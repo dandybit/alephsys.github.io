@@ -6,7 +6,7 @@ document.getElementById('init_simulation').addEventListener("click", function(){
     type: "GET",
     url: "map_query",
     data: {
-        "check_this": 'quesos',
+        "population": document.getElementById('population_id').value,
     },
     success: function(data){
 

@@ -45,8 +45,25 @@ def process_text(text):
     return simulation_steps, strata_population
 
 
-def main(cache=True):
-    id_name = 'init'
+def generate_name_cache(argsx):
+    dict_arg = {}
+    error_log = []
+    list_arg = []
+
+    try:
+        dict_arg['population'] = argsx['population']
+    except KeyError:
+        dict_arg['population'] = 1000000
+
+    list_arg = int(dict_arg['population'])
+
+    name = 'p' + str(dict_arg['population'])
+    return name, list_arg
+
+def main(argsx, cache=True):
+    id_name, arg_julia = generate_name_cache(argsx)
+    #print(argsx['population'])
+
     if os.path.isdir(os.path.abspath(os.getcwd())+'/cache/'+id_name):
         simulation_steps = []
         strata_population = {}
@@ -61,9 +78,9 @@ def main(cache=True):
         return simulation_steps, strata_population
 
     else:
-        os.makedirs(os.path.abspath(os.getcwd())+'/cache/'+id_name)
-        out = check_output(['./covid19_simulator_dashboard/MMCAcovid19/django_wrapper/wrapper.sh', "-p"])
+        out = check_output(['./covid19_simulator_dashboard/MMCAcovid19/django_wrapper/wrapper.sh', str(arg_julia)])
         simulation_steps, strata_population = process_text(out.decode('utf-8'))
+        os.makedirs(os.path.abspath(os.getcwd()) + '/cache/' + id_name)
         with open(os.path.abspath(os.getcwd())+'/cache/'+id_name + '/' + 'simulation_steps', 'w') as f:
             for x in simulation_steps:
                 f.write(str(x) + '\n')
@@ -84,6 +101,8 @@ def edgy_mode():
 
 
 if __name__ == '__main__':
-    main()
+    import sys
+    argsx = sys.argv[1:]
+    main(argsx)
     #edgy_mode()
 

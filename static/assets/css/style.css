@@ -568,6 +568,13 @@ pre{
 }
 
 /* Main Panel Module */
+#population_id{
+    color: #ffffff;
+    background-color : #000000;
+    text-align: center;
+}
+
+
 .ms-panel {
   background: #fff;
   -webkit-box-shadow: 0 1px 6px 1px rgba(69,65,78, 0.1);

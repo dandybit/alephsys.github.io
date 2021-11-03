@@ -22,7 +22,8 @@ def cat_map(request):
 
 
 def map_query(request, *a, **kw):
-    simulation_steps, strata_population = call_julia_script.main()
+    values_request = request.GET
+    simulation_steps, strata_population = call_julia_script.main(values_request)
     data = {}
     if simulation_steps:
         data = {'simulation_steps': simulation_steps, 'strata_population': strata_population, 'test': request.GET}
