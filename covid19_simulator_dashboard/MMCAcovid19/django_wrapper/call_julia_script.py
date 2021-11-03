@@ -1,0 +1,89 @@
+from subprocess import check_output
+import os
+import json
+
+
+
+
+def preprocess_timestep_string(timestep_info):
+    timestep_info = timestep_info.split(', ')
+    return_list = []
+    for x in timestep_info:
+        return_list.append(x.split(': ')[1])
+
+    return return_list
+
+def process_text(text):
+    #time, players, infected, cases, icus, deaths
+    simulation_steps = []
+    #strata, patch, time, cases
+    strata_population = {}
+    text = text.split('\n')
+    time_steps = True
+    first_line_strata = True
+    counter_population = 0
+    name_population = ''
+    for x in text:
+        if x == "barrier_":
+            time_steps = False
+            continue
+        if time_steps:
+            simulation_steps.append(preprocess_timestep_string(x))
+        elif time_steps == False:
+            if first_line_strata:
+                strata_population[x] = []
+                name_population = x
+                first_line_strata = False
+            else:
+                strata_population[name_population].append(x)
+                counter_population = counter_population + 1
+                if counter_population == 4:
+                    counter_population = 0
+                    first_line_strata = True
+    #print(simulation_steps)
+    #print(strata_population)
+    return simulation_steps, strata_population
+
+
+def main(cache=True):
+    id_name = 'init'
+    if os.path.isdir(os.path.abspath(os.getcwd())+'/cache/'+id_name):
+        simulation_steps = []
+        strata_population = {}
+        with open(os.path.abspath(os.getcwd())+'/cache/'+id_name + '/' + 'simulation_steps', 'r') as f:
+            for x in f:
+                simulation_steps.append(x.replace('\'', '').replace(']', '').split(', '))
+            f.close()
+        with open(os.path.abspath(os.getcwd())+'/cache/'+id_name + '/' + 'strata_population', 'r') as f:
+            strata_population = json.load(f)
+            #strata_population = list(f.read())
+            f.close()
+        return simulation_steps, strata_population
+
+    else:
+        os.makedirs(os.path.abspath(os.getcwd())+'/cache/'+id_name)
+        out = check_output(['./covid19_simulator_dashboard/MMCAcovid19/django_wrapper/wrapper.sh', "-p"])
+        simulation_steps, strata_population = process_text(out.decode('utf-8'))
+        with open(os.path.abspath(os.getcwd())+'/cache/'+id_name + '/' + 'simulation_steps', 'w') as f:
+            for x in simulation_steps:
+                f.write(str(x) + '\n')
+            f.close()
+        with open(os.path.abspath(os.getcwd())+'/cache/'+id_name + '/' + 'strata_population', 'w') as f:
+            json.dump(strata_population, f)
+            f.close()
+        return simulation_steps, strata_population
+
+
+
+
+def edgy_mode():
+    out = check_output(['./wrapper_edgy.sh', "-p"])
+    simulation_steps, strata_population = process_text(out.decode('utf-8'))
+    #strata_population = preprocess_strata_population(strata_population)
+    print(strata_population)
+
+
+if __name__ == '__main__':
+    main()
+    #edgy_mode()
+
