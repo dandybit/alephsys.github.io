@@ -1,7 +1,22 @@
 var simulator_steps = 0;
 var strata_population = 0;
 
+//add lockdonw button
+document.getElementById('lockdown_button').addEventListener("click", function(){
+  var parentElement = document.getElementById('form-elements');
+  var newElement = document.createElement('li');
+  var newElementChild = document.createElement('a');
+  newElementChild.innerText = "PEPE_THE_FROG";
+  newElement.appendChild(newElementChild);
+  parentElement.appendChild(newElement);
+  alert("pepe");
+});
+
+
+
+//Request button eventListener
 document.getElementById('init_simulation').addEventListener("click", function(){
+    document.getElementById('init_simulation').disabled = true;
     $.ajax({
     type: "GET",
     url: "map_query",
@@ -27,12 +42,18 @@ document.getElementById('init_simulation').addEventListener("click", function(){
         document.getElementById('icus_id').innerText = simulator_steps[0][4];
 
         //console.log(strata_population['Srun01']);
-        console.log("HERE----")
-        console.log(data['test'])
+        //console.log("HERE----")
+        //console.log(data['test'])
+        setTimeout(function(){
+         document.getElementById('init_simulation').disabled = false;
+        }, 1000);
 
     },
-    failure: function(data){
+    error: function(data){
         alert("The simulation has throw error");
+        setTimeout(function(){
+         document.getElementById('init_simulation').disabled = false;
+        }, 1000);
         //console.log(data);
     },
 });

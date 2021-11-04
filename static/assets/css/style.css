@@ -574,6 +574,12 @@ pre{
     text-align: center;
 }
 
+/* Main Panel Module */
+#lockdown_panel{
+    color: #ffffff;
+    background-color : #c91eab;
+    border:2px solid #c91eab;
+}
 
 .ms-panel {
   background: #fff;
@@ -977,7 +983,7 @@ body:not(.ms-aside-left-open) .ms-aside-toggler .ms-toggler-bar{
 .side-nav .menu-item a span{
   -webkit-transition: 0.3s;
   transition: 0.3s;
-  color: #b8c7ce;
+  color: #dbe1e7;
 }
 .side-nav .menu-item a.active::before{
   content: '';
@@ -1002,7 +1008,7 @@ body:not(.ms-aside-left-open) .ms-aside-toggler .ms-toggler-bar{
   color: #fff;
 }
 .side-nav .menu-item ul {
-  padding-left: 40px;
+  padding-left: 0px;
 }
 
 .side-nav .has-chevron:hover::after{

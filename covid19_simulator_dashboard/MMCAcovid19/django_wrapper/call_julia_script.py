@@ -80,14 +80,17 @@ def main(argsx, cache=True):
     else:
         out = check_output(['./covid19_simulator_dashboard/MMCAcovid19/django_wrapper/wrapper.sh', str(arg_julia)])
         simulation_steps, strata_population = process_text(out.decode('utf-8'))
-        os.makedirs(os.path.abspath(os.getcwd()) + '/cache/' + id_name)
-        with open(os.path.abspath(os.getcwd())+'/cache/'+id_name + '/' + 'simulation_steps', 'w') as f:
-            for x in simulation_steps:
-                f.write(str(x) + '\n')
-            f.close()
-        with open(os.path.abspath(os.getcwd())+'/cache/'+id_name + '/' + 'strata_population', 'w') as f:
-            json.dump(strata_population, f)
-            f.close()
+        try:
+            os.makedirs(os.path.abspath(os.getcwd()) + '/cache/' + id_name)
+            with open(os.path.abspath(os.getcwd())+'/cache/'+id_name + '/' + 'simulation_steps', 'w') as f:
+                for x in simulation_steps:
+                    f.write(str(x) + '\n')
+                f.close()
+            with open(os.path.abspath(os.getcwd())+'/cache/'+id_name + '/' + 'strata_population', 'w') as f:
+                json.dump(strata_population, f)
+                f.close()
+        except FileExistsError:
+            None
         return simulation_steps, strata_population
 
 
