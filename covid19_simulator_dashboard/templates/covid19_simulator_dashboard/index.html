@@ -129,27 +129,22 @@
                                 }
                             </style>
                             <label>Init timestep lockdown</label>
-                            <input id='population_id' class="form-control"  aria-describedby="emailHelp" placeholder="Number of inhabitants" value="0" type="number" oninput="this.value = Math.round(this.value);">
+                            <input id='init_time_step' class="form-control number_style"  value="0" type="number" oninput="this.value = Math.round(this.value);">
                             <label>Final timestep lockdown</label>
-                            <input id='population_id' class="form-control"  aria-describedby="emailHelp" placeholder="Number of inhabitants" value="0" type="number" oninput="this.value = Math.round(this.value);">
+                            <input id='final_time_step' class="form-control number_style"  value="0" type="number" oninput="this.value = Math.round(this.value);">
                             <label>Lockdown severity</label>
-                            <input id='population_id' class="form-control"  aria-describedby="emailHelp" placeholder="Number of inhabitants" value="0.00" min="0" max="100" type="number" oninput="this.value = Math.round(this.value);">
+                            <input id='lockdown_severity' class="form-control number_style"  value="0.00" min="0" max="100" type="number" oninput="this.value = Math.round(this.value);">
                             <small class="form-text text-muted">You must introduce a %. 100% means there isn't mobility at all.</small>
                             <select id="lockdown_select" class="form-select center_lockdown" aria-label="Default select example">
                               <option selected style="float: right;">Lockdown type</option>
-                              <option value="1">especulata</option>
-                              <option value="2">sica</option>
-                              <option value="3">gladius</option>
+                              <option value="especulata">especulata</option>
+                              <option value="sica">sica</option>
+                              <option value="gladius">gladius</option>
                             </select>
                            <button id="lockdown_button" type="button" class="btn btn-primary btn-lg center_lockdown">Add lockdown</button>
                       </div>
                   </ul>
               </li>
-
-
-              <li> <a href="pages/form/form-layout.html">Form Layouts</a> </li>
-              <li> <a href="pages/form/form-validation.html">Form Validation</a> </li>
-              <li> <a href="pages/form/form-wizard.html">Form Wizard</a> </li>
             </ul>
         </li>
         <!-- /Form Elements -->

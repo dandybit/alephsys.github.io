@@ -1,15 +1,64 @@
 var simulator_steps = 0;
 var strata_population = 0;
+var lockdown_data_count = 0;
+
+
+//Reset lockdown create default values.
+function lockdownResertValues()
+{
+  document.getElementById("init_time_step").value = 0;
+  document.getElementById("final_time_step").value = 0;
+  document.getElementById("lockdown_severity").value = 0.00;
+  document.getElementById("lockdown_select").value = "Lockdown type";
+}
 
 //add lockdonw button
 document.getElementById('lockdown_button').addEventListener("click", function(){
   var parentElement = document.getElementById('form-elements');
   var newElement = document.createElement('li');
+  var ulElement = document.createElement('ul');
+  ulElement.id = "lockdown_data_" + lockdown_data_count.toString();
   var newElementChild = document.createElement('a');
-  newElementChild.innerText = "PEPE_THE_FROG";
+  var divContent = document.createElement("div");
+  var deleteButton = document.createElement("button");
+  deleteButton.setAttribute("class", "btn btn-danger");
+  deleteButton.setAttribute("type", "button");
+  deleteButton.innerText = "Delete";
+
+  newElementChild.href = "#";
+  newElementChild.className = "has-chevron";
+  newElementChild.setAttribute("data-toggle", "collapse");
+  newElementChild.setAttribute("data-target", "#"+ulElement.id);
+  newElementChild.setAttribute("aria-expanded", "false");
+  newElementChild.setAttribute("aria-controls", ulElement.id);
+
+  ulElement.setAttribute("class", "collapse");
+  ulElement.setAttribute("aria-labelledby", ulElement.id);
+
+  var init_time_step = document.getElementById("init_time_step").value;
+  var final_time_step = document.getElementById("final_time_step").value;
+  var lockdown_severity = document.getElementById("lockdown_severity").value;
+  var lockdown_type = document.getElementById("lockdown_select").value;
+  divContent.setAttribute("style", "text-align: center;");
+  newElement.setAttribute("style", "border:0.5px solid #FFFFFF;");
+
+  newElementChild.innerText = "init: " + init_time_step.toString() + " final: " + final_time_step.toString() + " severity: " + lockdown_severity.toString();
+  divContent.innerText  = "init: " + init_time_step.toString() +
+      "\n final: " + final_time_step.toString() + "\n severity: " + lockdown_severity.toString() + " \nLockdown_type: " + lockdown_type.toString() + "\n";
+  divContent.appendChild(deleteButton);
+
   newElement.appendChild(newElementChild);
+  newElement.appendChild(ulElement);
   parentElement.appendChild(newElement);
-  alert("pepe");
+  ulElement.appendChild(divContent);
+
+  lockdown_data_count = lockdown_data_count + 1;
+  lockdownResertValues();
+
+  deleteButton.addEventListener("click", function(){
+      newElement.remove();
+  });
+
 });
 
 
