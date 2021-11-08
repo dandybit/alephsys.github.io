@@ -1,7 +1,8 @@
 var simulator_steps = 0;
 var strata_population = 0;
 var lockdown_data_count = 0;
-
+var lockdown_info = {};
+Array.range = (start, end) => Array.from({length: (end - start+1)}, (v, k) => k + start);
 
 //Reset lockdown create default values.
 function lockdownResertValues()
@@ -10,6 +11,39 @@ function lockdownResertValues()
   document.getElementById("final_time_step").value = 0;
   document.getElementById("lockdown_severity").value = 0.00;
   document.getElementById("lockdown_select").value = "Lockdown type";
+}
+
+
+function checkValuesLockdown(){
+    parent_ul = document.getElementById("form-elements");
+    index_objects = Object.keys(lockdown_info);
+
+    if (lockdown_info[index_objects.at(-1)]["lockdown_type"] === "Lockdown type"){
+        alert("You must select a lockdown type")
+        return -1
+    }
+    if (lockdown_info[index_objects.at(-1)]["init"] > lockdown_info[index_objects.at(-1)]["final"]){
+        alert("Final timestep lockdown must be greater than or equal to the init timestep lockdown")
+        return -1
+    }
+
+
+    try {
+        for (let i of index_objects.slice(0, -1)) {
+            for (let ii of Array.range(lockdown_info[index_objects.at(i)]["init"], lockdown_info[index_objects.at(i)]["final"])) {
+                if (Array.range(lockdown_info[index_objects.at(-1)]["init"], lockdown_info[index_objects.at(-1)]["final"]).includes(parseInt(ii, 10))) {
+                    alert("There is  overlap between lockdown ranges");
+                    return -1;
+                }
+            }
+        }
+    } catch (e){
+        alert("There is  overlap between lockdown ranges");
+        return -1;
+    }
+
+
+
 }
 
 //add lockdonw button
@@ -24,6 +58,7 @@ document.getElementById('lockdown_button').addEventListener("click", function(){
   deleteButton.setAttribute("class", "btn btn-danger");
   deleteButton.setAttribute("type", "button");
   deleteButton.innerText = "Delete";
+  deleteButton.setAttribute("id", lockdown_data_count);
 
   newElementChild.href = "#";
   newElementChild.className = "has-chevron";
@@ -45,18 +80,35 @@ document.getElementById('lockdown_button').addEventListener("click", function(){
   newElementChild.innerText = "init: " + init_time_step.toString() + " final: " + final_time_step.toString() + " severity: " + lockdown_severity.toString();
   divContent.innerText  = "init: " + init_time_step.toString() +
       "\n final: " + final_time_step.toString() + "\n severity: " + lockdown_severity.toString() + " \nLockdown_type: " + lockdown_type.toString() + "\n";
-  divContent.appendChild(deleteButton);
 
+  lockdown_info[lockdown_data_count] = {
+      "init": parseInt(init_time_step, 10),
+      "final": parseInt(final_time_step, 10),
+      "severity": parseInt(lockdown_severity, 10),
+      "lockdown_type": lockdown_type
+
+  };
+
+  check_int = checkValuesLockdown();
+  if (check_int === -1)
+  {
+      return check_int
+  }
+
+  divContent.appendChild(deleteButton);
   newElement.appendChild(newElementChild);
   newElement.appendChild(ulElement);
   parentElement.appendChild(newElement);
   ulElement.appendChild(divContent);
+
 
   lockdown_data_count = lockdown_data_count + 1;
   lockdownResertValues();
 
   deleteButton.addEventListener("click", function(){
       newElement.remove();
+      delete lockdown_info[deleteButton.id];
+
   });
 
 });

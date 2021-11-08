@@ -129,9 +129,9 @@
                                 }
                             </style>
                             <label>Init timestep lockdown</label>
-                            <input id='init_time_step' class="form-control number_style"  value="0" type="number" oninput="this.value = Math.round(this.value);">
+                            <input id='init_time_step' class="form-control number_style"  value="0" min="0" type="number" oninput="this.value = Math.round(this.value);">
                             <label>Final timestep lockdown</label>
-                            <input id='final_time_step' class="form-control number_style"  value="0" type="number" oninput="this.value = Math.round(this.value);">
+                            <input id='final_time_step' class="form-control number_style"  value="0" min="0" type="number" oninput="this.value = Math.round(this.value);">
                             <label>Lockdown severity</label>
                             <input id='lockdown_severity' class="form-control number_style"  value="0.00" min="0" max="100" type="number" oninput="this.value = Math.round(this.value);">
                             <small class="form-text text-muted">You must introduce a %. 100% means there isn't mobility at all.</small>
