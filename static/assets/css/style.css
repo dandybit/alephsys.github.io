@@ -573,26 +573,34 @@ pre{
     background-color : #000000;
     text-align: center;
 }
-/* Main Panel Module */
 #init_time_step{
     color: #ffffff;
     background-color : #000000;
     text-align: center;
 }
-/* Main Panel Module */
 #final_time_step{
     color: #ffffff;
     background-color : #000000;
     text-align: center;
 }
-/* Main Panel Module */
 #lockdown_severity{
     color: #ffffff;
     background-color : #000000;
     text-align: center;
 }
 
-/* Main Panel Module */
+#lockdown_permeability{
+    color: #ffffff;
+    background-color : #000000;
+    text-align: center;
+}
+
+#lockdown_distance{
+    color: #ffffff;
+    background-color : #000000;
+    text-align: center;
+}
+
 #lockdown_panel{
     color: #ffffff;
     background-color : #c91eab;

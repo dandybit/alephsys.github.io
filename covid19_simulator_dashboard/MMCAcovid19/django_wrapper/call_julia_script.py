@@ -1,3 +1,4 @@
+import time
 from subprocess import check_output
 import os
 import json
@@ -63,6 +64,11 @@ def generate_name_cache(argsx):
 def main(argsx, cache=True):
     id_name, arg_julia = generate_name_cache(argsx)
     #print(argsx['population'])
+    print(argsx)
+    for x in argsx:
+        print(type(x))
+    time.sleep(5)
+    #exit(0)
 
     if os.path.isdir(os.path.abspath(os.getcwd())+'/cache/'+id_name):
         simulation_steps = []
@@ -100,7 +106,7 @@ def edgy_mode():
     out = check_output(['./wrapper_edgy.sh', "-p"])
     simulation_steps, strata_population = process_text(out.decode('utf-8'))
     #strata_population = preprocess_strata_population(strata_population)
-    print(strata_population)
+    #print(strata_population)
 
 
 if __name__ == '__main__':

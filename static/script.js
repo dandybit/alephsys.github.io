@@ -4,12 +4,19 @@ var lockdown_data_count = 0;
 var lockdown_info = {};
 Array.range = (start, end) => Array.from({length: (end - start+1)}, (v, k) => k + start);
 
+//Check integer or float
+function isItNumber(str) {
+  return /^\-?[0-9]+(e[0-9]+)?(\.[0-9]+)?$/.test(str);
+}
+
 //Reset lockdown create default values.
 function lockdownResertValues()
 {
   document.getElementById("init_time_step").value = 0;
   document.getElementById("final_time_step").value = 0;
-  document.getElementById("lockdown_severity").value = 0.00;
+  document.getElementById("lockdown_severity").value = "0.0";
+  document.getElementById("lockdown_permeability").value = "0.0";
+  document.getElementById("lockdown_distance").value = "0.0";
   document.getElementById("lockdown_select").value = "Lockdown type";
 }
 
@@ -22,23 +29,38 @@ function checkValuesLockdown(){
         alert("You must select a lockdown type")
         return -1
     }
+
     if (lockdown_info[index_objects.at(-1)]["init"] > lockdown_info[index_objects.at(-1)]["final"]){
         alert("Final timestep lockdown must be greater than or equal to the init timestep lockdown")
         return -1
     }
 
+    if ( !(isItNumber(lockdown_info[index_objects.at(-1)]["severity"]))){
+        alert("Lockdown Mobility Reduction must be a Float type number")
+        return -1
+    }
+
+    if ( !(isItNumber(lockdown_info[index_objects.at(-1)]["lockdown_permeability"]))){
+        alert("Lockdown Permeability must be a Float type number")
+        return -1
+    }
+
+    if ( !(isItNumber(lockdown_info[index_objects.at(-1)]["lockdown_distance"]))){
+        alert("Lockdown Social Distance must be a Float type number")
+        return -1
+    }
 
     try {
         for (let i of index_objects.slice(0, -1)) {
             for (let ii of Array.range(lockdown_info[index_objects.at(i)]["init"], lockdown_info[index_objects.at(i)]["final"])) {
                 if (Array.range(lockdown_info[index_objects.at(-1)]["init"], lockdown_info[index_objects.at(-1)]["final"]).includes(parseInt(ii, 10))) {
-                    alert("There is  overlap between lockdown ranges");
+                    alert("There is an overlap between lockdown ranges");
                     return -1;
                 }
             }
         }
     } catch (e){
-        alert("There is  overlap between lockdown ranges");
+        alert("There is overlap between lockdown ranges");
         return -1;
     }
 
@@ -74,18 +96,24 @@ document.getElementById('lockdown_button').addEventListener("click", function(){
   var final_time_step = document.getElementById("final_time_step").value;
   var lockdown_severity = document.getElementById("lockdown_severity").value;
   var lockdown_type = document.getElementById("lockdown_select").value;
+  var lockdown_permeability = document.getElementById("lockdown_permeability").value;
+  var lockdown_distance = document.getElementById("lockdown_distance").value;
   divContent.setAttribute("style", "text-align: center;");
   newElement.setAttribute("style", "border:0.5px solid #FFFFFF;");
 
-  newElementChild.innerText = "init: " + init_time_step.toString() + " final: " + final_time_step.toString() + " severity: " + lockdown_severity.toString();
-  divContent.innerText  = "init: " + init_time_step.toString() +
-      "\n final: " + final_time_step.toString() + "\n severity: " + lockdown_severity.toString() + " \nLockdown_type: " + lockdown_type.toString() + "\n";
+  newElementChild.innerText = "init: " + init_time_step.toString() + " final: " + final_time_step.toString() + " m_reduction: " + lockdown_severity.toString();
+  divContent.innerText  = "Init: " + init_time_step.toString() +
+      "\n Final: " + final_time_step.toString() + "\n Mobility reduction: "
+      + lockdown_severity.toString() + " \nLockdown type: " + lockdown_type.toString() + " \nLockdown permeability: "
+      + lockdown_permeability.toString() + " \nLockdown social distance: " + lockdown_distance.toString() + "\n";
 
   lockdown_info[lockdown_data_count] = {
       "init": parseInt(init_time_step, 10),
       "final": parseInt(final_time_step, 10),
       "severity": parseInt(lockdown_severity, 10),
-      "lockdown_type": lockdown_type
+      "lockdown_type": lockdown_type,
+      "lockdown_permeability": parseInt(lockdown_permeability, 10),
+      "lockdown_distance": parseInt(lockdown_distance, 10)
 
   };
 
@@ -123,6 +151,7 @@ document.getElementById('init_simulation').addEventListener("click", function(){
     url: "map_query",
     data: {
         "population": document.getElementById('population_id').value,
+        "lockdown_info": JSON.stringify(lockdown_info)
     },
     success: function(data){
 
