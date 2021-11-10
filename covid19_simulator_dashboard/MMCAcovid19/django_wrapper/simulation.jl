@@ -19,8 +19,11 @@ using Distributions
 g_probs = [0.1, 0.6, 0.3]
 m_probs = [0.05, 0.10, 0.15, 0.30, 0.40]
 probs = transpose(m_probs) .* g_probs
-#total_population = 1000000
-total_population = parse(Int64,ARGS[1])
+total_population = 1000000
+#total_population = parse(Int64,ARGS[1])
+print("----")
+print(ARGS)
+print("----")
 
 distrib = Multinomial(total_population, reshape(probs, (1, G * M))[1, :])
 nᵢᵍ = convert.(Float64, reshape(rand(distrib), (G, M)))

@@ -58,17 +58,25 @@ def generate_name_cache(argsx):
 
     list_arg = int(dict_arg['population'])
 
-    name = 'p' + str(dict_arg['population'])
-    return name, list_arg
+    name = 'p' + "_" + str(dict_arg['population'])
+    return name
+
+def generate_lockdown_config(argx, id_name):
+    lockdown_json_parsed = json.loads(argx["lockdown_info"])
+    id_name = id_name + '-' + 'l'
+    for x in lockdown_json_parsed.keys():
+        id_name = id_name + "_" + str(lockdown_json_parsed[x]["init"])
+        id_name = id_name + "_" + str(lockdown_json_parsed[x]["final"])
+        id_name = id_name + "_" + str(lockdown_json_parsed[x]["severity"])
+        id_name = id_name + "_" + str(lockdown_json_parsed[x]["lockdown_type"][:3])
+        id_name = id_name + "_" + str(lockdown_json_parsed[x]["lockdown_permeability"])
+        id_name = id_name + "_" + str(lockdown_json_parsed[x]["lockdown_distance"])
+    return id_name
 
 def main(argsx, cache=True):
-    id_name, arg_julia = generate_name_cache(argsx)
-    #print(argsx['population'])
-    print(argsx)
-    for x in argsx:
-        print(type(x))
-    time.sleep(5)
-    #exit(0)
+    id_name = generate_name_cache(argsx)
+    id_name = generate_lockdown_config(argsx, id_name)
+    print(str(argsx))
 
     if os.path.isdir(os.path.abspath(os.getcwd())+'/cache/'+id_name):
         simulation_steps = []
@@ -84,7 +92,7 @@ def main(argsx, cache=True):
         return simulation_steps, strata_population
 
     else:
-        out = check_output(['./covid19_simulator_dashboard/MMCAcovid19/django_wrapper/wrapper.sh', str(arg_julia)])
+        out = check_output(['./covid19_simulator_dashboard/MMCAcovid19/django_wrapper/wrapper.sh', str(argsx)])
         simulation_steps, strata_population = process_text(out.decode('utf-8'))
         try:
             os.makedirs(os.path.abspath(os.getcwd()) + '/cache/' + id_name)
