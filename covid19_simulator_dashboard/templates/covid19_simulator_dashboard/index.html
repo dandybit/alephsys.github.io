@@ -133,12 +133,12 @@
                             <label>Final timestep lockdown</label>
                             <input id='final_time_step' class="form-control number_style"  value="0" min="0" type="number" oninput="this.value = Math.round(this.value);">
                             <label>Lockdown Mobility Reduction</label>
-                            <input id='lockdown_severity' class="form-control number_style"  value="0.00" min="0" max="100" type="number">
+                            <input id='lockdown_severity' class="form-control number_style"  type="number" value="0.00" min="0" max="100" step="0.01">
                             <small class="form-text text-muted">You must introduce a %. 100% means there isn't mobility at all.</small>
                             <label>Lockdown Permeability</label>
-                            <input id= "lockdown_permeability" class="form-control number_style"  type="number" value="0.00" step="0.01">
+                            <input id= "lockdown_permeability" class="form-control number_style" type="number" value="0.00" min="0" step="0.01">
                             <label>Lockdown Social Distance</label>
-                            <input id= "lockdown_distance" class="form-control number_style" type="number" value="0.00" step="0.01">
+                            <input id= "lockdown_distance" class="form-control number_style" type="number" value="0.00" min="0" step="0.01">
                             <small class="form-text text-muted">Social distance is represented in Meters.</small>
                             <select id="lockdown_select" class="form-select center_lockdown" aria-label="Default select example">
                               <option selected style="float: right;">Lockdown type</option>
@@ -618,7 +618,7 @@
                 }
             </style>
             <label class="form-label" for="customRange2" id="time_steps_title">Time steps Model (select model)</label>
-            <div class="range">
+            <div class="range" id="time_steps_div">
               <input type="range" class="form-range" min="0" max="100" id="time_steps_range" disabled/>
             </div>
          </div>

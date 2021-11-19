@@ -10,17 +10,20 @@ function isItNumber(str) {
 }
 
 //Reset lockdown create default values.
-function lockdownResertValues()
+function lockdownResetValues()
 {
+
   document.getElementById("init_time_step").value = 0;
   document.getElementById("final_time_step").value = 0;
   document.getElementById("lockdown_severity").value = "0.0";
   document.getElementById("lockdown_permeability").value = "0.0";
   document.getElementById("lockdown_distance").value = "0.0";
   document.getElementById("lockdown_select").value = "Lockdown type";
+
+
 }
 
-
+//Check integrity of the vars.
 function checkValuesLockdown(){
     parent_ul = document.getElementById("form-elements");
     index_objects = Object.keys(lockdown_info);
@@ -30,23 +33,43 @@ function checkValuesLockdown(){
         return -1
     }
 
-    if (lockdown_info[index_objects.at(-1)]["init"] > lockdown_info[index_objects.at(-1)]["final"]){
+    else if (lockdown_info[index_objects.at(-1)]["init"] > lockdown_info[index_objects.at(-1)]["final"]){
         alert("Final timestep lockdown must be greater than or equal to the init timestep lockdown")
         return -1
     }
 
-    if ( !(isItNumber(lockdown_info[index_objects.at(-1)]["severity"]))){
+    else if (lockdown_info[index_objects.at(-1)]["final"] > 200){
+        alert("Final timestep lockdown must be lesser or equal to timesteps")
+        return -1
+    }
+
+    else if ( !(isItNumber(lockdown_info[index_objects.at(-1)]["severity"]))){
         alert("Lockdown Mobility Reduction must be a Float type number")
         return -1
     }
 
-    if ( !(isItNumber(lockdown_info[index_objects.at(-1)]["lockdown_permeability"]))){
+    else if ( !(isItNumber(lockdown_info[index_objects.at(-1)]["lockdown_permeability"]))){
         alert("Lockdown Permeability must be a Float type number")
         return -1
     }
 
-    if ( !(isItNumber(lockdown_info[index_objects.at(-1)]["lockdown_distance"]))){
+    else if ( !(isItNumber(lockdown_info[index_objects.at(-1)]["lockdown_distance"]))){
         alert("Lockdown Social Distance must be a Float type number")
+        return -1
+    }
+
+    else if (lockdown_info[index_objects.at(-1)]["severity"] > 100 || lockdown_info[index_objects.at(-1)]["severity"] < 0 ){
+        alert("Lockdown Mobility Reduction must be greater or equal than 0 and lesser or equal than 100")
+        return -1
+    }
+
+    else if (lockdown_info[index_objects.at(-1)]["lockdown_distance"] < 0 ){
+        alert("Lockdown Social Distance must be greater or equal than 0 and lesser or equal than 100")
+        return -1
+    }
+
+    else if (lockdown_info[index_objects.at(-1)]["lockdown_permeability"] < 0 ){
+        alert("Lockdown Permeability must be greater or equal than 0 and lesser or equal than 100")
         return -1
     }
 
@@ -60,11 +83,9 @@ function checkValuesLockdown(){
             }
         }
     } catch (e){
-        alert("There is overlap between lockdown ranges");
+        alert(e);
         return -1;
     }
-
-
 
 }
 
@@ -131,7 +152,7 @@ document.getElementById('lockdown_button').addEventListener("click", function(){
 
 
   lockdown_data_count = lockdown_data_count + 1;
-  lockdownResertValues();
+  lockdownResetValues();
 
   deleteButton.addEventListener("click", function(){
       newElement.remove();
@@ -145,6 +166,8 @@ document.getElementById('lockdown_button').addEventListener("click", function(){
 
 //Request button eventListener
 document.getElementById('init_simulation').addEventListener("click", function(){
+    $('#time_steps_range').val(0);
+    document.getElementById('time_steps_range').setAttribute('disabled', true);
     document.getElementById('init_simulation').disabled = true;
     $.ajax({
     type: "GET",

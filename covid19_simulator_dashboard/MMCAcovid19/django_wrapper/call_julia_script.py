@@ -9,6 +9,7 @@ import json
 def preprocess_timestep_string(timestep_info):
     timestep_info = timestep_info.split(', ')
     return_list = []
+    print(timestep_info)
     for x in timestep_info:
         return_list.append(x.split(': ')[1])
 
@@ -78,6 +79,7 @@ def main(argsx, cache=True):
     id_name = generate_lockdown_config(argsx, id_name)
     args_julia = {"data": id_name}
     print(str(args_julia))
+    print(id_name)
 
 
     if os.path.isdir(os.path.abspath(os.getcwd())+'/cache/'+id_name):
@@ -94,7 +96,7 @@ def main(argsx, cache=True):
         return simulation_steps, strata_population
 
     else:
-        out = check_output(['./covid19_simulator_dashboard/MMCAcovid19/django_wrapper/wrapper.sh', str(args_julia)])
+        out = check_output(['./covid19_simulator_dashboard/MMCAcovid19/django_wrapper/wrapper.sh', str(id_name)])
         simulation_steps, strata_population = process_text(out.decode('utf-8'))
         try:
             os.makedirs(os.path.abspath(os.getcwd()) + '/cache/' + id_name)

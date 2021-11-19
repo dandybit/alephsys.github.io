@@ -21,31 +21,41 @@ argx_population = parse(Int64, split(argx_list[1], '_')[2],)
 argx_lockdown = split(argx_list[2], '_')
 argx_lockdown = argx_lockdown[2:lastindex(argx_lockdown)]
 
-timesteps_list = []
-mobility_reduction = []
+timesteps_list = Int64[]
+mobility_reduction = Float64[]
 lockdown_type = []
-lockdown_permability = []
-lockdown_social_distance = []
+lockdown_permability = Float64[]
+lockdown_social_distance = Float64[]
 
 
 counter = 0
 init_range = 0
+counter_t = 0
+
 for i in argx_lockdown
     if counter % 6 == 0
         global init_range = i
     elseif counter % 6 == 1
+        global counter_t = i
         for ii in [parse(Int64, init_range):1:parse(Int64,i);]
             append!(timesteps_list, ii)
         end
     elseif counter % 6 == 2
-        append!(mobility_reduction, parse(Int64, i))
+        for ii in [parse(Int64, init_range):1:parse(Int64,counter_t);]
+            append!(mobility_reduction, parse(Float64, i))
+        end
     elseif counter % 6 == 3
-        append!(lockdown_type, i)
+        for ii in [parse(Int64, init_range):1:parse(Int64,counter_t);]
+            append!(lockdown_type, i)
+        end
     elseif counter % 6 == 4
-        append!(lockdown_permability, i)
+        for ii in [parse(Int64, init_range):1:parse(Int64,counter_t);]
+            append!(lockdown_permability, parse(Float64,i))
+        end
     elseif counter % 6 == 5
-        append!(lockdown_social_distance, i)
-
+        for ii in [parse(Int64, init_range):1:parse(Int64,counter_t);]
+            append!(lockdown_social_distance, parse(Float64,i))
+        end
     end
     global counter = counter + 1
 end
@@ -190,18 +200,20 @@ tᶜ = 30
 δ = 0.207
 
 # List of timesteps of application of containments
-tᶜs = [30, 60, 90, 120]
-#tᶜs = timesteps_list
+#tᶜs = [30, 60, 90, 120]
+tᶜs = timesteps_list
 
 # List of mobility reductions
 #κ₀s = [0.65, 0.75, 0.65, 0.55]
-κ₀s = [0.65, 0.75, 0.65, 0.55]
+κ₀s = mobility_reduction
 
 # List of permeabilities of confined households
-ϕs = [0.174, 0.174, 0.174, 0.174]
+#ϕs = [0.174, 0.174, 0.174, 0.174]
+ϕs = lockdown_permability
 
 # List of social distancings
-δs = [0.207, 0.207, 0.207, 0.207]
+#δs = [0.207, 0.207, 0.207, 0.207]
+δs = lockdown_social_distance
 
 
 using MMCAcovid19
@@ -284,7 +296,10 @@ function store_compartment_v2(epi_params::Epidemic_Params,
     print('\n')
 end
 
-print(timesteps_list)
+#print(timesteps_list)
+#print(lockdown_permability)
+#print(lockdown_social_distance)
+#print(mobility_reduction)
 print("barrier_\n")
 #store_compartment(epi_params, population, "S", suffix, output_path)
 store_compartment_v2(epi_params, population, "S", suffix, output_path)
