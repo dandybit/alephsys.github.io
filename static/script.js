@@ -24,7 +24,6 @@ function lockdownResetValues()
 function checkValuesLockdown(){
     parent_ul = document.getElementById("form-elements");
     index_objects = Object.keys(lockdown_info);
-    console.log(lockdown_info)
 
     if (lockdown_info[index_objects.at(-1)]["lockdown_type"] === "Lockdown type"){
         alert("You must select a lockdown type")
@@ -92,6 +91,7 @@ function checkValuesLockdown(){
 
 //add lockdonw button
 document.getElementById('lockdown_button').addEventListener("click", function(){
+  console.log(document.getElementById('cat_map_id').getElementsByTagName('script'))
   var parentElement = document.getElementById('form-elements');
   var newElement = document.createElement('li');
   var ulElement = document.createElement('ul');
@@ -200,9 +200,6 @@ document.getElementById('init_simulation').addEventListener("click", function(){
         document.getElementById('cases_id').innerText = simulator_steps[0][3];
         document.getElementById('icus_id').innerText = simulator_steps[0][4];
 
-        //console.log(strata_population['Srun01']);
-        //console.log("HERE----")
-        //console.log(data['test'])
         setTimeout(function(){
          document.getElementById('init_simulation').disabled = false;
         }, 1000);
@@ -213,10 +210,8 @@ document.getElementById('init_simulation').addEventListener("click", function(){
         setTimeout(function(){
          document.getElementById('init_simulation').disabled = false;
         }, 1000);
-        //console.log(data);
     },
 });
-    //alert("TOUCH ME HARDER!");
 });
 
 
@@ -240,7 +235,6 @@ document.getElementById('time_steps_range').addEventListener('input', function()
 
 
 
-console.log(document.getElementById('frame_1_char').getBoundingClientRect());
 
 var char_1_height = document.getElementById('frame_1_char').getBoundingClientRect()['height'];
 var char_1_width = document.getElementById('frame_1_char').getBoundingClientRect()['width'];
@@ -326,7 +320,7 @@ function updatex(data) {
 }
 
 // At the beginning, I run the update function on the first dataset:
-update(data1)
+updatex(data1)
 
 
 // At the beginning, I run the update function on the first dataset:
