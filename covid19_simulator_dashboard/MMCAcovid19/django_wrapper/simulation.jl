@@ -10,7 +10,7 @@ using MMCAcovid19
 G = 3
 
 # Number of patches
-M = 5
+M = 4
 
 # Random population
 using Random
@@ -63,10 +63,12 @@ end
 
 
 g_probs = [0.1, 0.6, 0.3]
-m_probs = [0.05, 0.10, 0.15, 0.30, 0.40]
+#m_probs = [0.05, 0.10, 0.15, 0.30, 0.40]
+m_probs = [0.15, 0.15, 0.30, 0.40]
 probs = transpose(m_probs) .* g_probs
-total_population = argx_population
+#total_population = argx_population
 #total_population = parse(Int64,ARGS[1])
+total_population =  7727029
 
 
 
@@ -117,7 +119,7 @@ kᵍ_w = [1.72, 5.18, 0.0]
 pᵍ = [0.0, 1.0, 0.05]
 
 # Patch surfaces (in km²)
-sᵢ = [10.6, 23.0, 26.6, 5.7, 61.6]
+sᵢ = [12150.0, 5905.0, 7726.0, 6303.0]
 
 # Density factor
 ξ = 0.01
@@ -177,12 +179,14 @@ E₀ = zeros(G, M)
 
 # Initial number of infectious asymptomatic individuals
 A₀ = zeros(G, M)
-A₀[2, 5] = 2.0
+#A₀[2, 5] = 2.0
+A₀[2, 4] = 2.0
 A₀[3, 3] = 1.0
 
 # Initial number of infectious symptomatic individuals
 I₀ = zeros(G, M)
-I₀[2, 5] = 1.0
+#I₀[2, 5] = 1.0
+I₀[2, 4] = 1.0
 
 
 set_initial_infected!(epi_params, population, E₀, A₀, I₀)

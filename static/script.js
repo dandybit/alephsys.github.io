@@ -12,21 +12,19 @@ function isItNumber(str) {
 //Reset lockdown create default values.
 function lockdownResetValues()
 {
-
   document.getElementById("init_time_step").value = 0;
   document.getElementById("final_time_step").value = 0;
-  document.getElementById("lockdown_severity").value = "0.0";
-  document.getElementById("lockdown_permeability").value = "0.0";
-  document.getElementById("lockdown_distance").value = "0.0";
+  document.getElementById("lockdown_severity").value = "0.00";
+  document.getElementById("lockdown_permeability").value = "0.00";
+  document.getElementById("lockdown_distance").value = "0.00";
   document.getElementById("lockdown_select").value = "Lockdown type";
-
-
 }
 
 //Check integrity of the vars.
 function checkValuesLockdown(){
     parent_ul = document.getElementById("form-elements");
     index_objects = Object.keys(lockdown_info);
+    console.log(lockdown_info)
 
     if (lockdown_info[index_objects.at(-1)]["lockdown_type"] === "Lockdown type"){
         alert("You must select a lockdown type")
@@ -74,7 +72,8 @@ function checkValuesLockdown(){
     }
 
     try {
-        for (let i of index_objects.slice(0, -1)) {
+        //for (let i of index_objects.slice(0, -1)) {
+        for (let i of Array.range(0, index_objects.length - 2)) {
             for (let ii of Array.range(lockdown_info[index_objects.at(i)]["init"], lockdown_info[index_objects.at(i)]["final"])) {
                 if (Array.range(lockdown_info[index_objects.at(-1)]["init"], lockdown_info[index_objects.at(-1)]["final"]).includes(parseInt(ii, 10))) {
                     alert("There is an overlap between lockdown ranges");
@@ -86,6 +85,8 @@ function checkValuesLockdown(){
         alert(e);
         return -1;
     }
+
+    return 0
 
 }
 
@@ -128,6 +129,9 @@ document.getElementById('lockdown_button').addEventListener("click", function(){
       + lockdown_severity.toString() + " \nLockdown type: " + lockdown_type.toString() + " \nLockdown permeability: "
       + lockdown_permeability.toString() + " \nLockdown social distance: " + lockdown_distance.toString() + "\n";
 
+
+
+  //Add new lockdown to the global dict
   lockdown_info[lockdown_data_count] = {
       "init": parseInt(init_time_step, 10),
       "final": parseInt(final_time_step, 10),
@@ -138,12 +142,14 @@ document.getElementById('lockdown_button').addEventListener("click", function(){
 
   };
 
+  //Check overlaps lockdowns
   check_int = checkValuesLockdown();
   if (check_int === -1)
   {
       return check_int
   }
 
+  //Generate new HTML object for lockdown
   divContent.appendChild(deleteButton);
   newElement.appendChild(newElementChild);
   newElement.appendChild(ulElement);
