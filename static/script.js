@@ -170,7 +170,7 @@ document.getElementById('lockdown_button').addEventListener("click", function(){
 
 
 
-//Request button eventListener
+//Init simulation button eventListener
 document.getElementById('init_simulation').addEventListener("click", function(){
     $('#time_steps_range').val(0);
     document.getElementById('time_steps_range').setAttribute('disabled', true);
@@ -199,6 +199,8 @@ document.getElementById('init_simulation').addEventListener("click", function(){
         document.getElementById('deaths_id').innerText = simulator_steps[0][5];
         document.getElementById('cases_id').innerText = simulator_steps[0][3];
         document.getElementById('icus_id').innerText = simulator_steps[0][4];
+
+        redrawMap();
 
         setTimeout(function(){
          document.getElementById('init_simulation').disabled = false;
@@ -325,3 +327,5 @@ updatex(data1)
 
 // At the beginning, I run the update function on the first dataset:
 updatex(data1)
+
+

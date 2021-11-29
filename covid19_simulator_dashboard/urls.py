@@ -22,5 +22,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('cat_map/', views.cat_map, name='cat_map'),
     path('map_query/', views.map_query, name='map_query'),
-
+    path('request_json_map/', views.request_json_map, name='request_json_map'),
 ]

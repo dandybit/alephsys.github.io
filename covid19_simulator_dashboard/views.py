@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.http import JsonResponse
+import json
 
 from .MMCAcovid19.django_wrapper import call_julia_script
 
@@ -27,4 +28,13 @@ def map_query(request, *a, **kw):
     data = {}
     if simulation_steps:
         data = {'simulation_steps': simulation_steps, 'strata_population': strata_population, 'test': request.GET}
+    return JsonResponse(data)
+
+
+def request_json_map(request, *a, **kw):
+    with open('static/json/cat_provincias.json') as f:
+        json_map = json.load(f)
+    data = {}
+    if json_map:
+        data = {'map': json_map, 'test': request.GET}
     return JsonResponse(data)
