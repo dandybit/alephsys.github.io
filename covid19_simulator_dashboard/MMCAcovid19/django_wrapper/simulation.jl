@@ -68,12 +68,13 @@ m_probs = [0.15, 0.15, 0.30, 0.40]
 probs = transpose(m_probs) .* g_probs
 #total_population = argx_population
 #total_population = parse(Int64,ARGS[1])
-total_population =  7727029
+total_population = argx_population
 
 
 
 distrib = Multinomial(total_population, reshape(probs, (1, G * M))[1, :])
 nᵢᵍ = convert.(Float64, reshape(rand(distrib), (G, M)))
+
 
 # Strata contacts
 C = [0.5980 0.3849 0.0171

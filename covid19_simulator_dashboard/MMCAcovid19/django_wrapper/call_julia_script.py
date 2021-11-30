@@ -42,9 +42,52 @@ def process_text(text):
                 if counter_population == 4:
                     counter_population = 0
                     first_line_strata = True
+
+    strata_population = generate_overall_values(strata_population)
     #print(simulation_steps)
-    #print(strata_population)
+    #print(strata_population.keys())
     return simulation_steps, strata_population
+
+def generate_overall_values(strata):
+    strata_population = strata
+    for x in ['Srun01', 'Erun01', 'Arun01', 'Irun01', 'PHrun01', 'PDrun01', 'HRrun01', 'HDrun01', 'Rrun01', 'Drun01']:
+        overall = 0.0
+        #First time step
+        check_p = int(list(strata[x][2].split(',')[1:-2])[0])
+        time_s_list = []
+        value_list = []
+        for stratax, patch, time_s, value in zip(list(strata[x][0].split(',')[1:-2]), list(strata[x][1].split(',')[1:-2]),
+                                                list(strata[x][2].split(',')[1:-2]), list(strata[x][3].split(',')[1:-2])):
+            if check_p == int(time_s):
+                overall = overall + float(value)
+            else:
+                time_s_list.append(check_p)
+                value_list.append(overall)
+                check_p = int(time_s)
+
+        strata_population[x + "_overall"] = [time_s_list, value_list]
+
+
+    for x in ['Srun01', 'Erun01', 'Arun01', 'Irun01', 'PHrun01', 'PDrun01', 'HRrun01', 'HDrun01', 'Rrun01', 'Drun01']:
+        overall = 0.0
+        #First time step
+        check_p = int(list(strata[x][2].split(',')[1:-2])[0])
+        time_s_list = []
+        value_list = []
+        for stratax, patch, time_s, value in zip(list(strata[x][0].split(',')[1:-2]), list(strata[x][1].split(',')[1:-2]),
+                                                list(strata[x][2].split(',')[1:-2]), list(strata[x][3].split(',')[1:-2])):
+            if check_p == int(time_s):
+                overall = overall + float(value)
+            else:
+                time_s_list.append(check_p)
+                value_list.append(overall)
+                check_p = int(time_s)
+                overall = 0.0
+
+        strata_population[x + "_add"] = [time_s_list, value_list]
+
+    return strata_population
+
 
 
 def generate_name_cache(argsx):
