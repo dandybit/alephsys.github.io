@@ -6,12 +6,13 @@ var char_1_width = document.getElementById('frame_1_char').getBoundingClientRect
 //Global vars for graphs data
 var data_susceptible = [];
 var data_exposed = [];
-var data_asymptotic = [];
+var data_asymptomatic = [];
 var data_infected = [];
 var data_pre_hospitalized = [];
 var data_pre_deceased = [];
 var data_recovered = [];
 var data_hospitalized_icu = [];
+var data_hospitalized_icu_fatal = [];
 var data_deceased = [];
 
 
@@ -20,22 +21,31 @@ function initGraphVar()
 {
     data_susceptible = [];
     data_exposed = [];
-    data_asymptotic = [];
+    data_asymptomatic = [];
     data_infected = [];
     data_pre_hospitalized = [];
     data_pre_deceased = [];
     data_recovered = [];
     data_hospitalized_icu = [];
+    data_hospitalized_icu_fatal = [];
     data_deceased = [];
 
     for (let x in Array.range(0, strata_population["Drun01_add"][1].length - 1))
     {
         data_susceptible.push({ser1: x, ser2: strata_population["Srun01_add"][1][x]})
         data_exposed.push({ser1: x, ser2: strata_population["Erun01_add"][1][x]})
+        data_asymptomatic.push({ser1: x, ser2: strata_population["Arun01_add"][1][x]})
+        data_infected.push({ser1: x, ser2: strata_population["Irun01_add"][1][x]})
+        data_pre_hospitalized.push({ser1: x, ser2: strata_population["PHrun01_add"][1][x]})
+        data_pre_deceased.push({ser1: x, ser2: strata_population["PDrun01_add"][1][x]})
+        data_recovered.push({ser1: x, ser2: strata_population["Rrun01_add"][1][x]})
+        data_hospitalized_icu.push({ser1: x, ser2: strata_population["HRrun01_add"][1][x]})
+        data_hospitalized_icu_fatal.push({ser1: x, ser2: strata_population["HDrun01_add"][1][x]})
+        data_deceased.push({ser1: x, ser2: strata_population["Drun01_add"][1][x]})
     }
 
-    console.log(strata_population["Erun01_add"])
     console.log(data_exposed)
+    console.log(data_asymptomatic)
 
 }
 
@@ -45,13 +55,13 @@ const margin = {top: 10, right: 30, bottom: 30, left: 50},
     width = char_1_width * 1 - margin.left - margin.right,
     height = char_1_height * 3 - margin.top - margin.bottom;
 
-// append the svg object to the body of the page
-const svg = d3.select("#graph1")
-    .append("svg")
+var svg = d3.select("#graph1")
+  .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", `translate(${margin.left},${margin.top})`);
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
 
 
 // Initialise a X axis:
@@ -77,9 +87,7 @@ svg.append("g")
 function updatex(data) {
 
     // Create the X axis:
-    x.domain([0, d3.max(data, function (d) {
-        return d.ser1
-    })]);
+    x.domain([0, parseInt(data.at(-1)['ser1'], 10)]);
     svg.selectAll(".myXaxis").transition()
         .duration(3000)
         .call(xAxis);
@@ -172,6 +180,50 @@ document.getElementById("button_exposed").addEventListener("click", function() {
   updatex(data_exposed);
 
 });
+
+document.getElementById("button_asymtomatic").addEventListener("click", function() {
+
+  updatex(data_asymptomatic);
+
+});
+
+document.getElementById("button_infected").addEventListener("click", function() {
+
+  updatex(data_infected);
+
+});
+
+document.getElementById("button_hospitalized").addEventListener("click", function() {
+
+  updatex(data_pre_hospitalized);
+
+});
+
+document.getElementById("button_pre_deceased").addEventListener("click", function() {
+
+  updatex(data_pre_deceased);
+
+});
+
+document.getElementById("button_recovered").addEventListener("click", function() {
+
+  updatex(data_recovered);
+
+});
+
+document.getElementById("button_hospitalized_icu").addEventListener("click", function() {
+
+  updatex(data_hospitalized_icu);
+
+});
+
+document.getElementById("button_deceased").addEventListener("click", function() {
+
+  updatex(data_deceased);
+
+});
+
+
 
 // At the beginning, I run the update function on the first dataset:
 updatex(data1)

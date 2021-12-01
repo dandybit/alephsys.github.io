@@ -9,7 +9,7 @@ import json
 def preprocess_timestep_string(timestep_info):
     timestep_info = timestep_info.split(', ')
     return_list = []
-    print(timestep_info)
+    #print(timestep_info)
     for x in timestep_info:
         return_list.append(x.split(': ')[1])
 
@@ -122,7 +122,7 @@ def main(argsx, cache=True):
     id_name = generate_lockdown_config(argsx, id_name)
     args_julia = {"data": id_name}
     print(str(args_julia))
-    print(id_name)
+    #print(id_name)
 
 
     if os.path.isdir(os.path.abspath(os.getcwd())+'/cache/'+id_name):
