@@ -2,6 +2,9 @@ var simulator_steps = 0;
 var strata_population = 0;
 var lockdown_data_count = 0;
 var lockdown_info = {};
+var lockdown_info_map = {};
+var lockdown_info_map_acc = {};
+var acc_ref = 0;
 Array.range = (start, end) => Array.from({length: (end - start+1)}, (v, k) => k + start);
 
 //Check integer or float
@@ -89,6 +92,86 @@ function checkValuesLockdown(){
 
 }
 
+function stringToListInt(string_l)
+{
+    string_l = string_l.slice(1, -1).split(',');
+    string_l = string_l.map(function(item) {
+    return parseInt(item, 10);
+    });
+    return string_l;
+}
+
+function stringToListFloat(string_l)
+{
+    string_l = string_l.slice(1, -1).split(',');
+    string_l = string_l.map(function(item) {
+    return parseFloat(item);
+    });
+    return string_l;
+}
+
+function processInfoMap()
+{
+    deaths_list_turn = stringToListInt(strata_population["Drun01"][2]);
+    deaths_list_strata = stringToListInt(strata_population["Drun01"][1]);
+    deaths_list_value = stringToListFloat(strata_population["Drun01"][3]);
+
+    var init = 0;
+    var acc = {1:0, 2:0, 3:0, 4:0};
+    var x_val = 0;
+    var count_x = 0
+
+    for (var x of deaths_list_turn)
+    {
+        if (x !== init)
+        {
+            lockdown_info_map[x] = {};
+            lockdown_info_map[x][deaths_list_strata[count_x]] = deaths_list_value[count_x];
+
+            init = x;
+            x_val = x;
+            lockdown_info_map_acc[x - 1] = {};
+            Object.assign(lockdown_info_map_acc[x - 1], acc);
+
+
+        }
+        else
+        {
+            lockdown_info_map[x][deaths_list_strata[count_x]] = deaths_list_value[count_x];
+            acc[deaths_list_strata[count_x]] += deaths_list_value[count_x];
+            x_val = x;
+
+        }
+
+        count_x += 1;
+
+    }
+
+    lockdown_info_map_acc[x_val] = acc;
+
+    var val_i = 0;
+    //max value deaths
+    for (var x of Object.keys(acc))
+    {
+        if (val_i < acc[x])
+        {
+            val_i = acc[x];
+        }
+    }
+
+    val_cut = parseInt(val_i / 6, 10);
+    acc_ref = [];
+
+    for (var x in Array.range(0, 6))
+    {
+        acc_ref.push(parseInt( Math.pow(val_cut , x/5.2), 10))
+    }
+
+    //console.log(acc_ref);
+
+
+}
+
 //add lockdonw button
 document.getElementById('lockdown_button').addEventListener("click", function(){
   //console.log(document.getElementById('cat_map_id').getElementsByTagName('script'))
@@ -131,7 +214,7 @@ document.getElementById('lockdown_button').addEventListener("click", function(){
 
 
 
-  //Add new lockdown to the global dict
+  //Add new lockdown to global dict
   lockdown_info[lockdown_data_count] = {
       "init": parseInt(init_time_step, 10),
       "final": parseInt(final_time_step, 10),
@@ -200,8 +283,10 @@ document.getElementById('init_simulation').addEventListener("click", function(){
         document.getElementById('cases_id').innerText = simulator_steps[0][3];
         document.getElementById('icus_id').innerText = simulator_steps[0][4];
 
+        //Process info for map
+        processInfoMap();
         //Redraw map for the new simulation
-        redrawMap();
+        redrawMap(0);
         //Redraw graphs for the new simulation
         initGraphVar();
         redrawGraphs();
@@ -232,4 +317,6 @@ document.getElementById('time_steps_range').addEventListener('input', function()
     document.getElementById('icus_id').innerText = simulator_steps[document.getElementById('time_steps_range').value][4];
 
     // stats for stratas
+
+    redrawMap(document.getElementById('time_steps_range').value)
 });

@@ -85,7 +85,9 @@ C = [0.5980 0.3849 0.0171
 using LightGraphs
 
 # network
-network = erdos_renyi(M, 0.7, is_directed=true)
+#network = erdos_renyi(M, 0.7, is_directed=true)
+network = complete_digraph(M)
+
 for i in 1:M
   add_edge!(network, i, i)   # add self-loops
 end

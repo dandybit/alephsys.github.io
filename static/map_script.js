@@ -2,6 +2,7 @@ var json_map = '';
 var map = 0;
 var info = 0;
 var legendxx = 0;
+var first_draw = true;
 
 //Request map from server
 function requestMap() {
@@ -19,9 +20,11 @@ function requestMap() {
 	});
 }
 
+
 //First draw for the map
 function drawMap()
 {
+	first_draw = true;
 	map = L.map('map');
 
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -71,19 +74,6 @@ function drawMap()
 	map.setZoom(8);
 
 
-
-	// get color depending on population density value
-	function getColor(d) {
-	  return d > 1000 ? '#800026' :
-		d > 500  ? '#BD0026' :
-		  d > 200  ? '#E31A1C' :
-			d > 100  ? '#FC4E2A' :
-			  d > 50   ? '#FD8D3C' :
-				d > 20   ? '#FEB24C' :
-				  d > 10   ? '#FED976' :
-					'#FFEDA0';
-	}
-
 	function style(feature) {
 	  return {
 		weight: 2,
@@ -91,11 +81,12 @@ function drawMap()
 		color: 'white',
 		dashArray: '3',
 		fillOpacity: 0.7,
-		fillColor: getColor(feature.properties.density)
+		fillColor: getColor(feature.properties.AREAPROV)
 	  };
 	}
 
 
+	//Display info for region (the first draw will be for density population)
 	function highlightFeature(e) {
 	  var layer = e.target;
 
@@ -140,10 +131,20 @@ function drawMap()
 	var legend = L.control({position: 'bottomright'});
 	legendxx = legend;
 
-	legend.onAdd = function (map) {
+	// get color depending on population density value (first draw)
+	function getColor(d) {
+	  return d > 12000 ? '#800026' :
+			d > 11000  ? '#FC4E2A' :
+			  d > 9000   ? '#FD8D3C' :
+				d > 7000   ? '#FEB24C' :
+				  d > 5000   ? '#FED976' :
+					'#FFEDA0';
+	}
 
+	//Init map legend
+	legend.onAdd = function (map) {
 		var div = L.DomUtil.create('div', 'infox legend'),
-			grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+			grades = [5000, 7000, 9000, 11000, 12000],
 			labels = [],
 			from, to;
 
@@ -165,55 +166,56 @@ function drawMap()
 }
 
 
+
+
+
 //Redraw with update info
-function redrawMap()
+function redrawMap(timestep)
 {
+
+	//console.log(timestep);
+	//console.log(lockdown_info_map_acc[timestep]);
+	//console.log(lockdown_info_map[timestep]);
+
+	wrapper_ml = {'Lleida': lockdown_info_map_acc[timestep][4],
+	'Tarragona': lockdown_info_map_acc[timestep][3],
+	'Barcelona': lockdown_info_map_acc[timestep][2],
+	'Girona': lockdown_info_map_acc[timestep][1],
+	}
+
+	//console.log(wrapper_ml['Barcelona'])
+
+
 	info.update = function (props) {
+	  //console.log(props);
 	  this._div.innerHTML = 'Cat COVID-19 INFO<br><br>' +  (props ?
-		'<b>' + props.NOMPROV + '</b><br />' + props.AREAPROV + ' people / mi<sup>2</sup>'
+		'<b>' + props.NOMPROV + '</b><br />' + Number((wrapper_ml[props.NOMPROV]).toFixed(3)) + ' Deceases'
 		: 'CAT PROV');
 	};
-
-	// Define the geojson layer and add it to the map
-	L.geoJSON(json_map, {
-
-	  style: function (feature) {
-		return feature.properties && feature.properties.style;
-	  },
-	}).addTo(map);
-
-	let comarquestCatalunyaLayer = L.geoJson(json_map, {
-	  weight: 3,
-	  color: '#244422'
-	}).addTo(map);
-	//comarquestCatalunyaLayer.bindPopup('Comarquest de Catalunya');
-	//console.log(data)
-	//comarquestCatalunyaLayer(data.Feature).addTo(map);
-	map.fitBounds(comarquestCatalunyaLayer.getBounds());
-	map.setZoom(8);
 
 
 
 	// get color depending on population density value
 	function getColor(d) {
-	  return d > 1000 ? '#800026' :
-		d > 500  ? '#BD0026' :
-		  d > 200  ? '#E31A1C' :
-			d > 100  ? '#FC4E2A' :
-			  d > 50   ? '#FD8D3C' :
-				d > 20   ? '#FEB24C' :
-				  d > 10   ? '#FED976' :
+	  return d > acc_ref[6] ? '#800026' :
+		d > acc_ref[5]  ? '#BD0026' :
+		  d > acc_ref[4]  ? '#E31A1C' :
+			d > acc_ref[3]  ? '#FC4E2A' :
+			  d > acc_ref[2]   ? '#FD8D3C' :
+				d > acc_ref[1]   ? '#FEB24C' :
+				  d > acc_ref[0]   ? '#FED976' :
 					'#FFEDA0';
 	}
 
 	function style(feature) {
+	  //console.log(feature);
 	  return {
 		weight: 2,
 		opacity: 1,
 		color: 'white',
 		dashArray: '3',
 		fillOpacity: 0.7,
-		fillColor: getColor(feature.properties.density)
+		fillColor: getColor(wrapper_ml[feature.properties.NOMPROV])
 	  };
 	}
 
@@ -235,50 +237,59 @@ function redrawMap()
 	  info.update(layer.feature.properties);
 	}
 
+
+
 	var geojson;
 
 	function resetHighlight(e) {
-	  geojson.resetStyle(e.target);
-	  info.update();
+		geojson.resetStyle(e.target);
+		info.update();
 	}
 
 	function zoomToFeature(e) {
-	  map.fitBounds(e.target.getBounds());
+		map.fitBounds(e.target.getBounds());
 	}
 
 	function onEachFeature(feature, layer) {
-	  layer.on({
-		mouseover: highlightFeature,
-		mouseout: resetHighlight,
-		click: zoomToFeature
-	  });
+		layer.on({
+			mouseover: highlightFeature,
+			mouseout: resetHighlight,
+			click: zoomToFeature
+		});
 	}
 
 	geojson = L.geoJson(json_map, {
-	  style: style,
-	  onEachFeature: onEachFeature
-	}).addTo(map);
+			style: style,
+			onEachFeature: onEachFeature
+		}).addTo(map);
 
+	if (first_draw) {
 
-	legendxx.onAdd = function (map) {
+		legendxx.onAdd = function (map) {
 
-		var div = L.DomUtil.create('div', 'infox legend'),
-			grades = [0, 100, 200, 500, 1000, 2000, 5000, 10000],
-			labels = [],
-			from, to;
+			var div = L.DomUtil.create('div', 'infox legend'),
+				grades = acc_ref,
+				labels = [],
+				from, to;
 
-		for (var i = 0; i < grades.length; i++) {
-			from = grades[i];
-			to = grades[i + 1];
+			for (var i = 0; i < grades.length; i++) {
+				from = grades[i];
+				to = grades[i + 1];
 
-			labels.push(
-				'<i style="background:' + getColor(from + 1) + '"></i> ' +
-				from + (to ? '&ndash;' + to : '+'));
-		}
+				labels.push(
+					'<i style="background:' + getColor(from + 1) + '"></i> ' +
+					from + (to ? '&ndash;' + to : '+'));
+			}
 
-		div.innerHTML = labels.join('<br>');
-		return div;
-	};
+			div.innerHTML = labels.join('<br>');
+			return div;
+		};
+	}
+
+	if (first_draw)
+	{
+		first_draw = false;
+	}
 
 	legendxx.addTo(map);
 }

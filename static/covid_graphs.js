@@ -44,8 +44,8 @@ function initGraphVar()
         data_deceased.push({ser1: x, ser2: strata_population["Drun01_add"][1][x]})
     }
 
-    console.log(data_exposed)
-    console.log(data_asymptomatic)
+    //console.log(data_exposed)
+    //console.log(data_asymptomatic)
 
 }
 
