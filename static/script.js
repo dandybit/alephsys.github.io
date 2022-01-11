@@ -289,7 +289,6 @@ document.getElementById('init_simulation').addEventListener("click", function(){
         redrawMap(0);
         //Redraw graphs for the new simulation
         initGraphVar();
-        redrawGraphs();
 
         setTimeout(function(){
          document.getElementById('init_simulation').disabled = false;

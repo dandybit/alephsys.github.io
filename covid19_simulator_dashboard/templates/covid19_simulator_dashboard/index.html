@@ -5,7 +5,7 @@
   {% load static %}
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
   <title>COVID 19 SIMULATOR</title>
   <!-- Iconic Fonts -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -630,8 +630,8 @@
 
         <style>
             #map{
-                width: 100px;
-                height:150px;
+                width: 100%;
+                height: 190px;
                 min-height: 100%;
                 min-width: 100%;
                 display: block;
@@ -671,193 +671,36 @@
         </div>
 
 
-        <div class="col-xl-6 col-md-12">
+        <div class="col-xl-6">
           <div class="ms-panel ms-panel-fh" id="frame_1_char">
-                <!-- Add 2 buttons -->
-                <button id="button_susceptible">Susceptible</button>
-                <button id="button_exposed">Exposed</button>
-                <button id="button_asymtomatic">Asymptomatic</button>
-                <button id="button_infected">Infected</button>
-                <button id="button_hospitalized">Pre-hospitalized</button>
-                <button id="button_pre_deceased">Pre-deceased</button>
-                <button id="button_recovered">Recovered</button>
-                <button id="button_hospitalized_icu">Hospitalized in ICU</button>
-                <button id="button_deceased">Deceased</button>
-
-                <!-- Create a div where the graph will take place -->
+              <div class="btn-group" role="group">
+                <!-- Add buttons -->
+                <button id="button_susceptible" class="btn-secondary">Susceptible</button>
+                <button id="button_exposed" class="btn-secondary">Exposed</button>
+                <button id="button_asymtomatic" class="btn-secondary">Asymptomatic</button>
+                <button id="button_infected" class="btn-secondary">Infected</button>
+                <button id="button_hospitalized" class="btn-secondary">Pre-hospitalized</button>
+                <button id="button_pre_deceased" class="btn-secondary">Pre-deceased</button>
+                <button id="button_recovered" class="btn-secondary">Recovered</button>
+                <button id="button_hospitalized_icu" class="btn-secondary">Hospitalized in ICU</button>
+                <button id="button_deceased" class="btn-secondary">Deceased</button>
+              </div>
+                <!-- Create a div where the graph will take place-->
                 <div id="graph1"></div>
           </div>
         </div>
 
-        <div class="col-md-12">
+        <div>
           <div class="ms-panel">
             <div class="ms-panel-header">
-              <h6>Latest Projects</h6>
-              <p>Some of your latest works</p>
+              <h6>Graphs by Strata</h6>
+              <p>Strata are groups of people grouped by age.</p>
             </div>
-            <div class="ms-panel-body">
               <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                  <div class="ms-card">
-                    <div class="ms-card-body">
-                      <div class="media fs-14">
-                        <div class="mr-2 align-self-center">
-                          <img src="https://via.placeholder.com/270x270" class="ms-img-round" alt="people">
-                        </div>
-                        <div class="media-body">
-                          <h6>John Doe </h6>
-                          <div class="dropdown float-right">
-                            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="material-icons">more_vert</i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                              <li class="ms-dropdown-list">
-                                <a class="media p-2" href="#">
-                                  <div class="media-body">
-                                    <span>Comment</span>
-                                  </div>
-                                </a>
-                                <a class="media p-2" href="#">
-                                  <div class="media-body">
-                                    <span>Share</span>
-                                  </div>
-                                </a>
-                                <a class="media p-2" href="#">
-                                  <div class="media-body">
-                                    <span>Favorite</span>
-                                  </div>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                          <p class="fs-12 my-1 text-disabled">30 seconds ago</p>
-                        </div>
-
-                      </div>
-                      <h6>This is a project name</h6>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nunc velit, dictum eget nulla a, sollicitudin rhoncus orci. Vivamus nec commodo turpis.</p>
-                    </div>
-                    <div class="ms-card-img">
-                      <img src="https://via.placeholder.com/530x240" alt="card_img">
-                    </div>
-                    <div class="ms-card-footer text-disabled d-flex">
-                      <div class="ms-card-options">
-                        <i class="material-icons">favorite</i> 982
-                      </div>
-                      <div class="ms-card-options">
-                        <i class="material-icons">comment</i> 785
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                  <div class="ms-card">
-                    <div class="ms-card-body">
-                      <div class="media fs-14">
-                        <div class="mr-2 align-self-center">
-                          <img src="https://via.placeholder.com/270x270" class="ms-img-round" alt="people">
-                        </div>
-                        <div class="media-body">
-                          <h6>John Doe </h6>
-                          <div class="dropdown float-right">
-                            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="material-icons">more_vert</i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                              <li class="ms-dropdown-list">
-                                <a class="media p-2" href="#">
-                                  <div class="media-body">
-                                    <span>Comment</span>
-                                  </div>
-                                </a>
-                                <a class="media p-2" href="#">
-                                  <div class="media-body">
-                                    <span>Share</span>
-                                  </div>
-                                </a>
-                                <a class="media p-2" href="#">
-                                  <div class="media-body">
-                                    <span>Favorite</span>
-                                  </div>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                          <p class="fs-12 my-1 text-disabled">30 seconds ago</p>
-                        </div>
-
-                      </div>
-                      <h6>This is a project name</h6>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nunc velit, dictum eget nulla a, sollicitudin rhoncus orci. Vivamus nec commodo turpis.</p>
-                    </div>
-                    <div class="ms-card-img">
-                      <img src="https://via.placeholder.com/530x240" alt="card_img">
-                    </div>
-                    <div class="ms-card-footer text-disabled d-flex">
-                      <div class="ms-card-options">
-                        <i class="material-icons">favorite</i> 982
-                      </div>
-                      <div class="ms-card-options">
-                        <i class="material-icons">comment</i> 785
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                  <div class="ms-card">
-                    <div class="ms-card-body">
-                      <div class="media fs-14">
-                        <div class="mr-2 align-self-center">
-                          <img src="https://via.placeholder.com/270x270" class="ms-img-round" alt="people">
-                        </div>
-                        <div class="media-body">
-                          <h6>John Doe </h6>
-                          <div class="dropdown float-right">
-                            <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="material-icons">more_vert</i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                              <li class="ms-dropdown-list">
-                                <a class="media p-2" href="#">
-                                  <div class="media-body">
-                                    <span>Comment</span>
-                                  </div>
-                                </a>
-                                <a class="media p-2" href="#">
-                                  <div class="media-body">
-                                    <span>Share</span>
-                                  </div>
-                                </a>
-                                <a class="media p-2" href="#">
-                                  <div class="media-body">
-                                    <span>Favorite</span>
-                                  </div>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                          <p class="fs-12 my-1 text-disabled">30 seconds ago</p>
-                        </div>
-
-                      </div>
-                      <h6>This is a project name</h6>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nunc velit, dictum eget nulla a, sollicitudin rhoncus orci. Vivamus nec commodo turpis.</p>
-                    </div>
-                    <div class="ms-card-img">
-                      <img src="https://via.placeholder.com/530x240" alt="card_img">
-                    </div>
-                    <div class="ms-card-footer text-disabled d-flex">
-                      <div class="ms-card-options">
-                        <i class="material-icons">favorite</i> 982
-                      </div>
-                      <div class="ms-card-options">
-                        <i class="material-icons">comment</i> 785
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <div class="col" id="graph2"></div>
+                <div class="col" id="graph3"></div>
+                <div class="col" id="graph4"></div>
               </div>
-            </div>
           </div>
         </div>
 

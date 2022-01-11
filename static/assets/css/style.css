@@ -5804,6 +5804,13 @@ li .ms-count{
   margin-bottom: 0;
 }
 
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+/* Styles */
+}
+
 .website-performance-canvas,
 .ms-graph-canvas{
   position: relative;
