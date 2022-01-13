@@ -1,7 +1,7 @@
 //Global var for graphs info size
 Array.range = (start, end) => Array.from({length: (end - start+1)}, (v, k) => k + start);
-var char_1_height = document.getElementById('frame_1_char').getBoundingClientRect()['height'];
-var char_1_width = document.getElementById('frame_1_char').getBoundingClientRect()['width'];
+var char_1_height = 150;
+var char_1_width = 600;
 
 //Global vars for graphs data
 var data_susceptible = [];
@@ -46,19 +46,22 @@ function initGraphVar()
 
 }
 
-
 // set the dimensions and margins of the graph
-const margin = {top: 10, right: 15, bottom: 25, left: 65},
+const margin = {top: 10, right: 15, bottom: 25, left: 60},
     width = char_1_width * 1 - margin.left - margin.right,
     height = char_1_height * 3 - margin.top - margin.bottom;
 
-var svg = d3.select("#graph1")
+
+var svg = d3.select("div#graph1")
   .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+  .attr("preserveAspectRatio", "xMinYMin meet")
+  .attr("viewBox", "0 0 600 600")
+  .classed("svg-content", true)
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
+
+
 
 
 // Initialise a X axis:
@@ -300,3 +303,5 @@ function drawStrataGraph(svg, data) {
 
 
 initGraphVar();
+
+//window.addEventListener('resize', initGraphVar );

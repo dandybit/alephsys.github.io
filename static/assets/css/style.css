@@ -6832,3 +6832,17 @@ body:not(.ms-settings-open) .ms-settings-toggle:hover{
   overflow: hidden;
   border-radius: 5px;
 }
+
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    height: 200px;
+    padding-bottom: 75%; /* aspect ratio */
+    vertical-align: top;
+    overflow: hidden;
+}
+.svg-content-responsive {
+    left: 0;
+}

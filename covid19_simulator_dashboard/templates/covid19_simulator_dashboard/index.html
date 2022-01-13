@@ -629,12 +629,19 @@
 
 
         <style>
+
             #map{
                 width: 100%;
-                height: 190px;
                 min-height: 100%;
                 min-width: 100%;
                 display: block;
+            }
+
+            @media only screen and (max-width: 900px) {
+
+                #map { height: 500px; /* Or whatever floats your boat*/ }
+
+
             }
 
             html, body
@@ -656,12 +663,16 @@
 
             .container{
                 max-width:60em;
+                height: 600px;
+                max-height:60em;
                 padding: 0.2em;
             }
+
+
 	   </style>
         <!-- They never sleep-->
-        <div class="col-xl-6 col-md-12">
-          <div class="ms-panel ms-panel-fh">
+        <div class="col-xl-6">
+          <div class="ms-panel">
               <div id="map-holder">
                 <div class="container fill">
                     <div id="map"></div>
@@ -670,10 +681,9 @@
           </div>
         </div>
 
-
         <div class="col-xl-6">
-          <div class="ms-panel ms-panel-fh" id="frame_1_char">
-              <div class="btn-group" role="group">
+          <div class="ms-panel" id="frame_1_char">
+            <!-- Create a div where the graph will take place-->
                 <!-- Add buttons -->
                 <button id="button_susceptible" class="btn-secondary">Susceptible</button>
                 <button id="button_exposed" class="btn-secondary">Exposed</button>
@@ -684,9 +694,9 @@
                 <button id="button_recovered" class="btn-secondary">Recovered</button>
                 <button id="button_hospitalized_icu" class="btn-secondary">Hospitalized in ICU</button>
                 <button id="button_deceased" class="btn-secondary">Deceased</button>
+              <div class="svg-container">
+                    <div id="graph1"></div>
               </div>
-                <!-- Create a div where the graph will take place-->
-                <div id="graph1"></div>
           </div>
         </div>
 
@@ -697,7 +707,9 @@
               <p>Strata are groups of people grouped by age.</p>
             </div>
               <div class="row">
-                <div class="col" id="graph2"></div>
+                  <div class="svg-container">
+                    <div id="graph2" class="svg-content-responsive"></div>
+                  </div>
                 <div class="col" id="graph3"></div>
                 <div class="col" id="graph4"></div>
               </div>
