@@ -700,18 +700,38 @@
           </div>
         </div>
 
-        <div>
+        <div class="col">
           <div class="ms-panel">
             <div class="ms-panel-header">
               <h6>Graphs by Strata</h6>
               <p>Strata are groups of people grouped by age.</p>
+              <p></p>
+                <button id="button_susceptible_strata" class="btn-secondary">Susceptible</button>
+                <button id="button_exposed_strata" class="btn-secondary">Exposed</button>
+                <button id="button_asymtomatic_strata" class="btn-secondary">Asymptomatic</button>
+                <button id="button_infected_strata" class="btn-secondary">Infected</button>
+                <button id="button_hospitalized_strata" class="btn-secondary">Pre-hospitalized</button>
+                <button id="button_pre_deceased_strata" class="btn-secondary">Pre-deceased</button>
+                <button id="button_recovered_strata" class="btn-secondary">Recovered</button>
+                <button id="button_hospitalized_icu_strata" class="btn-secondary">Hospitalized in ICU</button>
+                <button id="button_deceased_strata" class="btn-secondary">Deceased</button>
             </div>
               <div class="row">
-                  <div class="svg-container">
-                    <div id="graph2" class="svg-content-responsive"></div>
+                  <div class="col-xl-4">
+                    <div class="svg-container">
+                        <div id="graph2"></div>
+                    </div>
                   </div>
-                <div class="col" id="graph3"></div>
-                <div class="col" id="graph4"></div>
+                  <div class="col-xl-4">
+                    <div class="svg-container">
+                        <div id="graph3"></div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4">
+                    <div class="svg-container">
+                        <div id="graph4"></div>
+                    </div>
+                  </div>
               </div>
           </div>
         </div>

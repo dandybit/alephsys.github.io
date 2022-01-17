@@ -61,7 +61,14 @@ var svg = d3.select("div#graph1")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
-
+//chart title
+svg.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 10)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .attr("fill", "white")
+        .text("COVID-19 OVERALL STATS");
 
 
 // Initialise a X axis:
@@ -188,13 +195,24 @@ document.getElementById("button_deceased").addEventListener("click", function() 
 
 
 
-var svg2 = d3.select("#graph2")
+var svg2 = d3.select("div#graph2")
   .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+  .attr("preserveAspectRatio", "xMinYMin meet")
+  .attr("viewBox", "0 0 600 600")
+  .classed("svg-content", true)
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
+
+//chart title
+svg2.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 10)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .attr("fill", "white")
+        .text("STRATA 1");
+
 
 // Initialise a X axis:
 svg2.append("g")
@@ -210,13 +228,23 @@ svg2.append("g")
     .attr("stroke-width", 0.8)
 
 
-var svg3 = d3.select("#graph3")
+var svg3 = d3.select("div#graph3")
   .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+  .attr("preserveAspectRatio", "xMinYMin meet")
+  .attr("viewBox", "0 0 600 600")
+  .classed("svg-content", true)
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
+
+//chart title
+svg3.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 10)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .attr("fill", "white")
+        .text("STRATA 2");
 
 // Initialise a X axis:
 svg3.append("g")
@@ -233,13 +261,24 @@ svg3.append("g")
 
 
 
-var svg4 = d3.select("#graph4")
+var svg4 = d3.select("div#graph4")
   .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+  .attr("preserveAspectRatio", "xMinYMin meet")
+  .attr("viewBox", "0 0 600 600")
+  .classed("svg-content", true)
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
+
+//chart title
+svg4.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 10)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .attr("fill", "white")
+        .text("STRATA 3");
+
 
 // Initialise a X axis:
 svg4.append("g")
