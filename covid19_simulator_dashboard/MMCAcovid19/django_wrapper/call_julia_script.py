@@ -86,6 +86,33 @@ def generate_overall_values(strata):
 
         strata_population[x + "_add"] = [time_s_list, value_list]
 
+    #check numbers of stratas
+    strata_int = list(map(lambda x : int(x), list(strata['Srun01'][0].split(',')[1:-2])))
+    strata_num = int(max(strata_int))
+    for x in ['Srun01', 'Erun01', 'Arun01', 'Irun01', 'PHrun01', 'PDrun01', 'HRrun01', 'HDrun01', 'Rrun01', 'Drun01']:
+        strata_overall = {x:0.0 for x in range(1, strata_num+1)}
+        strata_values = {x:[] for x in range(1, strata_num+1)}
+        strata_time = {x:[] for x in range(1, strata_num+1)}
+
+        #First time step
+        check_p = int(list(strata[x][2].split(',')[1:-2])[0])
+        time_s_list = []
+        value_list = []
+        for stratax, patch, time_s, value in zip(list(strata[x][0].split(',')[1:-2]), list(strata[x][1].split(',')[1:-2]),
+                                                list(strata[x][2].split(',')[1:-2]), list(strata[x][3].split(',')[1:-2])):
+            if check_p == int(time_s):
+                strata_overall[int(stratax)] = strata_overall[int(stratax)] + float(value)
+
+            else:
+                strata_time[int(stratax)].append(check_p)
+                #time_s_list.append(check_p)
+                strata_values[int(stratax)].append(strata_overall[int(stratax)])
+                #value_list.append(overall)
+                check_p = int(time_s)
+                strata_overall = {x:0.0 for x in range(1, strata_num+1)}
+
+        strata_population[x + "_strata_add"] = [strata_time, strata_values]
+
     return strata_population
 
 

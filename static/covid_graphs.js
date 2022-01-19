@@ -47,7 +47,7 @@ function initGraphVar()
 }
 
 // set the dimensions and margins of the graph
-const margin = {top: 10, right: 15, bottom: 25, left: 60},
+const margin = {top: 30, right: 15, bottom: 25, left: 60},
     width = char_1_width * 1 - margin.left - margin.right,
     height = char_1_height * 3 - margin.top - margin.bottom;
 
@@ -64,7 +64,7 @@ var svg = d3.select("div#graph1")
 //chart title
 svg.append("text")
         .attr("x", (width / 2))
-        .attr("y", 10)
+        .attr("y", -10)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .attr("fill", "white")
@@ -207,7 +207,7 @@ var svg2 = d3.select("div#graph2")
 //chart title
 svg2.append("text")
         .attr("x", (width / 2))
-        .attr("y", 10)
+        .attr("y", -10)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .attr("fill", "white")
@@ -240,7 +240,7 @@ var svg3 = d3.select("div#graph3")
 //chart title
 svg3.append("text")
         .attr("x", (width / 2))
-        .attr("y", 10)
+        .attr("y", -10)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .attr("fill", "white")
@@ -273,7 +273,7 @@ var svg4 = d3.select("div#graph4")
 //chart title
 svg4.append("text")
         .attr("x", (width / 2))
-        .attr("y", 10)
+        .attr("y", -10)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .attr("fill", "white")
@@ -299,6 +299,7 @@ svg4.append("g")
 function drawStrataGraph(svg, data) {
 
     // Create the X axis:
+    console.log(strata_population["Drun01_strata_add"]);
     x.domain([0, parseInt(data.at(-1)['ser1'], 10)]);
     svg.selectAll(".myXaxis").transition()
         .duration(3000)
