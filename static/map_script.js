@@ -15,7 +15,6 @@ function requestMap() {
 		success: function (data) {
 			json_map = data["map"];
 			drawMap();
-
 		},
 	});
 }
@@ -180,10 +179,10 @@ function redrawMap(timestep)
 	//console.log(lockdown_info_map_acc[timestep]);
 	//console.log(lockdown_info_map[timestep]);
 
-	wrapper_ml = {'Lleida': lockdown_info_map_acc[timestep][4],
-	'Tarragona': lockdown_info_map_acc[timestep][3],
-	'Barcelona': lockdown_info_map_acc[timestep][2],
-	'Girona': lockdown_info_map_acc[timestep][1],
+	wrapper_ml = {'Lleida': json_data_map['results']['total_patches']['D']['4'][timestep],
+	'Tarragona': json_data_map['results']['total_patches']['D']['3'][timestep],
+	'Barcelona': json_data_map['results']['total_patches']['D']['2'][timestep],
+	'Girona': json_data_map['results']['total_patches']['D']['1'][timestep],
 	}
 
 	//console.log(wrapper_ml['Barcelona'])

@@ -10,14 +10,14 @@ from .MMCAcovid19.django_wrapper import call_julia_script
 def index(request):
     template = loader.get_template('covid19_simulator_dashboard/index.html')
     context = {
-        'test_ko': 'oh no equipo enemigo q paso'
+        'test_ko': 'test'
     }
     return HttpResponse(template.render(context, request))
 
 def cat_map(request):
     template = loader.get_template('covid19_simulator_dashboard/cat_map.html')
     context = {
-        'test_ko': 'oh no equipo enemigo q paso'
+        'test_ko': 'test'
     }
     return HttpResponse(template.render(context, request))
 

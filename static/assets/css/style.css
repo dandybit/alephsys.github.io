@@ -577,6 +577,14 @@ pre{
     background-color : #000000;
     text-align: center;
 }
+
+#timesteps_id{
+    color: #ffffff;
+    background-color : #000000;
+    text-align: center;
+}
+
+
 #init_time_step{
     color: #ffffff;
     background-color : #000000;

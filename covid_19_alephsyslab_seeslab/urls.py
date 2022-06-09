@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth.models import User
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('covid19_simulator/', include('covid19_simulator_dashboard.urls')),
+    path('api/', include('covid19_rest_api.urls')),
+    path('', include('covid19_simulator_dashboard.urls')),
 ]

@@ -5,6 +5,7 @@ var lockdown_info = {};
 var lockdown_info_map = {};
 var lockdown_info_map_acc = {};
 var acc_ref = 0;
+var json_data_map = {};
 Array.range = (start, end) => Array.from({length: (end - start+1)}, (v, k) => k + start);
 
 //Check integer or float
@@ -110,7 +111,7 @@ function stringToListFloat(string_l)
     return string_l;
 }
 
-function processInfoMap()
+function processInfoMap(data)
 {
     deaths_list_turn = stringToListInt(strata_population["Drun01"][2]);
     deaths_list_strata = stringToListInt(strata_population["Drun01"][1]);
@@ -253,38 +254,42 @@ document.getElementById('lockdown_button').addEventListener("click", function(){
 
 
 
-//Init simulation button eventListener
+// Init simulation button eventListener
 document.getElementById('init_simulation').addEventListener("click", function(){
     $('#time_steps_range').val(0);
     document.getElementById('time_steps_range').setAttribute('disabled', true);
     document.getElementById('init_simulation').disabled = true;
+
     $.ajax({
     type: "GET",
-    url: "map_query",
+    url: "api/simulation",
     data: {
         "population": document.getElementById('population_id').value,
-        "lockdown_info": JSON.stringify(lockdown_info)
+        "timesteps": document.getElementById('timesteps_id').value,
+        "lockdown_info": JSON.stringify(lockdown_info),
     },
     success: function(data){
 
-        simulator_steps = data['simulation_steps'];
-        strata_population = data['strata_population'];
+        json_data_map = data
+        console.log(data)
+        simulator_steps = data['params']['num_timesteps'];
+        strata_population = data['params']['population_params']['num_strata'];
         //alert("success");
         //alert(data['simulation_steps']);
         document.getElementById('time_steps_title').innerText = 'Time steps Model (timestep 0)';
         document.getElementById('time_steps_range').setAttribute('min', 0);
-        document.getElementById('time_steps_range').setAttribute('max', simulator_steps.length - 1) ;
+        document.getElementById('time_steps_range').setAttribute('max', simulator_steps - 1) ;
         document.getElementById('time_steps_range').setAttribute('min', 0);
         document.getElementById('time_steps_range').removeAttribute('disabled');
         document.getElementById('time_steps_range').setAttribute('value', 0);
 
-        document.getElementById('infected_id').innerText = simulator_steps[0][2];
-        document.getElementById('deaths_id').innerText = simulator_steps[0][5];
-        document.getElementById('cases_id').innerText = simulator_steps[0][3];
-        document.getElementById('icus_id').innerText = simulator_steps[0][4];
+        document.getElementById('infected_id').innerText = data['results']['total_states']['I'][0];
+        document.getElementById('deaths_id').innerText = data['results']['total_states']['D'][0];
+        document.getElementById('cases_id').innerText = data['results']['total_states']['S'][0];
+        document.getElementById('icus_id').innerText = data['results']['total_states']['PD'][0];
 
         //Process info for map
-        processInfoMap();
+        processInfoMap(data);
         //Redraw map for the new simulation
         redrawMap(0);
         //Redraw graphs for the new simulation
@@ -305,15 +310,17 @@ document.getElementById('init_simulation').addEventListener("click", function(){
 });
 
 
+
+
 document.getElementById('time_steps_range').addEventListener('input', function(){
     document.getElementById('time_steps_title').innerText =
         'Time steps Model (timestep '+ document.getElementById('time_steps_range').value +')';
 
     // principal stats
-    document.getElementById('infected_id').innerText = simulator_steps[document.getElementById('time_steps_range').value][2];
-    document.getElementById('deaths_id').innerText = simulator_steps[document.getElementById('time_steps_range').value][5];
-    document.getElementById('cases_id').innerText = simulator_steps[document.getElementById('time_steps_range').value][3];
-    document.getElementById('icus_id').innerText = simulator_steps[document.getElementById('time_steps_range').value][4];
+    document.getElementById('infected_id').innerText =  json_data_map['results']['total_states']['I'][document.getElementById('time_steps_range').value];
+    document.getElementById('deaths_id').innerText =  json_data_map['results']['total_states']['D'][document.getElementById('time_steps_range').value];
+    document.getElementById('cases_id').innerText = json_data_map['results']['total_states']['S'][document.getElementById('time_steps_range').value];
+    document.getElementById('icus_id').innerText = json_data_map['results']['total_states']['PD'][document.getElementById('time_steps_range').value];
 
     // stats for stratas
 
