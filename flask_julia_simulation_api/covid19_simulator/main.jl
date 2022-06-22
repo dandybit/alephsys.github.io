@@ -1,8 +1,13 @@
+using JuliaWebAPI
 using Revise
+include("MMCAcovid19.jl")
+using .MMCAcovid19
 using Random
 using Distributions
 using Graphs
-
+using HTTP
+using Sockets
+using JSON2
 
 function generate_simulation(json_params)
 
@@ -348,5 +353,29 @@ function generate_simulation(json_params)
 
     # plot!(R_eff.R_eff, lab="R_eff")
 
+    return json_params
     return json_return
 end
+
+# "service" functions to actually do the work
+function createAnimal(req::HTTP.Request)
+    animal = JSON2.read(IOBuffer(HTTP.payload(req)), Animal)
+    animal.id = getNextId()
+    ANIMALS[animal.id] = animal
+    return HTTP.Response(200, JSON2.write(animal))
+end
+
+# "service" functions to actually do the work
+function simulation_post(req::HTTP.Request)
+    params = JSON2.read(IOBuffer(HTTP.payload(req)))
+    simulation = generate_simulation(params)
+    return HTTP.Response(200, JSON2.write(simulation))
+end
+
+
+# define REST endpoints to dispatch to "service" functions
+const ANIMAL_ROUTER = HTTP.Router()
+HTTP.@register(ANIMAL_ROUTER, "POST", "/simulation", simulation_post)
+
+HTTP.serve(ANIMAL_ROUTER, Sockets.localhost, 8081)
+

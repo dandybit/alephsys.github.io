@@ -1,25 +1,8 @@
-from flask import Flask, request, jsonify
-from flask_restful import Resource, Api, reqparse
+import requests
 
-# Julia preload libraries
-from julia import Main
-Main.include('covid19_simulator/MMCAcovid19.jl')
-julia_func = Main.include("covid19_simulator/main.jl")
+url = 'http://127.0.0.1:8081/simulation'
+myobj = {'somekey': 'somevalue'}
 
-app = Flask(__name__)
-api = Api(app)
+x = requests.post(url, json=myobj)
 
-
-class Simulation(Resource):
-    def post(self):
-        json_data = request.get_json(force=True)
-        json_simulation = julia_func(json_data)
-
-        return jsonify(json_simulation)
-
-api.add_resource(Simulation, '/simulation')
-
-
-if __name__ == '__main__':
-    app.run()  # run our Flask app
-
+print(x.text)
