@@ -1,7 +1,7 @@
 import dash
 from dash import dcc, html
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc
+from dash import html
 from django_plotly_dash import DjangoDash
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
