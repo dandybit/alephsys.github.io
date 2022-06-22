@@ -167,11 +167,8 @@ function processInfoMap(data)
     {
         acc_ref.push(parseInt( Math.pow(val_cut , x/5.2), 10))
     }
-
-    //console.log(acc_ref);
-
-
 }
+
 
 //add lockdonw button
 document.getElementById('lockdown_button').addEventListener("click", function(){
@@ -289,11 +286,10 @@ document.getElementById('init_simulation').addEventListener("click", function(){
         document.getElementById('icus_id').innerText = data['results']['total_states']['PD'][0];
 
         //Process info for map
-        processInfoMap(data);
         //Redraw map for the new simulation
         redrawMap(0);
         //Redraw graphs for the new simulation
-        initGraphVar();
+        drawMainGraph(data);
 
         setTimeout(function(){
          document.getElementById('init_simulation').disabled = false;

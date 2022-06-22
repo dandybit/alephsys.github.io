@@ -18,7 +18,25 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 from . import views
 
+from django.contrib import admin
+from django.urls import include, path
+from django.conf.urls import url
+
+from django.views.generic import TemplateView
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+# Load demo plotly apps - this triggers their registration
+import covid19_simulator_dashboard.test_app   # pylint: disable=unused-import
+import covid19_simulator_dashboard.bootstrap_app  # pylint: disable=unused-import
+
+from django_plotly_dash.views import add_to_session
+
+from .views import dash_example_1_view, session_state_view
+
 urlpatterns = [
+    path('django_plotly_dash/', include('django_plotly_dash.urls')),
     path('', views.index, name='index'),
     path('cat_map/', views.cat_map, name='cat_map'),
     path('map_query/', views.map_query, name='map_query'),

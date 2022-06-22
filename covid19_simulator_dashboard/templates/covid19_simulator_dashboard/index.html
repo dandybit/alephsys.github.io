@@ -1,3 +1,4 @@
+{% load plotly_dash %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,6 +22,7 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="M-favicon.png">
   <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
 
 
 
@@ -693,20 +695,7 @@
 
         <div class="col-xl-6">
           <div class="ms-panel" id="frame_1_char">
-            <!-- Create a div where the graph will take place-->
-                <!-- Add buttons -->
-                <button id="button_susceptible" class="btn-secondary">Susceptible</button>
-                <button id="button_exposed" class="btn-secondary">Exposed</button>
-                <button id="button_asymtomatic" class="btn-secondary">Asymptomatic</button>
-                <button id="button_infected" class="btn-secondary">Infected</button>
-                <button id="button_hospitalized" class="btn-secondary">Pre-hospitalized</button>
-                <button id="button_pre_deceased" class="btn-secondary">Pre-deceased</button>
-                <button id="button_recovered" class="btn-secondary">Recovered</button>
-                <button id="button_hospitalized_icu" class="btn-secondary">Hospitalized in ICU</button>
-                <button id="button_deceased" class="btn-secondary">Deceased</button>
-              <div class="svg-container">
-                    <div id="graph1"></div>
-              </div>
+              <div id="main_graph" style="resize:both; overflow: auto"></div>
           </div>
         </div>
 

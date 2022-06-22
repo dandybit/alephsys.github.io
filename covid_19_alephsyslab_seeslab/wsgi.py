@@ -11,6 +11,14 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
+from django.core.asgi import get_asgi_application
+from channels.routing import ProtocolTypeRouter
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'covid_19_alephsyslab_seeslab.settings')
 
 application = get_wsgi_application()
+
+application = ProtocolTypeRouter({
+    "http": get_asgi_application(),
+    # Just HTTP for now. (We can add other protocols later.)
+})

@@ -25,7 +25,6 @@ SECRET_KEY = 'django-insecure-4-x2yf)7iou=ai1i5bbcl(7@2)#(88b3vc@7^g*os8+dxtor!h
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 ALLOWED_HOSTS = []
 
@@ -38,19 +37,34 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'covid19_simulator_dashboard.apps.SimulatorModelConfig',
     'covid19_rest_api.apps.Covid19RestApiConfig',
+
+    'covid19_simulator_dashboard.apps.DjangoPlotlyDashConfig',
+    'dpd_static_support',
     'django_celery_results',
+    'channels',
+
     'rest_framework',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+
+    'django_plotly_dash.middleware.BaseMiddleware',
+    'django_plotly_dash.middleware.ExternalRedirectionMiddleware',
+
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -73,7 +87,11 @@ TEMPLATES = [
     },
 ]
 
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
 WSGI_APPLICATION = 'covid_19_alephsyslab_seeslab.wsgi.application'
+
+ASGI_APPLICATION = "covid_19_alephsyslab_seeslab.asgi.application"
 
 
 # Database
@@ -130,6 +148,36 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Plotly dash settings
+
+PLOTLY_DASH = {
+
+    # Route used for the message pipe websocket connection
+    "ws_route" :   "dpd/ws/channel",
+
+    # Route used for direct http insertion of pipe messages
+    "http_route" : "dpd/views",
+
+    # Flag controlling existince of http poke endpoint
+    "http_poke_enabled" : True,
+
+    # Insert data for the demo when migrating
+    "insert_demo_migrations" : False,
+
+    # Timeout for caching of initial arguments in seconds
+    "cache_timeout_initial_arguments": 60,
+
+    # Name of view wrapping function
+    "view_decorator": None,
+
+    # Flag to control location of initial argument storage
+    "cache_arguments": True,
+
+    # Flag controlling local serving of assets
+    "serve_locally": False,
+}
+
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -164,3 +212,40 @@ CACHES = {
         'LOCATION': 'my_cache_table',
     }
 }
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379),],
+        },
+    },
+}
+
+# Staticfiles finders for locating dash app assets and related files
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+
+    'django_plotly_dash.finders.DashAssetFinder',
+    'django_plotly_dash.finders.DashComponentFinder',
+    'django_plotly_dash.finders.DashAppDirectoryFinder',
+]
+
+# Plotly components containing static content that should
+# be handled by the Django staticfiles infrastructure
+
+
+PLOTLY_COMPONENTS = [
+
+    # Common components (ie within dash itself) are automatically added
+
+    # django-plotly-dash components
+    'dpd_components',
+    # static support if serving local assets
+    'dpd_static_support',
+
+    # Other components, as needed
+    'dash_bootstrap_components',
+]
