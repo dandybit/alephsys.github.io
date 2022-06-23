@@ -4,10 +4,11 @@
 #   Sends "Hello" to server, expects "World" back
 #
 
+from utils.mongo_utils import create_mongo_client
 
-import requests
-api_url = "http://localhost:5000/simulation"
-todo = {"userId": 1, "title": "Buy milk", "completed": False}
-response = requests.post(api_url, json=todo)
-print(response.json())
-print(response.status_code)
+mongo_client = create_mongo_client()
+
+predictions_db = mongo_client["predictions"]
+
+db = predictions_db["predictions"]
+print(db.find_one({'hash_id': '6be49b21896b862f413bd9f8201cb346'}))
