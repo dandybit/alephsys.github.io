@@ -28,17 +28,19 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 # Load demo plotly apps - this triggers their registration
-import covid19_simulator_dashboard.test_app   # pylint: disable=unused-import
-import covid19_simulator_dashboard.bootstrap_app  # pylint: disable=unused-import
+#import covid19_simulator_dashboard.test_app   # pylint: disable=unused-import
+#import covid19_simulator_dashboard.bootstrap_app  # pylint: disable=unused-import
 
-from django_plotly_dash.views import add_to_session
+#from django_plotly_dash.views import add_to_session
 
-from .views import dash_example_1_view, session_state_view
+#from .views import dash_example_1_view, session_state_view
 
 urlpatterns = [
-    path('django_plotly_dash/', include('django_plotly_dash.urls')),
+   # path('django_plotly_dash/', include('django_plotly_dash.urls')),
     path('', views.index, name='index'),
     path('cat_map/', views.cat_map, name='cat_map'),
     path('map_query/', views.map_query, name='map_query'),
     path('request_json_map/', views.request_json_map, name='request_json_map'),
+    path('test_plot/', views.test_plot, name='test_plot'),
+    path('django_plotly_dash/', include('django_plotly_dash.urls')),
 ]

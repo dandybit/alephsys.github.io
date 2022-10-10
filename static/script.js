@@ -268,7 +268,6 @@ document.getElementById('init_simulation').addEventListener("click", function(){
     success: function(data){
 
         json_data_map = data
-        console.log(data)
         simulator_steps = data['params']['num_timesteps'];
         strata_population = data['params']['population_params']['num_strata'];
         //alert("success");
@@ -287,7 +286,7 @@ document.getElementById('init_simulation').addEventListener("click", function(){
 
         //Process info for map
         //Redraw map for the new simulation
-        redrawMap(0);
+        drawMap(data);
         //Redraw graphs for the new simulation
         drawMainGraph(data);
 

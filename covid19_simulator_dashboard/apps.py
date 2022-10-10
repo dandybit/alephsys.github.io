@@ -6,7 +6,7 @@ class SimulatorModelConfig(AppConfig):
     name = 'covid19_simulator_dashboard'
 
 
-class DjangoPlotlyDashConfig(AppConfig):
-    'Verbose name and other settings for the django-plotly-dash application'
-    name = 'django_plotly_dash'
-    verbose_name = "Django Plotly Dash"
+#class DjangoPlotlyDashConfig(AppConfig):
+ #   'Verbose name and other settings for the django-plotly-dash application'
+  #  name = 'django_plotly_dash'
+   # verbose_name = "Django Plotly Dash"

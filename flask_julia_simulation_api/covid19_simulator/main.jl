@@ -27,7 +27,8 @@ function generate_simulation(json_params)
     g_probs = [0.1, 0.6, 0.3]
     m_probs = [0.05, 0.10, 0.15, 0.30, 0.40]
     probs = transpose(m_probs) .* g_probs
-    total_population = 500000
+    #total_population = 500000
+    total_population = parse(Int64, json_params["population"])
     distrib = Multinomial(total_population, reshape(probs, (1, G * M))[1, :])
     nᵢᵍ = convert.(Float64, reshape(rand(distrib), (G, M)))
 
@@ -150,8 +151,8 @@ function generate_simulation(json_params)
 
 
     # Number of timesteps
-    T = 200
-
+    #T = 200
+    T = parse(Int64, json_params["timesteps"])
     # Epidemic parameters
     epi_params = Epidemic_Params(βᴵ, βᴬ, ηᵍ, αᵍ, μᵍ, θᵍ, γᵍ, ζᵍ, λᵍ, ωᵍ, ψᵍ, χᵍ, G, M, T)
 

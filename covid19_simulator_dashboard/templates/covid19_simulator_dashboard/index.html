@@ -687,7 +687,9 @@
           <div class="ms-panel">
               <div id="map-holder">
                 <div class="container fill">
-                    <div id="map"></div>
+                    <div id="map_cat"></div>
+                    {%load plotly_dash%}
+                    {%plotly_app name="SimpleExample"%}
                 </div>
               </div>
           </div>
@@ -1425,7 +1427,7 @@
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="{% static 'covid_graphs.js' %}"></script>
-  <script src="{% static 'map_script.js' %}"></script>
+  <script src="{% static 'map_cat.js' %}"></script>
   <!-- Global Required Scripts End -->
 
   <!-- Page Specific Scripts Start -->

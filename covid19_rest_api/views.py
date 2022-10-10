@@ -23,18 +23,20 @@ mongo_client = create_mongo_client()
 predictions_db = mongo_client["predictions"]
 db = predictions_db["predictions"]
 
+
 class SimulationList(APIView):
     """
     List all snippets, or create a new snippet.
     """
+
     def get(self, request, hash=None, format=None):
         json_request = request.GET.dict()
         check_hash = hashlib.md5(str(json_request).encode('utf-8')).hexdigest()
 
         check_simulation = db.find_one({'hash_id': str(check_hash)})
-        #check_simulation = None
+        # check_simulation = None
         if check_simulation:
-            del(check_simulation["_id"])
+            del (check_simulation["_id"])
             return Response(check_simulation)
         else:
             json_simulation = requests.post(url_api_julia_simulation, json=json_request).json()

@@ -41,14 +41,26 @@ INSTALLED_APPS = [
     'covid19_simulator_dashboard.apps.SimulatorModelConfig',
     'covid19_rest_api.apps.Covid19RestApiConfig',
 
-    'covid19_simulator_dashboard.apps.DjangoPlotlyDashConfig',
+    #'covid19_simulator_dashboard.apps.DjangoPlotlyDashConfig',
     'dpd_static_support',
     'django_celery_results',
     'channels',
+    'channels_redis',
+    'django_plotly_dash.apps.DjangoPlotlyDashConfig',
 
     'rest_framework',
     'bootstrap4',
 ]
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379),],
+        },
+    },
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -237,15 +249,10 @@ STATICFILES_FINDERS = [
 # be handled by the Django staticfiles infrastructure
 
 
+#Add PLOTLY_COMPONENTS
 PLOTLY_COMPONENTS = [
-
-    # Common components (ie within dash itself) are automatically added
-
-    # django-plotly-dash components
-    'dpd_components',
-    # static support if serving local assets
-    'dpd_static_support',
-
-    # Other components, as needed
-    'dash_bootstrap_components',
+    'dash_core_components',
+    'dash_html_components',
+    'dash_renderer',
+    'dpd_components'
 ]

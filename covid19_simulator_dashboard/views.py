@@ -5,6 +5,13 @@ from django.http import JsonResponse
 import json
 from django.shortcuts import render
 
+import dash
+from dash import dcc, html
+from django_plotly_dash import DjangoDash
+from dash.dependencies import Input, Output
+import plotly.express as px
+import pandas as pd
+
 from .MMCAcovid19.django_wrapper import call_julia_script
 
 # Create your views here.
@@ -40,34 +47,116 @@ def request_json_map(request, *a, **kw):
         data = {'map': json_map, 'test': request.GET}
     return JsonResponse(data)
 
+# Create your views here.
+def test_plot(request):
+    template = loader.get_template('covid19_simulator_dashboard/index2.html')
+    context = {
+        'test_ko': 'test'
+    }
+    return HttpResponse(template.render(context, request))
 
-#pylint: disable=unused-argument
 
-def dash_example_1_view(request, template_name="demo_six.html", **kwargs):
-    'Example view that inserts content into the dash context passed to the dash application'
 
-    context = {}
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+app = DjangoDash('SimpleExample')   # replaces dash.Dash
 
-    # create some context to send over to Dash:
-    dash_context = request.session.get("django_plotly_dash", dict())
-    dash_context['django_to_dash_context'] = "I am Dash receiving context from Django"
-    request.session['django_plotly_dash'] = dash_context
+styles = {
+    'pre': {
+        'border': 'thin lightgrey solid',
+        'overflowX': 'scroll'
+    }
+}
 
-    return render(request, template_name=template_name, context=context)
+df = pd.DataFrame({
+    "x": [1,2,1,2],
+    "y": [1,2,3,4],
+    "customdata": [1,2,3,4],
+    "fruit": ["apple", "apple", "orange", "orange"]
+})
 
-def session_state_view(request, template_name, **kwargs):
-    'Example view that exhibits the use of sessions to store state'
+fig = px.scatter(df, x="x", y="y", color="fruit", custom_data=["customdata"])
 
-    session = request.session
+fig.update_layout(clickmode='event+select')
 
-    demo_count = session.get('django_plotly_dash', {})
+fig.update_traces(marker_size=20)
 
-    ind_use = demo_count.get('ind_use', 0)
-    ind_use += 1
-    demo_count['ind_use'] = ind_use
+app.layout = html.Div([
+    dcc.Graph(
+        id='basic-interactions',
+        figure=fig
+    ),
 
-    context = {'ind_use' : ind_use}
+    html.Div(className='row', children=[
+        html.Div([
+            dcc.Markdown("""
+                **Hover Data**
 
-    session['django_plotly_dash'] = demo_count
+                Mouse over values in the graph.
+            """),
+            html.Pre(id='hover-data', style=styles['pre'])
+        ], className='three columns'),
 
-    return render(request, template_name=template_name, context=context)
+        html.Div([
+            dcc.Markdown("""
+                **Click Data**
+
+                Click on points in the graph.
+            """),
+            html.Pre(id='click-data', style=styles['pre']),
+        ], className='three columns'),
+
+        html.Div([
+            dcc.Markdown("""
+                **Selection Data**
+
+                Choose the lasso or rectangle tool in the graph's menu
+                bar and then select points in the graph.
+
+                Note that if `layout.clickmode = 'event+select'`, selection data also
+                accumulates (or un-accumulates) selected data if you hold down the shift
+                button while clicking.
+            """),
+            html.Pre(id='selected-data', style=styles['pre']),
+        ], className='three columns'),
+
+        html.Div([
+            dcc.Markdown("""
+                **Zoom and Relayout Data**
+
+                Click and drag on the graph to zoom or click on the zoom
+                buttons in the graph's menu bar.
+                Clicking on legend items will also fire
+                this event.
+            """),
+            html.Pre(id='relayout-data', style=styles['pre']),
+        ], className='three columns')
+    ])
+])
+
+
+@app.callback(
+    Output('hover-data', 'children'),
+    Input('basic-interactions', 'hoverData'))
+def display_hover_data(hoverData):
+    return json.dumps(hoverData, indent=2)
+
+
+@app.callback(
+    Output('click-data', 'children'),
+    Input('basic-interactions', 'clickData'))
+def display_click_data(clickData):
+    return json.dumps(clickData, indent=2)
+
+
+@app.callback(
+    Output('selected-data', 'children'),
+    Input('basic-interactions', 'selectedData'))
+def display_selected_data(selectedData):
+    return json.dumps(selectedData, indent=2)
+
+
+@app.callback(
+    Output('relayout-data', 'children'),
+    Input('basic-interactions', 'relayoutData'))
+def display_relayout_data(relayoutData):
+    return json.dumps(relayoutData, indent=2)
