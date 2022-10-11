@@ -4,15 +4,21 @@ from django.template import loader
 from django.http import JsonResponse
 import json
 from django.shortcuts import render
-
+import urllib.request
 import dash
 from dash import dcc, html
 from django_plotly_dash import DjangoDash
 from dash.dependencies import Input, Output
 import plotly.express as px
 import pandas as pd
+import plotly.graph_objs as go
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+import plotly.express as px
 
 from .MMCAcovid19.django_wrapper import call_julia_script
+
+
 
 # Create your views here.
 def index(request):
@@ -57,106 +63,78 @@ def test_plot(request):
 
 
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-app = DjangoDash('SimpleExample')   # replaces dash.Dash
-
-styles = {
-    'pre': {
-        'border': 'thin lightgrey solid',
-        'overflowX': 'scroll'
+def map(request):
+    template = loader.get_template('covid19_simulator_dashboard/index.html')
+    context = {
+        'test_ko': 'test'
     }
-}
+    app = DjangoDash('SimpleExample')  # replaces dash.Dash
 
-df = pd.DataFrame({
-    "x": [1,2,1,2],
-    "y": [1,2,3,4],
-    "customdata": [1,2,3,4],
-    "fruit": ["apple", "apple", "orange", "orange"]
-})
+    china_url = 'https://raw.githubusercontent.com/aariste/GeoJSON-Mapas/master/comarques-compressed.geojson'
 
-fig = px.scatter(df, x="x", y="y", color="fruit", custom_data=["customdata"])
+    def read_geojson(url):
+        with urllib.request.urlopen(url) as url:
+            jdata = json.loads(url.read().decode())
+        return jdata
 
-fig.update_layout(clickmode='event+select')
+    jdata = read_geojson(china_url)
 
-fig.update_traces(marker_size=20)
+    locations = [k for k in range(50)]
+    text = []
 
-app.layout = html.Div([
-    dcc.Graph(
-        id='basic-interactions',
-        figure=fig
-    ),
+    for local in locations:
+        jdata['features'][local]['id'] = local
 
-    html.Div(className='row', children=[
-        html.Div([
-            dcc.Markdown("""
-                **Hover Data**
+    for x in range(len(jdata['features'])):
+        text.append(jdata['features'][x]['properties']['nom_comar'])
 
-                Mouse over values in the graph.
-            """),
-            html.Pre(id='hover-data', style=styles['pre'])
-        ], className='three columns'),
+    z = [x for x in range(50)]
 
-        html.Div([
-            dcc.Markdown("""
-                **Click Data**
+    fig = go.Figure(go.Choroplethmapbox(z=z,
+                                        locations=locations,
+                                        colorscale='reds',
+                                        colorbar=dict(thickness=20, ticklen=3),
+                                        geojson=jdata,
+                                        text=text,
+                                        hoverinfo='all',
+                                        marker_line_width=0.1, marker_opacity=0.75))
 
-                Click on points in the graph.
-            """),
-            html.Pre(id='click-data', style=styles['pre']),
-        ], className='three columns'),
+    fig.update_layout(title_text='Choroplethmapbox',
+                      title_x=0.1,
+                      # autosize=False,
+                      # width=1200,
+                      height=500,
+                      margin=dict(l=0, r=0, b=0, t=0),
+                      # paper_bgcolor="Black",
+                      mapbox=dict(center=dict(lat=41.687016, lon=1.670047),
+                                  accesstoken="pk.eyJ1IjoiZGFuZHlsaW9uIiwiYSI6ImNrdWUyczE5MDA4Z24yd3FrdnVxNXNvdTMifQ.9267FYgF4tibdnqHBCiLiA",
+                                  style='basic',
+                                  zoom=6.8,
+                                  ))
 
-        html.Div([
-            dcc.Markdown("""
-                **Selection Data**
+    # style = {'heigth': '1000px'}
 
-                Choose the lasso or rectangle tool in the graph's menu
-                bar and then select points in the graph.
+    app.layout = html.Div([dcc.Graph(
+        id='map_container',
+        figure=fig,
+    )])
 
-                Note that if `layout.clickmode = 'event+select'`, selection data also
-                accumulates (or un-accumulates) selected data if you hold down the shift
-                button while clicking.
-            """),
-            html.Pre(id='selected-data', style=styles['pre']),
-        ], className='three columns'),
+    app2 = DjangoDash('SimpleExample2')  # replaces dash.Dash
 
-        html.Div([
-            dcc.Markdown("""
-                **Zoom and Relayout Data**
+    df2 = px.data.gapminder().query("continent=='Oceania'")
+    fig2 = px.line(df2, x="year", y="lifeExp", color='country')
 
-                Click and drag on the graph to zoom or click on the zoom
-                buttons in the graph's menu bar.
-                Clicking on legend items will also fire
-                this event.
-            """),
-            html.Pre(id='relayout-data', style=styles['pre']),
-        ], className='three columns')
-    ])
-])
+    fig2.update_layout(title_text='Choroplethmapbox',
+                       # autosize=False,
+                       # width=1200,
+                       height=500,
+                       margin=dict(l=0, r=0, b=0, t=50),
+                       # paper_bgcolor="Black",
+                       )
 
+    app2.layout = html.Div([dcc.Graph(
+        id='map_container',
+        figure=fig2,
+    )])
 
-@app.callback(
-    Output('hover-data', 'children'),
-    Input('basic-interactions', 'hoverData'))
-def display_hover_data(hoverData):
-    return json.dumps(hoverData, indent=2)
-
-
-@app.callback(
-    Output('click-data', 'children'),
-    Input('basic-interactions', 'clickData'))
-def display_click_data(clickData):
-    return json.dumps(clickData, indent=2)
-
-
-@app.callback(
-    Output('selected-data', 'children'),
-    Input('basic-interactions', 'selectedData'))
-def display_selected_data(selectedData):
-    return json.dumps(selectedData, indent=2)
-
-
-@app.callback(
-    Output('relayout-data', 'children'),
-    Input('basic-interactions', 'relayoutData'))
-def display_relayout_data(relayoutData):
-    return json.dumps(relayoutData, indent=2)
+    return HttpResponse(template.render(context, request))

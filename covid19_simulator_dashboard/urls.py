@@ -38,6 +38,7 @@ from django.conf.urls.static import static
 urlpatterns = [
    # path('django_plotly_dash/', include('django_plotly_dash.urls')),
     path('', views.index, name='index'),
+    path('map/', views.map, name='map'),
     path('cat_map/', views.cat_map, name='cat_map'),
     path('map_query/', views.map_query, name='map_query'),
     path('request_json_map/', views.request_json_map, name='request_json_map'),
