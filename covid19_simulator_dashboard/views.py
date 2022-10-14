@@ -46,11 +46,21 @@ def map_query(request, *a, **kw):
 
 
 def request_json_map(request, *a, **kw):
-    with open('static/json/cat_provincias.json') as f:
+    with open('static/json/cat_comarques.geojson') as f:
         json_map = json.load(f)
     data = {}
+    locations = [k for k in range(50)]
+    nombre_comarques = []
+
+    for local in locations:
+        json_map['features'][local]['id'] = local
+
+    for x in range(len(json_map['features'])):
+        nombre_comarques.append(json_map['features'][x]['properties']['nom_comar'])
+
+
     if json_map:
-        data = {'map': json_map, 'test': request.GET}
+        data = {'map': json_map, 'nom_comarques': nombre_comarques, 'test_data': [x for x in range(50)]}
     return JsonResponse(data)
 
 # Create your views here.
@@ -64,7 +74,7 @@ def test_plot(request):
 
 
 def map(request):
-    template = loader.get_template('covid19_simulator_dashboard/index.html')
+    template = loader.get_template('covid19_simulator_dashboard/map.html')
     context = {
         'test_ko': 'test'
     }

@@ -210,7 +210,7 @@ function generate_simulation(json_params)
 
 
 
-    #------ Containment strategy ------#
+    #------ Containment strategy ------# #-----------------------WEB SITE IMPLEMETATION
 
     # Single containment parameters
 
@@ -242,23 +242,50 @@ function generate_simulation(json_params)
     δs = [0.207, 0.207, 0.207, 0.207]
 
 
+
+     # List of timesteps of application of containments
+    tᶜs = Int[]
+
+    # List of mobility reductions
+    κ₀s = Float64[]
+
+    # List of permeabilities of confined households
+    ϕs = Float64[]
+
+    # List of social distancings
+    δs = Float64[]
+
+    #parse(Int64, json_params["population"])
+    for lockdown in Dict(JSON.parse(json_params["lockdown_info"]))
+        # lockdown timesteps
+        tᶜs = append!(tᶜs, [timestep for timestep in lockdown.second["init"]:lockdown.second["final"]])
+        # severity
+        κ₀s = append!(κ₀s, [convert(AbstractFloat, lockdown.second["severity"]) for x in lockdown.second["init"]:lockdown.second["final"]])
+        # lockdown_permeability
+        ϕs = append!(ϕs, [convert(AbstractFloat, lockdown.second["lockdown_permeability"]) for x in lockdown.second["init"]:lockdown.second["final"]])
+        # lockdown_distance
+        δs = append!(δs, [convert(AbstractFloat, lockdown.second["lockdown_distance"]) for x in lockdown.second["init"]:lockdown.second["final"]])
+    end
+
+
+
     # No containment as particular case of multiple containments
-    tᶜs = [-1]
-    κ₀s = [0.0]
-    ϕs = [1.0]
-    δs = [0.0]
+    #tᶜs = [-1]
+    #κ₀s = [0.0]
+    #ϕs = [1.0]
+    #δs = [0.0]
 
     # Single containment as particular case of multiple containments
-    tᶜs = [30]
-    κ₀s = [0.65]
-    ϕs = [0.174]
-    δs = [0.207]
+    #tᶜs = [30]
+    #κ₀s = [0.65]
+    #ϕs = [0.174]
+    #δs = [0.207]
 
     # Multiple containments
-    tᶜs = [30, 60, 90, 120]
-    κ₀s = [0.65, 0.75, 0.65, 0.55]
-    ϕs = [0.174, 0.174, 0.174, 0.174]
-    δs = [0.207, 0.207, 0.207, 0.207]
+    #tᶜs = [30, 60, 90, 120]
+    #κ₀s = [0.65, 0.75, 0.65, 0.55]
+    #ϕs = [0.174, 0.174, 0.174, 0.174]
+    #δs = [0.207, 0.207, 0.207, 0.207]
 
 
 

@@ -13,8 +13,8 @@ function drawMainGraph(json_data)
         alt_y_1.push(graph_data["D"][2][x]);
     }
 
-    console.log(alt_x)
-    console.log(alt_y)
+    //console.log(alt_x)
+    //console.log(alt_y)
 
     var trace1 = {
         name: 'Deaths strata 1',

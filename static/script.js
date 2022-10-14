@@ -29,12 +29,12 @@ function checkValuesLockdown(){
     parent_ul = document.getElementById("form-elements");
     index_objects = Object.keys(lockdown_info);
 
-    if (lockdown_info[index_objects.at(-1)]["lockdown_type"] === "Lockdown type"){
-        alert("You must select a lockdown type")
-        return -1
-    }
+    //if (lockdown_info[index_objects.at(-1)]["lockdown_type"] === "Lockdown type"){
+      //  alert("You must select a lockdown type")
+        //return -1
+    //}
 
-    else if (lockdown_info[index_objects.at(-1)]["init"] > lockdown_info[index_objects.at(-1)]["final"]){
+    if (lockdown_info[index_objects.at(-1)]["init"] > lockdown_info[index_objects.at(-1)]["final"]){
         alert("Final timestep lockdown must be greater than or equal to the init timestep lockdown")
         return -1
     }
@@ -59,18 +59,18 @@ function checkValuesLockdown(){
         return -1
     }
 
-    else if (lockdown_info[index_objects.at(-1)]["severity"] > 100 || lockdown_info[index_objects.at(-1)]["severity"] < 0 ){
-        alert("Lockdown Mobility Reduction must be greater or equal than 0 and lesser or equal than 100")
+    else if (lockdown_info[index_objects.at(-1)]["severity"] > 1.0 || lockdown_info[index_objects.at(-1)]["severity"] < 0 ){
+        alert("Lockdown Mobility Reduction must be greater or equal than 0 and equal or lesser than 1.0")
         return -1
     }
 
     else if (lockdown_info[index_objects.at(-1)]["lockdown_distance"] < 0 ){
-        alert("Lockdown Social Distance must be greater or equal than 0 and lesser or equal than 100")
+        alert("Lockdown Social Distance must be greater or equal than 0")
         return -1
     }
 
-    else if (lockdown_info[index_objects.at(-1)]["lockdown_permeability"] < 0 ){
-        alert("Lockdown Permeability must be greater or equal than 0 and lesser or equal than 100")
+    else if (lockdown_info[index_objects.at(-1)]["lockdown_permeability"] < 0 || lockdown_info[index_objects.at(-1)]["lockdown_permeability"] > 1.0){
+        alert("Lockdown Permeability must be greater or equal than 0 and equal or lesser than 1.0")
         return -1
     }
 
@@ -257,6 +257,12 @@ document.getElementById('init_simulation').addEventListener("click", function(){
     document.getElementById('time_steps_range').setAttribute('disabled', true);
     document.getElementById('init_simulation').disabled = true;
 
+    console.log("*****");
+    console.log(document.getElementById('population_id').value);
+    console.log(document.getElementById('timesteps_id').value);
+    console.log(JSON.stringify(lockdown_info));
+    console.log("*****");
+
     $.ajax({
     type: "GET",
     url: "api/simulation",
@@ -286,6 +292,7 @@ document.getElementById('init_simulation').addEventListener("click", function(){
 
         //Process info for map
         //Redraw map for the new simulation
+        //redrawMap(0);
         drawMap(data);
         //Redraw graphs for the new simulation
         drawMainGraph(data);

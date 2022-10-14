@@ -1,33 +1,27 @@
-div_graph = document.getElementById('map_cat');
-let map_comarcas = '';
+div_map = document.getElementById('map');
 
 //Request map from server
-function requestMap() {
+function drawMap(data_covid) {
 
 	$.ajax({
 		type: "GET",
 		url: "request_json_map",
 
-		success: function (data) {
-            map_comarcas = data;
+		success: function (data_map) {
+
+            var data = [{
+                type: "choroplethmapbox", name: "Catalunya Comarques", geojson: data_map['map'], locations: data_map['test_data'],
+            z: data_map['test_data'],
+            zmin: 25, zmax: 280, colorbar: {y: 0, yanchor: "bottom", title: {text: "Catalunya Comarques", side: "right"}}}
+             ];
+
+            var layout = {mapbox: {style: "dark", center: {lon: 1.670047, lat: 41.687016}, zoom: 6.8}, margin: {l:0, r:0, b:0, t:0}};
+
+            var config = {mapboxAccessToken:"pk.eyJ1IjoiZGFuZHlsaW9uIiwiYSI6ImNrdWUyczE5MDA4Z24yd3FrdnVxNXNvdTMifQ.9267FYgF4tibdnqHBCiLiA",
+            };
+
+            Plotly.newPlot(div_map, data, layout, config);
 		},
 	});
 
-}
-
-
-function drawMap(json_map){
-    requestMap();
-
-    var data = [{
-        type: "choroplethmapbox", name: "US states", geojson: "https://github.com/aariste/GeoJSON-Mapas/blob/master/comarques-compressed.geojson", locations: [ "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY" ],
-    z: [ 141, 140, 155, 147, 132, 146, 151, 137, 146, 136, 145, 141, 149, 151, 138, 158, 164, 141, 146, 145, 142, 150, 155, 160, 156, 161, 147, 164, 150, 152, 155, 167, 145, 146, 151, 154, 161, 145, 155, 150, 151, 162, 172, 169, 170, 151, 152, 173, 160, 176 ],
-    zmin: 25, zmax: 280, colorbar: {y: 0, yanchor: "bottom", title: {text: "US states", side: "right"}}}
-     ];
-
-    var layout = {mapbox: {style: "dark", center: {lon: -110, lat: 50}, zoom: 0.8}, width: 600, height: 400, margin: {t: 0, b: 0}};
-
-    var config = {street:"pk.eyJ1IjoiZGFuZHlsaW9uIiwiYSI6ImNrdWUyczE5MDA4Z24yd3FrdnVxNXNvdTMifQ.9267FYgF4tibdnqHBCiLiA"};
-
-    Plotly.newPlot(div_graph, data, layout, config);
 }
