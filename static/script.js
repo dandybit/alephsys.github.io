@@ -16,8 +16,8 @@ function isItNumber(str) {
 //Reset lockdown create default values.
 function lockdownResetValues()
 {
-  document.getElementById("init_time_step").value = 0;
-  document.getElementById("final_time_step").value = 0;
+  document.getElementById("init_time_step").value = 1;
+  document.getElementById("final_time_step").value = 1;
   document.getElementById("lockdown_severity").value = "0.00";
   document.getElementById("lockdown_permeability").value = "0.00";
   document.getElementById("lockdown_distance").value = "0.00";
@@ -39,10 +39,16 @@ function checkValuesLockdown(){
         return -1
     }
 
+    else if (lockdown_info[index_objects.at(-1)]["init"] <= 0) {
+        alert("Init timestep lockdown must be equal or greater than 1")
+        return -1
+    }
+
     else if (lockdown_info[index_objects.at(-1)]["final"] > 200){
         alert("Final timestep lockdown must be lesser or equal to timesteps")
         return -1
     }
+
 
     else if ( !(isItNumber(lockdown_info[index_objects.at(-1)]["severity"]))){
         alert("Lockdown Mobility Reduction must be a Float type number")
@@ -257,12 +263,6 @@ document.getElementById('init_simulation').addEventListener("click", function(){
     document.getElementById('time_steps_range').setAttribute('disabled', true);
     document.getElementById('init_simulation').disabled = true;
 
-    console.log("*****");
-    console.log(document.getElementById('population_id').value);
-    console.log(document.getElementById('timesteps_id').value);
-    console.log(JSON.stringify(lockdown_info));
-    console.log("*****");
-
     $.ajax({
     type: "GET",
     url: "api/simulation",
@@ -271,6 +271,7 @@ document.getElementById('init_simulation').addEventListener("click", function(){
         "timesteps": document.getElementById('timesteps_id').value,
         "lockdown_info": JSON.stringify(lockdown_info),
     },
+
     success: function(data){
 
         json_data_map = data
@@ -319,10 +320,10 @@ document.getElementById('time_steps_range').addEventListener('input', function()
         'Time steps Model (timestep '+ document.getElementById('time_steps_range').value +')';
 
     // principal stats
-    document.getElementById('infected_id').innerText =  json_data_map['results']['total_states']['I'][document.getElementById('time_steps_range').value];
-    document.getElementById('deaths_id').innerText =  json_data_map['results']['total_states']['D'][document.getElementById('time_steps_range').value];
-    document.getElementById('cases_id').innerText = json_data_map['results']['total_states']['S'][document.getElementById('time_steps_range').value];
-    document.getElementById('icus_id').innerText = json_data_map['results']['total_states']['PD'][document.getElementById('time_steps_range').value];
+    document.getElementById('infected_id').innerText =  Math.trunc(json_data_map['results']['total_states']['I'][document.getElementById('time_steps_range').value]);
+    document.getElementById('deaths_id').innerText =  Math.trunc(json_data_map['results']['total_states']['D'][document.getElementById('time_steps_range').value]);
+    document.getElementById('cases_id').innerText = Math.trunc(json_data_map['results']['total_states']['S'][document.getElementById('time_steps_range').value]);
+    document.getElementById('icus_id').innerText = Math.trunc(json_data_map['results']['total_states']['PD'][document.getElementById('time_steps_range').value]);
 
     // stats for stratas
 

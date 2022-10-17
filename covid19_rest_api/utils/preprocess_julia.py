@@ -31,6 +31,7 @@ def preprocess_julia_json(julia_json):
 
     for timesteps_data in julia_json['results']['compartmental_evolution']:
         for data in range(len(timesteps_data['evolution'])):
+            # Add + to = += to accomulative mode
             total_states[timesteps_data["compartment"]][data] += timesteps_data['evolution'][data]
             total_patches[timesteps_data["compartment"]][timesteps_data['patch']][data] += timesteps_data['evolution'][data]
 

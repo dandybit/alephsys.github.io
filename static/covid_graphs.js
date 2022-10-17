@@ -1,64 +1,70 @@
+let div_graph_total = document.getElementById('main_graph');
+let graph_data_total;
+
+// registers of buttons
+let graph_exposed_status = false;
+let graph_asymtomatic_status = false;
+let graph_infected_status = false;
+let graph_pre_hospitalized_status = false;
+let graph_pre_deceased_status = false;
+let graph_recovered_status = false;
+let graph_hospitalized_icu_status = false;
+let graph_deceased_status = false;
+
+// buttons ids
+let graph_exposed = document.getElementById('button_exposed_strata_graph');
+let graph_asymtomatic = document.getElementById('button_exposed_strata_graph');
+let graph_infected = document.getElementById('button_exposed_strata_graph');
+let graph_pre_hospitalized = document.getElementById('button_exposed_strata_graph');
+let graph_pre_deceased = document.getElementById('button_exposed_strata_graph');
+let graph_recovered = document.getElementById('button_exposed_strata_graph');
+let graph_hospitalized_icu = document.getElementById('button_exposed_strata_graph');
+let ggraph_deceased = document.getElementById('button_exposed_strata_graph');
+
 function drawMainGraph(json_data)
 {
-    div_graph = document.getElementById('main_graph');
-    graph_data = json_data["results"]["total_patches"]
+    graph_data_total = json_data["results"]["total_states"]
 
-    alt_x = []
-    alt_y = []
-    alt_y_1 = []
-    for (var x in Array.range(0, graph_data["D"][1].length - 1))
+    let alt_x = [];
+    let alt_y = [];
+
+    for (let x in Array.range(0, graph_data_total["D"].length - 1))
     {
         alt_x.push(parseInt(x));
-        alt_y.push(graph_data["D"][1][x]);
-        alt_y_1.push(graph_data["D"][2][x]);
+        alt_y.push(graph_data_total["D"][x]);
     }
 
-    //console.log(alt_x)
-    //console.log(alt_y)
-
-    var trace1 = {
-        name: 'Deaths strata 1',
+    let trace1 = {
         type: "scatter",
         mode: "lines",
+        name: "Deceased",
+
         x: alt_x,
         y: alt_y,
-        line: {color: '#17BECF'}
+        line: {color: '#cf1717'}
     };
 
-    var trace2 = {
-        name: 'Deaths strata 2',
-        type: "scatter",
-        mode: "lines",
-        x: alt_x,
-        y: alt_y_1,
-        line: {color: '#cf17b0'}
-    };
 
-    var config = {responsive: true};
-    var layout = {
-      title: 'Covid 19 Graph',
+    let config = {responsive: true};
+    let layout = {
+      title: 'Covid 19 Graph (Overall)',
       margin: {
 
-        l: 40,
+        l: 30,
 
-        r: 30,
+        r: 5,
 
-        b: 40,
+        b: 20,
 
-        t: 50,
+        t: 30,
 
-        pad: 4
+
 
       },
-      paper_bgcolor: '#7f7f7f',
+      paper_bgcolor: '#ffffff',
       plot_bgcolor: '#c7c7c7',
-      legend: {
-        x: 1,
-        xanchor: 'right',
-        y: 1,
-        bgcolor: 'transparent',
-      },
+      legend: { orientation: 'h', site: 'top'},
     };
 
-    Plotly.newPlot(div_graph, [trace1,trace2], layout, config);
+    Plotly.newPlot(div_graph_total, [trace1, trace1], layout, config);
 }

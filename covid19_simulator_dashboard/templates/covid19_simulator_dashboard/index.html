@@ -143,9 +143,9 @@
                                 }
                             </style>
                             <label>Init timestep lockdown</label>
-                            <input id='init_time_step' class="form-control number_style"  value="0" min="0" type="number" oninput="this.value = Math.round(this.value);">
+                            <input id='init_time_step' class="form-control number_style"  value="1" min="0" type="number" oninput="this.value = Math.round(this.value);">
                             <label>Final timestep lockdown</label>
-                            <input id='final_time_step' class="form-control number_style"  value="0" min="0" type="number" oninput="this.value = Math.round(this.value);">
+                            <input id='final_time_step' class="form-control number_style"  value="1" min="0" type="number" oninput="this.value = Math.round(this.value);">
                             <label>Lockdown Mobility Reduction</label>
                             <input id='lockdown_severity' class="form-control number_style"  type="number" value="0.00" min="0" max="100" step="0.01">
                             <small class="form-text text-muted">You must introduce a %. 100% means there isn't mobility at all.</small>
@@ -696,6 +696,16 @@
         </div>
 
         <div class="col-xl-6">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <button id="button_exposed_strata_graph" class="btn-secondary">Exposed</button>
+                <button id="button_asymtomatic_strata_graph" class="btn-secondary">Asymptomatic</button>
+                <button id="button_infected_strata_graph" class="btn-secondary">Infected</button>
+                <button id="button_hospitalized_strata_graph" class="btn-secondary">Pre-hospitalized</button>
+                <button id="button_pre_deceased_strata_graph" class="btn-secondary">Pre-deceased</button>
+                <button id="button_recovered_strata_graph" class="btn-secondary">Recovered</button>
+                <button id="button_hospitalized_icu_strata_graph" class="btn-secondary">Hospitalized in ICU</button>
+                <button id="button_deceased_strata_graph" class="btn-secondary">Deceased</button>
+            </div>
           <div class="ms-panel" id="frame_1_char">
               <div id="main_graph" style="resize:both; overflow: auto"></div>
           </div>
