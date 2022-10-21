@@ -41,11 +41,42 @@ graph_recovered.style.background = '#005cbf';
 graph_hospitalized_icu.style.background ='#005cbf';
 graph_deceased.style.background = '#005cbf';
 
+
+function init_graph_var(){
+
+    graph_exposed.style.background='#005cbf';
+    graph_exposed_status = false;
+
+    graph_asymtomatic.style.background='#005cbf';
+    graph_asymtomatic_status = false;
+
+    graph_infected.style.background='#005cbf';
+    graph_infected_status = false;
+
+    graph_pre_hospitalized.style.background='#005cbf';
+    graph_pre_hospitalized_status = false;
+
+    graph_pre_deceased.style.background='#005cbf';
+    graph_pre_deceased_status = false;
+
+    graph_recovered.style.background='#005cbf';
+    graph_recovered_status = false;
+
+    graph_hospitalized_icu.style.background='#005cbf';
+    graph_hospitalized_icu_status = false;
+
+    graph_deceased.style.background='#005cbf';
+    graph_deceased_status = false;
+
+}
+
+
+
 // First time draw graph.
 function drawMainGraph(json_data)
 {
+    init_graph_var();
     graph_data_total = json_data["results"]["total_states"];
-    console.log(json_data);
 
     let alt_x = [];
     let alt_y_exposed = [];
@@ -81,6 +112,7 @@ function drawMainGraph(json_data)
         type: "scatter",
         mode: "lines",
         name: "Deceased",
+        visible: "true",
 
         x: alt_x,
         y: alt_y_deceased,
@@ -169,22 +201,39 @@ function drawMainGraph(json_data)
     let layout = {
       title: 'Covid 19 Graph (Overall)',
       margin: {
-
         l: 35,
-
         r: 5,
-
         b: 20,
-
         t: 30,
-
-
-
       },
       paper_bgcolor: '#ffffff',
       plot_bgcolor: '#c7c7c7',
       legend: { orientation: 'h', site: 'top'},
+      shapes: [
+            {
+
+      type: 'line',
+
+      x0: 50,
+
+      y0: 0,
+
+      x1: 50,
+
+      y1: 2000,
+
+      line: {
+
+        color: 'rgb(55, 128, 191)',
+
+        width: 3
+
+      }
+
+    },
+        ]
     };
+
 
     Plotly.newPlot(div_graph_total, [trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8], layout, config);
 }
@@ -213,6 +262,39 @@ graph_exposed.addEventListener("click", function() {
         Plotly.restyle(div_graph_total, update, [1]);
 
     }
+
+    var update ={
+        shapes: [
+            {
+
+      type: 'line',
+
+      x0: 50,
+
+      y0: 0,
+
+      x1: 50,
+
+      y1: 2000,
+
+      line: {
+
+        color: 'rgb(55, 128, 191)',
+
+        width: 3
+
+      }
+
+    },
+        ]
+    }
+
+    Plotly.restyle(div_graph_total, update);
+    console.log("*************************");
+    console.log(div_graph_total.data);
+    console.log(div_graph_total.layout);
+    console.log("*************************");
+
 
 });
 

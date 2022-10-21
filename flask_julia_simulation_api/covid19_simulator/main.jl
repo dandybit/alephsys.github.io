@@ -267,9 +267,33 @@ function generate_simulation(json_params)
         δs = append!(δs, [convert(AbstractFloat, lockdown.second["lockdown_distance"]) for x in lockdown.second["init"]:lockdown.second["final"]])
     end
 
+    if length(Dict(JSON.parse(json_params["lockdown_info"]))) == 0
+        tᶜs = [-1]
+        κ₀s = [0.0]
+        ϕs = [1.0]
+        δs = [0.0]
+    end
+
+    println("******************************************")
+    println(tᶜs)
+    println("******************************************")
+    println(κ₀s)
+    println("******************************************")
+    println(ϕs)
+    println("******************************************")
+    println(δs)
+    println("******************************************")
+    println(Dict(JSON.parse(json_params["lockdown_info"])))
+    println("******************************************")
+    println(length(Dict(JSON.parse(json_params["lockdown_info"]))))
+    println("******************************************")
 
 
-    # No containment as particular case of multiple containments
+
+
+
+
+    # No containment as particular case of multiple containments # <----------------------------------------------
     #tᶜs = [-1]
     #κ₀s = [0.0]
     #ϕs = [1.0]
@@ -291,22 +315,6 @@ function generate_simulation(json_params)
 
 
     #------ Running the model ------#
-
-    # Run the model without containment strategies
-    population = Population_Params(G, M, nᵢᵍ, kᵍ, kᵍ_h, kᵍ_w, C, pᵍ, edgelist, Rᵢⱼ, sᵢ, ξ, σ)
-    epi_params = Epidemic_Params(βᴵ, βᴬ, ηᵍ, αᵍ, μᵍ, θᵍ, γᵍ, ζᵍ, λᵍ, ωᵍ, ψᵍ, χᵍ, G, M, T)
-    set_initial_infected!(epi_params, population, E₀, A₀, I₀)
-
-    run_epidemic_spreading_mmca!(epi_params, population; verbose=true)
-
-
-    # Run the model with a single containment strategy
-    population = Population_Params(G, M, nᵢᵍ, kᵍ, kᵍ_h, kᵍ_w, C, pᵍ, edgelist, Rᵢⱼ, sᵢ, ξ, σ)
-    epi_params = Epidemic_Params(βᴵ, βᴬ, ηᵍ, αᵍ, μᵍ, θᵍ, γᵍ, ζᵍ, λᵍ, ωᵍ, ψᵍ, χᵍ, G, M, T)
-    set_initial_infected!(epi_params, population, E₀, A₀, I₀)
-
-    run_epidemic_spreading_mmca!(epi_params, population; tᶜ=tᶜ, κ₀=κ₀, ϕ=ϕ, δ=δ)
-
 
     # Run the model with multiple containment strategies
     population = Population_Params(G, M, nᵢᵍ, kᵍ, kᵍ_h, kᵍ_w, C, pᵍ, edgelist, Rᵢⱼ, sᵢ, ξ, σ)

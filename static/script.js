@@ -222,10 +222,10 @@ document.getElementById('lockdown_button').addEventListener("click", function(){
   lockdown_info[lockdown_data_count] = {
       "init": parseInt(init_time_step, 10),
       "final": parseInt(final_time_step, 10),
-      "severity": parseInt(lockdown_severity, 10),
+      "severity": parseFloat(lockdown_severity),
       "lockdown_type": lockdown_type,
-      "lockdown_permeability": parseInt(lockdown_permeability, 10),
-      "lockdown_distance": parseInt(lockdown_distance, 10)
+      "lockdown_permeability": parseFloat(lockdown_permeability),
+      "lockdown_distance": parseFloat(lockdown_distance),
 
   };
 
@@ -262,6 +262,10 @@ document.getElementById('init_simulation').addEventListener("click", function(){
     $('#time_steps_range').val(0);
     document.getElementById('time_steps_range').setAttribute('disabled', true);
     document.getElementById('init_simulation').disabled = true;
+
+    console.log("************************");
+    console.log(lockdown_info);
+    console.log("************************");
 
     $.ajax({
     type: "GET",
