@@ -1,7 +1,8 @@
+// Div reference graph
 let div_graph_total = document.getElementById('main_graph');
 let graph_data_total;
 
-// registers of buttons
+// Registers of buttons
 let graph_exposed_status = false;
 let graph_asymtomatic_status = false;
 let graph_infected_status = false;
@@ -11,7 +12,7 @@ let graph_recovered_status = false;
 let graph_hospitalized_icu_status = false;
 let graph_deceased_status = false;
 
-// buttons ids
+// Buttons ids
 let graph_exposed = document.getElementById('button_exposed_strata_graph');
 let graph_asymtomatic = document.getElementById('button_asymtomatic_strata_graph');
 let graph_infected = document.getElementById('button_infected_strata_graph');
@@ -31,7 +32,7 @@ let trace6;
 let trace7;
 let trace8;
 
-
+// First button color draw
 graph_exposed.style.background = '#005cbf';
 graph_asymtomatic.style.background = '#005cbf';
 graph_infected.style.background = '#005cbf';
@@ -41,7 +42,7 @@ graph_recovered.style.background = '#005cbf';
 graph_hospitalized_icu.style.background ='#005cbf';
 graph_deceased.style.background = '#005cbf';
 
-
+// Graph button initializer
 function init_graph_var(){
 
     graph_exposed.style.background='#005cbf';
@@ -67,7 +68,6 @@ function init_graph_var(){
 
     graph_deceased.style.background='#005cbf';
     graph_deceased_status = false;
-
 }
 
 
@@ -88,17 +88,15 @@ function drawMainGraph(json_data)
     let alt_y_deceased = [];
     let alt_y_pre_deceased = [];
 
+    // Default button is deceases
     graph_deceased_status = true;
     graph_deceased.style.background='#d73541';
+
 
     for (let x in Array.range(0, graph_data_total["D"].length - 1))
     {
         alt_x.push(parseInt(x));
         alt_y_deceased.push(graph_data_total["D"][x]);
-    }
-
-    for (let x in Array.range(0, graph_data_total["D"].length - 1))
-    {
         alt_y_exposed.push(graph_data_total["E"][x]);
         alt_y_asymtomatic.push(graph_data_total["A"][x]);
         alt_y_infected.push(graph_data_total["I"][x]);
@@ -200,43 +198,35 @@ function drawMainGraph(json_data)
     let config = {responsive: true};
     let layout = {
       title: 'Covid 19 Graph (Overall)',
+      //width: 1000,
+      height: 546,
       margin: {
         l: 35,
         r: 5,
         b: 20,
         t: 30,
       },
+      shapes: [{
+            type: 'line',
+            x0: 0,
+            y0: 0,
+            x1: 0,
+            y1: 1,
+            yref: 'paper',
+            line: {
+              color: 'grey',
+              width: 1.5,
+              dash: 'dot'
+            }}],
       paper_bgcolor: '#ffffff',
       plot_bgcolor: '#c7c7c7',
       legend: { orientation: 'h', site: 'top'},
-      shapes: [
-            {
-
-      type: 'line',
-
-      x0: 50,
-
-      y0: 0,
-
-      x1: 50,
-
-      y1: 2000,
-
-      line: {
-
-        color: 'rgb(55, 128, 191)',
-
-        width: 3
-
-      }
-
-    },
-        ]
     };
 
 
     Plotly.newPlot(div_graph_total, [trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8], layout, config);
 }
+
 
 // Listeners for button graph generators
 
@@ -263,39 +253,7 @@ graph_exposed.addEventListener("click", function() {
 
     }
 
-    var update ={
-        shapes: [
-            {
-
-      type: 'line',
-
-      x0: 50,
-
-      y0: 0,
-
-      x1: 50,
-
-      y1: 2000,
-
-      line: {
-
-        color: 'rgb(55, 128, 191)',
-
-        width: 3
-
-      }
-
-    },
-        ]
-    }
-
-    Plotly.restyle(div_graph_total, update);
-    console.log("*************************");
-    console.log(div_graph_total.data);
-    console.log(div_graph_total.layout);
-    console.log("*************************");
-
-
+    drawTimestepLine();
 });
 
 graph_asymtomatic.addEventListener("click", function() {
@@ -319,6 +277,8 @@ graph_asymtomatic.addEventListener("click", function() {
         };
         Plotly.restyle(div_graph_total, update, [2]);
     }
+
+    drawTimestepLine();
 
 });
 
@@ -344,6 +304,8 @@ graph_infected.addEventListener("click", function() {
         Plotly.restyle(div_graph_total, update, [3]);
     }
 
+    drawTimestepLine();
+
 });
 
 graph_pre_hospitalized.addEventListener("click", function() {
@@ -367,6 +329,8 @@ graph_pre_hospitalized.addEventListener("click", function() {
         };
         Plotly.restyle(div_graph_total, update, [4]);
     }
+
+    drawTimestepLine();
 
 });
 
@@ -392,6 +356,8 @@ graph_pre_deceased.addEventListener("click", function() {
         Plotly.restyle(div_graph_total, update, [7]);
     }
 
+    drawTimestepLine();
+
 });
 
 graph_recovered.addEventListener("click", function() {
@@ -415,6 +381,8 @@ graph_recovered.addEventListener("click", function() {
         };
         Plotly.restyle(div_graph_total, update, [5]);
     }
+
+    drawTimestepLine();
 
 });
 
@@ -440,6 +408,8 @@ graph_hospitalized_icu.addEventListener("click", function() {
         Plotly.restyle(div_graph_total, update, [6]);
     }
 
+    drawTimestepLine();
+
 });
 
 graph_deceased.addEventListener("click", function() {
@@ -464,4 +434,27 @@ graph_deceased.addEventListener("click", function() {
         Plotly.restyle(div_graph_total, update, [0]);
     }
 
+    drawTimestepLine();
+
 });
+
+// Draw a vertical dashed line for the actual timestep.
+function drawTimestepLine(){
+    let update = {
+        shapes: [{
+            type: 'line',
+            x0: parseInt(document.getElementById('time_steps_range').value),
+            y0: 0,
+            x1: parseInt(document.getElementById('time_steps_range').value),
+            y1: 1,
+            yref: 'paper',
+            line: {
+              color: 'grey',
+              width: 3.5,
+              dash: 'dot'
+            }
+        }]
+    }
+
+    Plotly.relayout(div_graph_total, update);
+}

@@ -263,10 +263,6 @@ document.getElementById('init_simulation').addEventListener("click", function(){
     document.getElementById('time_steps_range').setAttribute('disabled', true);
     document.getElementById('init_simulation').disabled = true;
 
-    console.log("************************");
-    console.log(lockdown_info);
-    console.log("************************");
-
     $.ajax({
     type: "GET",
     url: "api/simulation",
@@ -290,7 +286,8 @@ document.getElementById('init_simulation').addEventListener("click", function(){
         document.getElementById('time_steps_range').removeAttribute('disabled');
         document.getElementById('time_steps_range').setAttribute('value', 0);
 
-        document.getElementById('infected_id').innerText = data['results']['total_states']['I'][0];
+        //document.getElementById('infected_id').innerText = data['results']['total_states']['I'][0];
+        document.getElementById('infected_id').innerText = 0;
         document.getElementById('deaths_id').innerText = data['results']['total_states']['D'][0];
         document.getElementById('cases_id').innerText = data['results']['total_states']['S'][0];
         document.getElementById('icus_id').innerText = data['results']['total_states']['PD'][0];
@@ -330,6 +327,6 @@ document.getElementById('time_steps_range').addEventListener('input', function()
     document.getElementById('icus_id').innerText = Math.trunc(json_data_map['results']['total_states']['PD'][document.getElementById('time_steps_range').value]);
 
     // stats for stratas
-
-    redrawMap(document.getElementById('time_steps_range').value)
+    //redrawMap(document.getElementById('time_steps_range').value)
+    drawTimestepLine();
 });

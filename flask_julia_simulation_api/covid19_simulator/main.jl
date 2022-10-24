@@ -274,25 +274,6 @@ function generate_simulation(json_params)
         δs = [0.0]
     end
 
-    println("******************************************")
-    println(tᶜs)
-    println("******************************************")
-    println(κ₀s)
-    println("******************************************")
-    println(ϕs)
-    println("******************************************")
-    println(δs)
-    println("******************************************")
-    println(Dict(JSON.parse(json_params["lockdown_info"])))
-    println("******************************************")
-    println(length(Dict(JSON.parse(json_params["lockdown_info"]))))
-    println("******************************************")
-
-
-
-
-
-
     # No containment as particular case of multiple containments # <----------------------------------------------
     #tᶜs = [-1]
     #κ₀s = [0.0]

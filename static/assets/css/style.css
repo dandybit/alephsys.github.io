@@ -686,13 +686,13 @@ pre{
   padding-left: 0;
 }
 .ms-has-quickbar .body-content{
-  padding-right: 60px;
+  padding-right: 0px;
 }
 .ms-aside-open .body-content{
   padding-left: 255px;
 }
 .ms-content-wrapper{
-  padding: 30px;
+  padding: 20px;
 }
 .has-chevron{
   position: relative;
@@ -833,9 +833,7 @@ pre{
   background: transparent;
   color: #374eae;
 }
-.ms-navbar .ms-nav-link{
-  padding:
-}
+
 .ms-aside-toggler,
 .ms-nav-toggler{
   padding: .25rem .75rem;
@@ -953,7 +951,7 @@ body:not(.ms-aside-left-open) .ms-aside-toggler .ms-toggler-bar{
   left: 0;
   display: flex;
   flex-direction: column;
-  width: 255px;
+  width: 210px;
   margin: 0;
   height: 100%;
   float: left;
@@ -1409,7 +1407,7 @@ a.ms-confirm-trigger:hover{
 @media ( max-width: 1024px ){
 
   .ms-content-wrapper{
-    padding: 1.5rem 15px;
+    padding: 0px;
   }
   .ms-d-block-lg{
     display: none;
@@ -2992,6 +2990,8 @@ input:checked + .ms-switch-slider.ms-switch-dark{
   color: #fff;
   background-color: #445cc8;
   border-color: #445cc8;
+  width: 100%;
+  padding: 0px;
 }
 .btn-secondary:hover,
 .btn-secondary:focus,
@@ -6589,7 +6589,8 @@ body.ms-dark-theme, .ms-dark-theme a,
     display: none;
   }
   .btn-group{
-    flex-direction: column;
+    flex-direction: row;
+    width: 100%;
   }
   .modal-footer{
     display: block;
