@@ -52,8 +52,20 @@ def request_json_map(request, *a, **kw):
     locations = [k for k in range(50)]
     nombre_comarques = []
 
+    dup = ''
+    dup_c = 1
     for local in locations:
-        json_map['features'][local]['id'] = local
+        #json_map['features'][local]['id'] = local
+        json_map['features'][local]['id'] = json_map['features'][local]['properties']['nom_comar']
+
+        if dup == json_map['features'][local]['properties']['nom_comar']:
+            json_map['features'][local]['id'] = (json_map['features'][local]['properties']['nom_comar']) + str(' ')
+            json_map['features'][local]['properties']['nom_comar'] = json_map['features'][local]['id']
+            dup_c += 1
+        else:
+            dup_c = 1
+            dup = json_map['features'][local]['properties']['nom_comar']
+
 
     for x in range(len(json_map['features'])):
         nombre_comarques.append(json_map['features'][x]['properties']['nom_comar'])

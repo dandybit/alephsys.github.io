@@ -9,8 +9,10 @@ function drawMap(data_covid) {
 
 		success: function (data_map) {
 
+            console.log(data_map);
+
             var data = [{
-                type: "choroplethmapbox", name: "Catalunya Comarques", geojson: data_map['map'], locations: data_map['test_data'],
+                type: "choroplethmapbox", name: "Catalunya Comarques", geojson: data_map['map'], locations: data_map['nom_comarques'],
             z: data_map['test_data'],
             zmin: 25, zmax: 280, colorbar: {y: 0, yanchor: "bottom", title: {text: "Catalunya Comarques", side: "right"}}}
              ];
