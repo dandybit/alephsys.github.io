@@ -4,39 +4,39 @@ Alt Penedès
 Alt Urgell
 Alta Ribagorça
 Anoia
-Val d'Aran
-Bages
-Baix Camp
-Baix Ebre
-Baix Empordà
-Baix Llobregat
-Baix Penedès
-Barcelonès
-Berguedà
-Cerdanya
-Conca de Barberà
-Garraf
-Garrigues
-Garrotxa
-Gironès
-Maresme
-Moianès
-Montsià
-Noguera
-Osona
-Pallars Jussà
-Pallars Sobirà
-Pla d'Urgell
-Pla de l'Estany
-Priorat
-Ribera d'Ebre
-Ripollès
-Segarra
-Segrià
-Selva
-Solsonès
-Tarragonès
-Terra Alta
-Urgell
-Vallès Occidental
+Val d'Aran #
+Bages #
+Baix Camp # 9
+Baix Ebre # 10
+Baix Empordà # 11
+Baix Llobregat # 12
+Baix Penedès # 13
+Barcelonès # 14
+Berguedà # 15
+Cerdanya # 16
+Conca de Barberà # 17
+Garraf # 18
+Garrigues # 19
+Garrotxa # 20
+Gironès # 21
+Maresme # 22
+Moianès # 23 --<?
+Montsià # 24
+Noguera # 25
+Osona #26
+Pallars Jussà # 27
+Pallars Sobirà # 28
+Pla d'Urgell # 29
+Pla de l'Estany #30
+Priorat #31
+Ribera d'Ebre #32
+Ripollès # 33
+Segarra # 34
+Segrià # 35
+Selva # 36
+Solsonès # 37
+Tarragonès #38
+Terra Alta #39
+Urgell # 40
+Vallès Occidental # 41
 Vallès Oriental

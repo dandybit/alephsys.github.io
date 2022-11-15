@@ -119,58 +119,58 @@ population = {
     "Alt Urgell": 20240,
     "Alta Ribagorça": 3972,
     "Anoia": 124399,
-    "Bages": 179770 + 4703,
-    "Baix Camp": 196718,
-    "Baix Ebre": 78953,
-    "Baix Empordà": 135555,
-    "Baix Llobregat": 828732,
-    "Baix Penedès": 110086,
-    "Barcelonès": 2283173,
-    "Barcelonès ": 2283173,
-    "Berguedà": 40009,
-    "Berguedà ": 40009,
-    "Cerdanya": 19107,
-    "Cerdanya ": 19107,
-    "Conca de Barberà": 19990,
-    "Garraf": 152192,
-    "Garrigues": 19085,
-    "Garrotxa": 58100,
-    "Gironès": 191798,
-    "Maresme": 455504,
+    "Bages": 179770 + 4703, # <--
+    "Baix Camp": 196718, # <-- 7
+    "Baix Ebre": 78953, # <-- 8
+    "Baix Empordà": 135555, # <-- 9
+    "Baix Llobregat": 828732, # <-- 10
+    "Baix Penedès": 110086, # <-- 11
+    "Barcelonès": 2283173, # <-- 12
+    "Barcelonès ": 2283173, # <-- 13
+    "Berguedà": 40009, # <-- 14
+    "Berguedà ": 40009, # <-- 15
+    "Cerdanya": 19107, # <-- 16
+    "Cerdanya ": 19107, # <-- 17
+    "Conca de Barberà": 19990, # <-- 18
+    "Garraf": 152192, # <-- 19
+    "Garrigues": 19085, # <-- 20
+    "Garrotxa": 58100, # <-- 21
+    "Gironès": 191798, # <-- 22
+    "Maresme": 455504, # <-- 23
     #"Moianès": 14110, #? valles oriental, Bages y osona
-    "Montsià": 69494,
-    "Noguera": 38649,
-    "Osona": 162499 + 4703,
-    "Pallars Jussà": 12994,
-    "Pallars Jussà ": 12994,
-    "Pallars Sobirà": 7099,
-    "Pla d'Urgell": 37532,
-    "Pla d'Urgell ": 37532,
-    "Pla de l'Estany": 32673,
-    "Priorat": 9223,
-    "Ribera d'Ebre": 21641,
-    "Ripollès": 25352,
-    "Ripollès ": 25352,
-    "Segarra": 23028,
-    "Segrià": 208510,
-    "Segrià ": 208510,
-    "Selva": 172416,
-    "Solsonès": 13897,
-    "Solsonès ": 13897,
-    "Tarragonès": 264320,
-    "Terra Alta": 11302,
-    "Urgell": 37235,
-    "Urgell ": 37235,
-    "Val d'Aran": 10265,
-    "Vallès Occidental": 938516,
-    "Vallès Oriental": 415491 + 4703,
+    "Montsià": 69494, # <-- 24
+    "Noguera": 38649, # <-- 25
+    "Osona": 162499 + 4703, # <-- 26
+    "Pallars Jussà": 12994, # <-- 27
+    "Pallars Jussà ": 12994, # <-- 28
+    "Pallars Sobirà": 7099, # <-- 29
+    "Pla d'Urgell": 37532, # <-- 30
+    "Pla d'Urgell ": 37532, # <-- 31
+    "Pla de l'Estany": 32673, # <--32
+    "Priorat": 9223, # <-- 33
+    "Ribera d'Ebre": 21641, # <-- 34
+    "Ripollès": 25352, # <-- 35
+    "Ripollès ": 25352, # <-- 36
+    "Segarra": 23028, # <-- 37
+    "Segrià": 208510, # <-- 38
+    "Segrià ": 208510, # <-- 39
+    "Selva": 172416, # <-- 40
+    "Solsonès": 13897, # <-- 41
+    "Solsonès ": 13897, # <--42
+    "Tarragonès": 264320, # <-- 43
+    "Terra Alta": 11302,# <-- 44
+    "Urgell": 37235, # <-- 45
+    "Urgell ": 37235, # <-- 46
+    "Val d'Aran": 10265, # <-- 47
+    "Vallès Occidental": 938516, # <-- 48
+    "Vallès Oriental": 415491 + 4703, # <--49
 }
 
 cat_total = 0
 for comarca in population:
     cat_total += population[comarca]
 #print(cat_total)
-#print(len(population))
+print(len(population))
 
 final_list = []
 

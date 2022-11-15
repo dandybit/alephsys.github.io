@@ -198,8 +198,8 @@ function drawMainGraph(json_data)
     let config = {responsive: true};
     let layout = {
       title: 'Covid 19 Graph (Overall)',
-      //width: 1000,
-      height: 546,
+      //width: 3000,
+      //height: 546,
       margin: {
         l: 35,
         r: 5,
