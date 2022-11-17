@@ -1,6 +1,22 @@
 div_map = document.getElementById('map');
 
+// Map data
+let data_map_draw = ''
+let data_map_covid = ''
 
+// Buttons ids strata
+let strata_1_button = document.getElementById('button_strata_1');
+strata_1_button.style.background='#d73541';
+let strata_2_button = document.getElementById('button_strata_2');
+let strata_3_button = document.getElementById('button_strata_3');
+
+// Buttons control
+let strata_1_button_status = true;
+let strata_2_button_status = false;
+let strata_3_button_status = false;
+
+
+// Get the strata data from GET petition and preprocess data.
 function requestDataStrata(data, mode){
     let barrier_mode = false;
     let data_pre = data;
@@ -29,14 +45,11 @@ function requestDataStrata(data, mode){
         }
     }
 
-    //console.log(strata_1);
-    //console.log(strata_2);
-    //console.log(strata_3);
-
     let strata_1_final = {};
     let strata_2_final = {};
     let strata_3_final = {};
-    // reindex
+
+    // reindex data from mao.
     for(let id_comar in Array.from({length: 3}, (x, i) => i)){
         if(id_comar === '0'){
             strata_1_final[0] = strata_1[1];
@@ -197,15 +210,95 @@ function requestDataStrata(data, mode){
 
     }
 
-
     return {'strata_1': strata_1_final, 'strata_2': strata_2_final, 'strata_3': strata_3_final}
 }
 
-function redrawMap(data){
+// Update map.
+function redrawMap(){
+    // Default value infected
+    let data_mode = 'I'
+
+    // check mode data.
+    if(graph_map_exposed_status === true){
+        data_mode = 'E';
+    }
+    else if(graph_map_asymtomatic_status === true){
+        data_mode = 'A';
+    }
+    else if(graph_map_infected_status === true){
+        data_mode = 'I';
+    }
+    else if(graph_map_pre_hospitalized_status === true){
+        data_mode = 'PH';
+    }
+    else if(graph_map_pre_deceased_status === true){
+        data_mode = 'PD';
+    }
+    else if(graph_map_recovered_status === true){
+        data_mode = 'R';
+    }
+    else if(graph_map_hospitalized_icu_status === true){
+        data_mode = 'HD';
+    }
+    else if(graph_map_deceased_status === true){
+        data_mode = 'D';
+    }
+
+    let data_infected = data_map_covid['results']['compartmental_evolution'];
+    data_infected = requestDataStrata(data_infected, data_mode);
+
+    let strata_select = checkStrataSelect();
+
+
+    let data_display = Array(50).fill(0);
+    let label_display = Array(50).fill('');
+    let counter_data = 0;
+    let round_number;
+
+    for(let strata_n of strata_select){
+        for(let data_strata in data_infected[strata_n]){
+            round_number = Number((data_infected[strata_n][data_strata][document.getElementById('time_steps_range').value]).toFixed(1));
+            data_display[counter_data] += round_number;
+            label_display[counter_data] += strata_n + ": " + round_number.toString() + ", ";
+            counter_data += 1;
+        }
+        counter_data = 0;
+    }
+
+    let max_value = Math.max(data_display);
+    let min_value = Math.min(data_display);
+
+
+    drawMapGraph(data_infected, data_mode);
+
+
+    var data = [{
+    type: 'choropleth', geojson: data_map_draw['map'], locations: data_map_draw['nom_comarques'],
+    z: data_display, text: label_display, zmin: min_value, zmax: max_value,
+    },];
+
+    var layout = {
+        style: "dark",
+        margin: {l:0, r:0, b:0, t:0},
+        geo: {showframe: false, showcoastlines: false, center: {lon: 1.670047, lat: 41.687016},
+          projection: { scale: 110},
+            "lataxis": {"dtick": 10, "range": [-300, -100], "tick0": 15, "showgrid": false},
+            "lonaxis": {"dtick": 30, "range": [-50, 10], "tick0": -180, "showgrid": false},
+        },
+
+    }
+
+    //var config = {responsive: true};
+
+    Plotly.newPlot(div_map, data, layout, {showLink: false});
+
 
 }
 
-//Request map from server
+
+
+
+// Request map from server. Initial draw.
 function drawMap(data_covid) {
 
 	$.ajax({
@@ -214,8 +307,8 @@ function drawMap(data_covid) {
 
 		success: function (data_map) {
 
-            //console.log(data_map);
-            //console.log(data_covid['results']['compartmental_evolution']);
+            data_map_draw = data_map;
+            data_map_covid = data_covid;
 
             let data_infected = data_covid['results']['compartmental_evolution'];
             data_infected = requestDataStrata(data_infected, "I");
@@ -224,22 +317,6 @@ function drawMap(data_covid) {
             for(let datax in data_infected['strata_1']){
                 data_display.push(data_infected['strata_1'][datax][0])
             }
-            console.log("***");
-            console.log(data_map['test_data']);
-            console.log(data_display);
-            console.log("***");
-
-            var data = [{
-                type: "choroplethmapbox", name: "Catalunya Comarques", geojson: data_map['map'], locations: data_map['nom_comarques'],
-            z: data_display,
-            zmin: 25, zmax: 280, colorbar: {y: 0, yanchor: "bottom", title: {text: "Catalunya Comarques", side: "right"}}}
-             ];
-
-            var layout = {mapbox: {style: "dark", center: {lon: 1.670047, lat: 41.687016}, zoom: 6.8}, margin: {l:0, r:0, b:0, t:0}};
-
-            var config = {mapboxAccessToken:"pk.eyJ1IjoiZGFuZHlsaW9uIiwiYSI6ImNrdWUyczE5MDA4Z24yd3FrdnVxNXNvdTMifQ.9267FYgF4tibdnqHBCiLiA", responsive: false};
-
-            Plotly.newPlot(div_map, data, layout, config);
 		},
 	});
 
@@ -247,3 +324,55 @@ function drawMap(data_covid) {
 
 
 
+// Strata buttons event functions,
+strata_1_button.addEventListener("click", function() {
+    if(strata_1_button_status === false){
+        strata_1_button_status = true;
+        strata_1_button.style.background='#d73541';
+    }
+    else{
+        strata_1_button_status = false;
+        strata_1_button.style.background='#005cbf';
+    }
+    redrawMap();
+});
+
+strata_2_button.addEventListener("click", function() {
+    if(strata_2_button_status === false){
+        strata_2_button_status = true;
+        strata_2_button.style.background='#d73541';
+    }
+    else{
+        strata_2_button_status = false;
+        strata_2_button.style.background='#005cbf';
+    }
+    redrawMap();
+});
+
+strata_3_button.addEventListener("click", function() {
+    if(strata_3_button_status === false){
+        strata_3_button_status = true;
+        strata_3_button.style.background='#d73541';
+    }
+    else{
+        strata_3_button_status = false;
+        strata_3_button.style.background='#005cbf';
+    }
+    redrawMap();
+});
+
+
+function checkStrataSelect(){
+    let return_status = [];
+    if(strata_1_button_status === true){
+        return_status.push("strata_1");
+    }
+    if(strata_2_button_status === true){
+        return_status.push("strata_2");
+    }
+    if(strata_3_button_status === true){
+        return_status.push("strata_3");
+    }
+
+    return return_status;
+}

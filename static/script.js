@@ -298,7 +298,7 @@ document.getElementById('init_simulation').addEventListener("click", function(){
         drawMap(data);
         //Redraw graphs for the new simulation
         drawMainGraph(data);
-        drawMapGraph(data);
+        drawMapGraph(data, 'I');
 
         setTimeout(function(){
          document.getElementById('init_simulation').disabled = false;
@@ -331,4 +331,5 @@ document.getElementById('time_steps_range').addEventListener('input', function()
     //redrawMap(document.getElementById('time_steps_range').value)
     drawTimestepLine();
     drawTimestepLineMap();
+    redrawMap();
 });

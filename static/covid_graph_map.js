@@ -16,7 +16,7 @@ let graph_map_deceased_status = false;
 let graph_map_exposed = document.getElementById('button_exposed_strata_graph_map');
 let graph_map_asymtomatic = document.getElementById('button_asymtomatic_strata_graph_map');
 let graph_map_infected = document.getElementById('button_infected_strata_graph_map');
-let graph_map_pre_hospitalized = document.getElementById('button_hospitalized_strata_graph');
+let graph_map_pre_hospitalized = document.getElementById('button_hospitalized_strata_graph_map');
 let graph_map_pre_deceased = document.getElementById('button_pre_deceased_strata_graph_map');
 let graph_map_recovered = document.getElementById('button_recovered_strata_graph_map');
 let graph_map_hospitalized_icu = document.getElementById('button_hospitalized_icu_strata_graph_map');
@@ -103,7 +103,7 @@ function clearButtons(){
 }
 
 // First time draw graph.
-function drawMapGraph(json_data)
+function drawMapGraph(json_data, data_mode)
 {
     init_map_graph_var();
     graph_map_data_total = json_data["results"]["total_states"];
@@ -229,7 +229,7 @@ function drawMapGraph(json_data)
     let layout = {
       title: 'Covid 19 Graph (Overall)',
       //width: 3000,
-      //height: 546,
+      height: 572,
       margin: {
         l: 35,
         r: 5,

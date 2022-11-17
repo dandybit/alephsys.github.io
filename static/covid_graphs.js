@@ -199,7 +199,7 @@ function drawMainGraph(json_data)
     let layout = {
       title: 'Covid 19 Graph (Overall)',
       //width: 3000,
-      //height: 546,
+      height: 850,
       margin: {
         l: 35,
         r: 5,
