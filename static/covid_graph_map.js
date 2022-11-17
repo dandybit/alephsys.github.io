@@ -5,7 +5,8 @@ let graph_map_data_total;
 // Registers of buttons
 let graph_map_exposed_status = false;
 let graph_map_asymtomatic_status = false;
-let graph_map_infected_status = false;
+// Default value
+let graph_map_infected_status = true;
 let graph_map_pre_hospitalized_status = false;
 let graph_map_pre_deceased_status = false;
 let graph_map_recovered_status = false;
@@ -22,20 +23,18 @@ let graph_map_recovered = document.getElementById('button_recovered_strata_graph
 let graph_map_hospitalized_icu = document.getElementById('button_hospitalized_icu_strata_graph_map');
 let graph_map_deceased = document.getElementById('button_deceased_strata_graph_map');
 
+
 // Traces reference
 let trace1_map;
 let trace2_map;
 let trace3_map;
-let trace4_map;
-let trace5_map;
-let trace6_map;
-let trace7_map;
-let trace8_map;
+
 
 // First button color draw
 graph_map_exposed.style.background = '#005cbf';
 graph_map_asymtomatic.style.background = '#005cbf';
-graph_map_infected.style.background = '#005cbf';
+// Default value
+graph_map_infected.style.background='#d73541';
 graph_map_pre_hospitalized.style.background= '#005cbf';
 graph_map_pre_deceased.style.background = '#005cbf';
 graph_map_recovered.style.background = '#005cbf';
@@ -103,131 +102,99 @@ function clearButtons(){
 }
 
 // First time draw graph.
-function drawMapGraph(json_data, data_mode)
+function drawMapGraph(json_data, strata_select)
 {
-    init_map_graph_var();
-    graph_map_data_total = json_data["results"]["total_states"];
+    //init_map_graph_var();
+    //graph_map_data_total = json_data["results"]["total_states"];
 
-    let alt_x = [];
-    let alt_y_exposed = [];
-    let alt_y_asymtomatic = [];
-    let alt_y_infected = [];
-    let alt_y_pre_hospitalized = [];
-    let alt_y_recovered = [];
-    let alt_y_hospitalized_icu = [];
-    let alt_y_deceased = [];
-    let alt_y_pre_deceased = [];
+    console.log(json_data)
 
-    // Default button is deceases
-    graph_map_deceased_status = true;
-    graph_map_deceased.style.background='#d73541';
+    let strata_1_y = Array(simulator_steps).fill(0);
+    let strata_2_y = Array(simulator_steps).fill(0);
+    let strata_3_y = Array(simulator_steps).fill(0);
+
+    let strata_1_display = false;
+    let strata_2_display = false;
+    let strata_3_display = false;
+
+    let counter_pos = 0;
 
 
-    for (let x in Array.range(0, graph_map_data_total["D"].length - 1))
-    {
-        alt_x.push(parseInt(x));
-        alt_y_deceased.push(graph_map_data_total["D"][x]);
-        alt_y_exposed.push(graph_map_data_total["E"][x]);
-        alt_y_asymtomatic.push(graph_map_data_total["A"][x]);
-        alt_y_infected.push(graph_map_data_total["I"][x]);
-        alt_y_pre_hospitalized.push(graph_map_data_total["PH"][x]);
-        alt_y_recovered.push(graph_map_data_total["R"][x]);
-        alt_y_hospitalized_icu.push(graph_map_data_total["HD"][x]);
-        alt_y_pre_deceased.push(graph_map_data_total["PD"][x]);
+    for(let strata_i in json_data){
+        for(let strata_d in json_data[strata_i]){
+            for(let strata_pos in json_data[strata_i][strata_d]) {
+                if (strata_i === 'strata_1') {
+                    strata_1_y[counter_pos] += json_data[strata_i][strata_d][strata_pos];
+                    strata_1_display = true;
+                }
+                if (strata_i === 'strata_2') {
+                    strata_2_y[counter_pos] += json_data[strata_i][strata_d][strata_pos];
+                    strata_2_display = true;
+                }
+                if (strata_i === 'strata_3') {
+                    strata_3_y[counter_pos] += json_data[strata_i][strata_d][strata_pos];
+                    strata_3_display = true;
+                }
+                counter_pos += 1;
+            }
+            counter_pos = 0;
+        }
     }
 
-    trace1_map = {
+
+
+    let alt_x = Array.from({length: strata_1_y.length}, (x, i) => i);
+
+    let array_display = [];
+
+    if(strata_1_display === true){
+        trace1_map = {
         type: "scatter",
         mode: "lines",
-        name: "Deceased",
+        name: "<=25 years",
         visible: "true",
 
         x: alt_x,
-        y: alt_y_deceased,
+        y: strata_1_y,
         line: {color: '#000000'}
     };
+        array_display.push(trace1_map);
+    }
 
-    trace2_map = {
+
+    if(strata_2_display === true){
+        trace2_map = {
         type: "scatter",
         mode: "lines",
-        name: "Exposed",
-        visible: "legendonly",
+        name: "<= 65 years",
+        visible: "true",
 
         x: alt_x,
-        y: alt_y_exposed,
+        y: strata_2_y,
         line: {color: '#8c00ff'}
-    };
+        };
+        array_display.push(trace2_map);
+    }
 
-    trace3_map = {
+    if(strata_3_display === true){
+        trace3_map = {
         type: "scatter",
         mode: "lines",
-        name: "Asymtomatic",
-        visible: "legendonly",
+        name: ">=66 years",
+        visible: "true",
 
         x: alt_x,
-        y: alt_y_asymtomatic,
+        y: strata_3_y,
         line: {color: '#e6ff00'}
-    };
+        };
+        array_display.push(trace3_map);
+    }
 
-    trace4_map = {
-        type: "scatter",
-        mode: "lines",
-        name: "Infected",
-        visible: "legendonly",
-
-        x: alt_x,
-        y: alt_y_infected,
-        line: {color: '#08ff00'}
-    };
-
-    trace5_map = {
-        type: "scatter",
-        mode: "lines",
-        name: "Pre Hospitalized",
-        visible: "legendonly",
-
-        x: alt_x,
-        y: alt_y_pre_hospitalized,
-        line: {color: '#ee00ff'}
-    };
-
-    trace6_map = {
-        type: "scatter",
-        mode: "lines",
-        name: "Recovered",
-        visible: "legendonly",
-
-        x: alt_x,
-        y: alt_y_recovered,
-        line: {color: '#000dff'}
-    };
-
-    trace7_map = {
-        type: "scatter",
-        mode: "lines",
-        name: "Hospitalized Icu",
-        visible: "legendonly",
-
-        x: alt_x,
-        y: alt_y_hospitalized_icu,
-        line: {color: '#ff6800'}
-    };
-
-    trace8_map = {
-        type: "scatter",
-        mode: "lines",
-        name: "Pre Deceased",
-        visible: "legendonly",
-
-        x: alt_x,
-        y: alt_y_pre_deceased,
-        line: {color: '#ff0000'}
-    };
 
 
     let config = {responsive: true};
     let layout = {
-      title: 'Covid 19 Graph (Overall)',
+      title: 'Covid 19 Graph (Strata)',
       //width: 3000,
       height: 572,
       margin: {
@@ -254,7 +221,9 @@ function drawMapGraph(json_data, data_mode)
     };
 
 
-    Plotly.newPlot(div_graph_map_total, [trace1_map, trace2_map, trace3_map, trace4_map, trace5_map, trace6_map, trace7_map, trace8_map], layout, config);
+    Plotly.purge(div_graph_map_total);
+    Plotly.newPlot(div_graph_map_total, array_display, layout, config);
+    drawTimestepLineMap();
 }
 
 
@@ -268,22 +237,9 @@ graph_map_exposed.addEventListener("click", function() {
 
         graph_map_exposed.style.background='#d73541';
         graph_map_exposed_status = true;
-
-        var update = {
-             visible: "true",
-        };
-        Plotly.restyle(div_graph_map_total, update, [1]);
+        redrawMap();
     }
-    else {
-        graph_map_exposed.style.background='#005cbf';
-        graph_map_exposed_status = false;
 
-        var update = {
-             visible: "legendonly",
-        };
-        Plotly.restyle(div_graph_map_total, update, [1]);
-
-    }
 
     drawTimestepLineMap();
 });
@@ -296,21 +252,9 @@ graph_map_asymtomatic.addEventListener("click", function() {
 
         graph_map_asymtomatic.style.background='#d73541';
         graph_map_asymtomatic_status = true;
-
-        var update = {
-             visible: "true",
-        };
-        Plotly.restyle(div_graph_map_total, update, [2]);
+        redrawMap();
     }
-    else {
-        graph_map_asymtomatic.style.background='#005cbf';
-        graph_map_asymtomatic_status = false;
 
-        var update = {
-             visible: "legendonly",
-        };
-        Plotly.restyle(div_graph_map_total, update, [2]);
-    }
 
     drawTimestepLineMap();
 
@@ -324,20 +268,7 @@ graph_map_infected.addEventListener("click", function() {
 
         graph_map_infected.style.background='#d73541';
         graph_map_infected_status = true;
-
-        var update = {
-             visible: "true",
-        };
-        Plotly.restyle(div_graph_map_total, update, [3]);
-    }
-    else {
-        graph_map_infected.style.background='#005cbf';
-        graph_map_infected_status = false;
-
-        var update = {
-             visible: "legendonly",
-        };
-        Plotly.restyle(div_graph_map_total, update, [3]);
+        redrawMap();
     }
 
     drawTimestepLineMap();
@@ -352,20 +283,7 @@ graph_map_pre_hospitalized.addEventListener("click", function() {
 
         graph_map_pre_hospitalized.style.background='#d73541';
         graph_map_pre_hospitalized_status = true;
-
-        var update = {
-             visible: "true",
-        };
-        Plotly.restyle(div_graph_map_total, update, [4]);
-    }
-    else {
-        graph_map_pre_hospitalized.style.background='#005cbf';
-        graph_map_pre_hospitalized_status = false;
-
-        var update = {
-             visible: "legendonly",
-        };
-        Plotly.restyle(div_graph_map_total, update, [4]);
+        redrawMap();
     }
 
     drawTimestepLineMap();
@@ -380,20 +298,7 @@ graph_map_pre_deceased.addEventListener("click", function() {
 
         graph_map_pre_deceased.style.background='#d73541';
         graph_map_pre_deceased_status = true;
-
-        var update = {
-             visible: "true",
-        };
-        Plotly.restyle(div_graph_map_total, update, [7]);
-    }
-    else {
-        graph_map_pre_deceased.style.background='#005cbf';
-        graph_map_pre_deceased_status = false;
-
-        var update = {
-             visible: "legendonly",
-        };
-        Plotly.restyle(div_graph_map_total, update, [7]);
+        redrawMap();
     }
 
     drawTimestepLineMap();
@@ -409,19 +314,7 @@ graph_map_recovered.addEventListener("click", function() {
         graph_map_recovered.style.background='#d73541';
         graph_map_recovered_status = true;
 
-        var update = {
-             visible: "true",
-        };
-        Plotly.restyle(div_graph_map_total, update, [5]);
-    }
-    else {
-        graph_map_recovered.style.background='#005cbf';
-        graph_map_recovered_status = false;
-
-        var update = {
-             visible: "legendonly",
-        };
-        Plotly.restyle(div_graph_map_total, update, [5]);
+        redrawMap();
     }
 
     drawTimestepLineMap();
@@ -436,20 +329,7 @@ graph_map_hospitalized_icu.addEventListener("click", function() {
 
         graph_map_hospitalized_icu.style.background='#d73541';
         graph_map_hospitalized_icu_status = true;
-
-        var update = {
-             visible: "true",
-        };
-        Plotly.restyle(div_graph_map_total, update, [6]);
-    }
-    else {
-        graph_map_hospitalized_icu.style.background='#005cbf';
-        graph_map_hospitalized_icu_status = false;
-
-        var update = {
-             visible: "legendonly",
-        };
-        Plotly.restyle(div_graph_map_total, update, [6]);
+        redrawMap();
     }
 
     drawTimestepLineMap();
@@ -464,20 +344,7 @@ graph_map_deceased.addEventListener("click", function() {
 
         graph_map_deceased.style.background='#d73541';
         graph_map_deceased_status = true;
-
-        var update = {
-             visible: "true",
-        };
-        Plotly.restyle(div_graph_map_total, update, [0]);
-    }
-    else {
-        graph_map_deceased.style.background='#005cbf';
-        graph_map_deceased_status = false;
-
-        var update = {
-             visible: "legendonly",
-        };
-        Plotly.restyle(div_graph_map_total, update, [0]);
+        redrawMap();
     }
 
     drawTimestepLineMap();

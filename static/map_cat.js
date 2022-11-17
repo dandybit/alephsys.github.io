@@ -259,7 +259,15 @@ function redrawMap(){
         for(let data_strata in data_infected[strata_n]){
             round_number = Number((data_infected[strata_n][data_strata][document.getElementById('time_steps_range').value]).toFixed(1));
             data_display[counter_data] += round_number;
-            label_display[counter_data] += strata_n + ": " + round_number.toString() + ", ";
+            if(strata_n === 'strata_1'){
+                label_display[counter_data] += '(<=25) years' + ":" + round_number.toString() + "<br>";
+            }
+            else if(strata_n === 'strata_2'){
+                label_display[counter_data] += '(<= 65) years' + ":" + round_number.toString() + "<br>";
+            }
+            else{
+                label_display[counter_data] += '(>=66) years' + ":" + round_number.toString();
+            }
             counter_data += 1;
         }
         counter_data = 0;
@@ -269,7 +277,6 @@ function redrawMap(){
     let min_value = Math.min(data_display);
 
 
-    drawMapGraph(data_infected, data_mode);
 
 
     var data = [{
@@ -290,7 +297,16 @@ function redrawMap(){
 
     //var config = {responsive: true};
 
+    Plotly.purge(div_map);
     Plotly.newPlot(div_map, data, layout, {showLink: false});
+
+    let drawOnlyStrata = {};
+
+    for(let strata_id in strata_select){
+        drawOnlyStrata[strata_select[strata_id]] = data_infected[strata_select[strata_id]]
+    }
+
+    drawMapGraph(drawOnlyStrata);
 
 
 }
@@ -313,10 +329,11 @@ function drawMap(data_covid) {
             let data_infected = data_covid['results']['compartmental_evolution'];
             data_infected = requestDataStrata(data_infected, "I");
 
-            let data_display = []
             for(let datax in data_infected['strata_1']){
                 data_display.push(data_infected['strata_1'][datax][0])
             }
+
+            redrawMap();
 		},
 	});
 
