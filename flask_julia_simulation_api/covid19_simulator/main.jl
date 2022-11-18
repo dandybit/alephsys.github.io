@@ -263,7 +263,6 @@ function generate_simulation(json_params)
     # List of social distancings
     δs = Float64[]
 
-    parse(Int64, json_params["population"])
     for lockdown in Dict(JSON.parse(json_params["lockdown_info"]))
         # lockdown timesteps
         tᶜs = append!(tᶜs, [timestep for timestep in lockdown.second["init"]:lockdown.second["final"]])

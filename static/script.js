@@ -267,7 +267,8 @@ document.getElementById('init_simulation').addEventListener("click", function(){
     type: "GET",
     url: "api/simulation",
     data: {
-        "population": document.getElementById('population_id').value,
+        //"population": document.getElementById('population_id').value,
+        "population": 1,
         "timesteps": document.getElementById('timesteps_id').value,
         "lockdown_info": JSON.stringify(lockdown_info),
     },
@@ -295,6 +296,7 @@ document.getElementById('init_simulation').addEventListener("click", function(){
         //Process info for map
         //Redraw map for the new simulation
         //redrawMap(0);
+        document.getElementById('hidden_block').removeAttribute('hidden');
         drawMap(data);
         //Redraw graphs for the new simulation
         drawMainGraph(data);

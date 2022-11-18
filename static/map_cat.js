@@ -278,7 +278,6 @@ function redrawMap(){
 
 
 
-
     var data = [{
     type: 'choropleth', geojson: data_map_draw['map'], locations: data_map_draw['nom_comarques'],
     z: data_display, text: label_display, zmin: min_value, zmax: max_value,
@@ -325,14 +324,7 @@ function drawMap(data_covid) {
 
             data_map_draw = data_map;
             data_map_covid = data_covid;
-
-            let data_infected = data_covid['results']['compartmental_evolution'];
-            data_infected = requestDataStrata(data_infected, "I");
-
-            for(let datax in data_infected['strata_1']){
-                data_display.push(data_infected['strata_1'][datax][0])
-            }
-
+            console.log(strata_1_button_status);
             redrawMap();
 		},
 	});
