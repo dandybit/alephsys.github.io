@@ -197,7 +197,7 @@ function drawMainGraph(json_data)
 
     let config = {responsive: true};
     let layout = {
-      title: 'Covid 19 Graph (Overall)',
+      title: 'Covid 19 Graph (Comarques and Strata Overall)',
       //width: 3000,
       height: 850,
       margin: {

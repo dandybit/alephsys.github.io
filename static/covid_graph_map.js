@@ -194,7 +194,7 @@ function drawMapGraph(json_data, strata_select)
 
     let config = {responsive: true};
     let layout = {
-      title: 'Covid 19 Graph (Strata)',
+      title: 'Covid 19 Graph (Comarques Overall)',
       //width: 3000,
       height: 572,
       margin: {
