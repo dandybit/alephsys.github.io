@@ -104,7 +104,7 @@
              <div class="form-group">
                 <label>Timesteps</label>
                 <input id='timesteps_id' class="form-control"  aria-describedby="timesteps" placeholder="Number of timesteps" value="200" type="number" oninput="this.value = Math.round(this.value);">
-                <small id="population_help_id" class="form-text text-muted">You must introduce an integer for this field</small>
+                <small id="population_help_id" class="form-text text-muted">You must introduce an integer for this field (min: 0, max:500)</small>
               </div>
         </li>
         <!-- /Advanced UI Elements -->
@@ -354,7 +354,7 @@
 
 
     <!-- Body Content Wrapper -->
-    <div id="hidden_block" class="ms-content-wrapper" style="padding-left: 10px;" hidden>
+    <div id="hidden_block" class="ms-content-wrapper" style="padding-left: 10px;">
       <div class="row">
         <div class="col-xl-3 col-md-6" style="padding-left: 10px;">
           <div class="ms-card card-gradient-success ms-widget ms-infographics-widget">

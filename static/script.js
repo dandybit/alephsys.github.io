@@ -44,7 +44,7 @@ function checkValuesLockdown(){
         return -1
     }
 
-    else if (lockdown_info[index_objects.at(-1)]["final"] > 200){
+    else if (lockdown_info[index_objects.at(-1)]["final"] > document.getElementById('timesteps_id').value){
         alert("Final timestep lockdown must be lesser or equal to timesteps")
         return -1
     }
@@ -178,48 +178,48 @@ function processInfoMap(data)
 
 //add lockdonw button
 document.getElementById('lockdown_button').addEventListener("click", function(){
-  //console.log(document.getElementById('cat_map_id').getElementsByTagName('script'))
-  var parentElement = document.getElementById('form-elements');
-  var newElement = document.createElement('li');
-  var ulElement = document.createElement('ul');
-  ulElement.id = "lockdown_data_" + lockdown_data_count.toString();
-  var newElementChild = document.createElement('a');
-  var divContent = document.createElement("div");
-  var deleteButton = document.createElement("button");
-  deleteButton.setAttribute("class", "btn btn-danger");
-  deleteButton.setAttribute("type", "button");
-  deleteButton.innerText = "Delete";
-  deleteButton.setAttribute("id", lockdown_data_count);
+    //console.log(document.getElementById('cat_map_id').getElementsByTagName('script'))
+    var parentElement = document.getElementById('form-elements');
+    var newElement = document.createElement('li');
+    var ulElement = document.createElement('ul');
+    ulElement.id = "lockdown_data_" + lockdown_data_count.toString();
+    var newElementChild = document.createElement('a');
+    var divContent = document.createElement("div");
+    var deleteButton = document.createElement("button");
+    deleteButton.setAttribute("class", "btn btn-danger");
+    deleteButton.setAttribute("type", "button");
+    deleteButton.innerText = "Delete";
+    deleteButton.setAttribute("id", lockdown_data_count);
 
-  newElementChild.href = "#";
-  newElementChild.className = "has-chevron";
-  newElementChild.setAttribute("data-toggle", "collapse");
-  newElementChild.setAttribute("data-target", "#"+ulElement.id);
-  newElementChild.setAttribute("aria-expanded", "false");
-  newElementChild.setAttribute("aria-controls", ulElement.id);
+    newElementChild.href = "#";
+    newElementChild.className = "has-chevron";
+    newElementChild.setAttribute("data-toggle", "collapse");
+    newElementChild.setAttribute("data-target", "#"+ulElement.id);
+    newElementChild.setAttribute("aria-expanded", "false");
+    newElementChild.setAttribute("aria-controls", ulElement.id);
 
-  ulElement.setAttribute("class", "collapse");
-  ulElement.setAttribute("aria-labelledby", ulElement.id);
+    ulElement.setAttribute("class", "collapse");
+    ulElement.setAttribute("aria-labelledby", ulElement.id);
 
-  var init_time_step = document.getElementById("init_time_step").value;
-  var final_time_step = document.getElementById("final_time_step").value;
-  var lockdown_severity = document.getElementById("lockdown_severity").value;
-  var lockdown_type = document.getElementById("lockdown_select").value;
-  var lockdown_permeability = document.getElementById("lockdown_permeability").value;
-  var lockdown_distance = document.getElementById("lockdown_distance").value;
-  divContent.setAttribute("style", "text-align: center;");
-  newElement.setAttribute("style", "border:0.5px solid #FFFFFF;");
+    var init_time_step = document.getElementById("init_time_step").value;
+    var final_time_step = document.getElementById("final_time_step").value;
+    var lockdown_severity = document.getElementById("lockdown_severity").value;
+    var lockdown_type = document.getElementById("lockdown_select").value;
+    var lockdown_permeability = document.getElementById("lockdown_permeability").value;
+    var lockdown_distance = document.getElementById("lockdown_distance").value;
+    divContent.setAttribute("style", "text-align: center;");
+    newElement.setAttribute("style", "border:0.5px solid #FFFFFF;");
 
-  newElementChild.innerText = "init: " + init_time_step.toString() + " final: " + final_time_step.toString() + " m_reduction: " + lockdown_severity.toString();
-  divContent.innerText  = "Init: " + init_time_step.toString() +
+    newElementChild.innerText = "init: " + init_time_step.toString() + " final: " + final_time_step.toString() + " m_reduction: " + lockdown_severity.toString();
+    divContent.innerText  = "Init: " + init_time_step.toString() +
       "\n Final: " + final_time_step.toString() + "\n Mobility reduction: "
       + lockdown_severity.toString() + " \nLockdown type: " + lockdown_type.toString() + " \nLockdown permeability: "
       + lockdown_permeability.toString() + " \nLockdown social distance: " + lockdown_distance.toString() + "\n";
 
 
 
-  //Add new lockdown to global dict
-  lockdown_info[lockdown_data_count] = {
+    //Add new lockdown to global dict
+    lockdown_info[lockdown_data_count] = {
       "init": parseInt(init_time_step, 10),
       "final": parseInt(final_time_step, 10),
       "severity": parseFloat(lockdown_severity),
@@ -227,31 +227,31 @@ document.getElementById('lockdown_button').addEventListener("click", function(){
       "lockdown_permeability": parseFloat(lockdown_permeability),
       "lockdown_distance": parseFloat(lockdown_distance),
 
-  };
+    };
 
-  //Check overlaps lockdowns
-  check_int = checkValuesLockdown();
-  if (check_int === -1)
-  {
+    //Check overlaps lockdowns
+    check_int = checkValuesLockdown();
+    if (check_int === -1)
+    {
       return check_int
-  }
+    }
 
-  //Generate new HTML object for lockdown
-  divContent.appendChild(deleteButton);
-  newElement.appendChild(newElementChild);
-  newElement.appendChild(ulElement);
-  parentElement.appendChild(newElement);
-  ulElement.appendChild(divContent);
+    //Generate new HTML object for lockdown
+    divContent.appendChild(deleteButton);
+    newElement.appendChild(newElementChild);
+    newElement.appendChild(ulElement);
+    parentElement.appendChild(newElement);
+    ulElement.appendChild(divContent);
 
 
-  lockdown_data_count = lockdown_data_count + 1;
-  lockdownResetValues();
+    lockdown_data_count = lockdown_data_count + 1;
+    lockdownResetValues();
 
-  deleteButton.addEventListener("click", function(){
+    deleteButton.addEventListener("click", function(){
       newElement.remove();
       delete lockdown_info[deleteButton.id];
 
-  });
+    });
 
 });
 
@@ -259,6 +259,10 @@ document.getElementById('lockdown_button').addEventListener("click", function(){
 
 // Init simulation button eventListener
 document.getElementById('init_simulation').addEventListener("click", function(){
+    if(document.getElementById('timesteps_id').value < 0 || document.getElementById('timesteps_id').value > 500){
+        alert("Timesteps must be in range (0-500)");
+        return -1;
+    }
     $('#time_steps_range').val(0);
     document.getElementById('time_steps_range').setAttribute('disabled', true);
     document.getElementById('init_simulation').disabled = true;
@@ -290,13 +294,13 @@ document.getElementById('init_simulation').addEventListener("click", function(){
         //document.getElementById('infected_id').innerText = data['results']['total_states']['I'][0];
         document.getElementById('infected_id').innerText = 0;
         document.getElementById('deaths_id').innerText = data['results']['total_states']['D'][0];
-        document.getElementById('cases_id').innerText = data['results']['total_states']['S'][0];
+        document.getElementById('cases_id').innerText = parseInt(data['results']['total_states']['S'][0], 10);
         document.getElementById('icus_id').innerText = data['results']['total_states']['PD'][0];
 
         //Process info for map
         //Redraw map for the new simulation
         //redrawMap(0);
-        document.getElementById('hidden_block').removeAttribute('hidden');
+        //document.getElementById('hidden_block').removeAttribute('hidden');
         drawMap(data);
         //Redraw graphs for the new simulation
         drawMainGraph(data);
@@ -312,7 +316,7 @@ document.getElementById('init_simulation').addEventListener("click", function(){
          document.getElementById('init_simulation').disabled = false;
         }, 1000);
     },
-});
+    });
 });
 
 
@@ -332,4 +336,46 @@ document.getElementById('time_steps_range').addEventListener('input', function()
     //redrawMap(document.getElementById('time_steps_range').value)
     drawTimestepLine();
     redrawMap();
+});
+
+
+
+$.ajax({
+type: "GET",
+url: "api/simulation",
+data: {
+    //"population": document.getElementById('population_id').value,
+    "population": 1,
+    "timesteps": 200,
+    "lockdown_info": JSON.stringify(lockdown_info),
+},
+
+success: function(data){
+    json_data_map = data
+    simulator_steps = data['params']['num_timesteps'];
+    strata_population = data['params']['population_params']['num_strata'];
+    //alert("success");
+    //alert(data['simulation_steps']);
+    document.getElementById('time_steps_title').innerText = 'Time steps Model (timestep 0)';
+    document.getElementById('time_steps_range').setAttribute('min', 0);
+    document.getElementById('time_steps_range').setAttribute('max', simulator_steps - 1) ;
+    document.getElementById('time_steps_range').setAttribute('min', 0);
+    document.getElementById('time_steps_range').removeAttribute('disabled');
+    document.getElementById('time_steps_range').setAttribute('value', 0);
+
+    //document.getElementById('infected_id').innerText = data['results']['total_states']['I'][0];
+    document.getElementById('infected_id').innerText = 0;
+    document.getElementById('deaths_id').innerText = data['results']['total_states']['D'][0];
+    document.getElementById('cases_id').innerText = parseInt(data['results']['total_states']['S'][0], 10);
+    document.getElementById('icus_id').innerText = data['results']['total_states']['PD'][0];
+
+    //Redraw map for the new simulation
+    drawMap(data);
+    //Redraw graphs for the new simulation
+    drawMainGraph(data);
+
+},
+error: function(data){
+    alert("The simulation has throw error");
+},
 });
