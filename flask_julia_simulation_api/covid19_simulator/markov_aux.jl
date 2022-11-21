@@ -366,7 +366,7 @@ function Population_Params(G::Int64,
     edgelist, Rᵢⱼ = correct_self_loops(edgelist, Rᵢⱼ, M)
 
     # Aggregate population count
-    Nᵍ = Int.(sum(nᵢᵍ, dims = 2)[:, 1])
+    Nᵍ = floor.(Int,sum(nᵢᵍ, dims = 2)[:, 1])
     N = sum(Nᵍ)
     nᵢ = sum(nᵢᵍ, dims = 1)[1, :]
     mobilityᵍ = zeros(Float64, G, length(Rᵢⱼ))
