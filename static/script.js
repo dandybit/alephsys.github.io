@@ -70,6 +70,11 @@ function checkValuesLockdown(){
         return -1
     }
 
+    else if (lockdown_info[index_objects.at(-1)]["lockdown_distance"] > 1.0 || lockdown_info[index_objects.at(-1)]["lockdown_distance"] < 0 ){
+        alert("Lockdown Distance must be greater or equal than 0 and equal or lesser than 1.0")
+        return -1
+    }
+
     else if (lockdown_info[index_objects.at(-1)]["lockdown_distance"] < 0 ){
         alert("Lockdown Social Distance must be greater or equal than 0")
         return -1
@@ -81,7 +86,6 @@ function checkValuesLockdown(){
     }
 
     try {
-        //for (let i of index_objects.slice(0, -1)) {
         for (let i of Array.range(0, index_objects.length - 2)) {
             for (let ii of Array.range(lockdown_info[index_objects.at(i)]["init"], lockdown_info[index_objects.at(i)]["final"])) {
                 if (Array.range(lockdown_info[index_objects.at(-1)]["init"], lockdown_info[index_objects.at(-1)]["final"]).includes(parseInt(ii, 10))) {
@@ -176,7 +180,7 @@ function processInfoMap(data)
 }
 
 
-//add lockdonw button
+//add lockdown button
 document.getElementById('lockdown_button').addEventListener("click", function(){
     //console.log(document.getElementById('cat_map_id').getElementsByTagName('script'))
     var parentElement = document.getElementById('form-elements');
@@ -218,6 +222,7 @@ document.getElementById('lockdown_button').addEventListener("click", function(){
 
 
 
+
     //Add new lockdown to global dict
     lockdown_info[lockdown_data_count] = {
       "init": parseInt(init_time_step, 10),
@@ -233,8 +238,11 @@ document.getElementById('lockdown_button').addEventListener("click", function(){
     check_int = checkValuesLockdown();
     if (check_int === -1)
     {
+      lockdown_info = "";
       return check_int
     }
+
+
 
     //Generate new HTML object for lockdown
     divContent.appendChild(deleteButton);
@@ -275,6 +283,7 @@ document.getElementById('init_simulation').addEventListener("click", function(){
         "population": 1,
         "timesteps": document.getElementById('timesteps_id').value,
         "lockdown_info": JSON.stringify(lockdown_info),
+        "patient_zero": document.getElementById('patient_zero_id').value,
     },
 
     success: function(data){
@@ -298,9 +307,6 @@ document.getElementById('init_simulation').addEventListener("click", function(){
         document.getElementById('icus_id').innerText = data['results']['total_states']['PD'][0];
 
         //Process info for map
-        //Redraw map for the new simulation
-        //redrawMap(0);
-        //document.getElementById('hidden_block').removeAttribute('hidden');
         drawMap(data);
         //Redraw graphs for the new simulation
         drawMainGraph(data);
@@ -348,14 +354,14 @@ data: {
     "population": 1,
     "timesteps": 200,
     "lockdown_info": JSON.stringify(lockdown_info),
+    "patient_zero": '5', // Altá Ribagorça default patient zero zone.
 },
 
 success: function(data){
     json_data_map = data
     simulator_steps = data['params']['num_timesteps'];
     strata_population = data['params']['population_params']['num_strata'];
-    //alert("success");
-    //alert(data['simulation_steps']);
+
     document.getElementById('time_steps_title').innerText = 'Time steps Model (timestep 0)';
     document.getElementById('time_steps_range').setAttribute('min', 0);
     document.getElementById('time_steps_range').setAttribute('max', simulator_steps - 1) ;
@@ -363,7 +369,6 @@ success: function(data){
     document.getElementById('time_steps_range').removeAttribute('disabled');
     document.getElementById('time_steps_range').setAttribute('value', 0);
 
-    //document.getElementById('infected_id').innerText = data['results']['total_states']['I'][0];
     document.getElementById('infected_id').innerText = 0;
     document.getElementById('deaths_id').innerText = data['results']['total_states']['D'][0];
     document.getElementById('cases_id').innerText = parseInt(data['results']['total_states']['S'][0], 10);
@@ -375,7 +380,7 @@ success: function(data){
     drawMainGraph(data);
 
 },
-error: function(data){
+error: function(){
     alert("The simulation has throw error");
 },
 });

@@ -1,20 +1,13 @@
-from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
-from rest_framework import permissions
-from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
-from django.http import HttpResponse
 import hashlib
 from .utils.preprocess_julia import preprocess_julia_json
 from .utils.mongo_utils import create_mongo_client
 import requests
 import subprocess
 import json
-from bson.objectid import ObjectId
 
-folder_julia = "flask_julia_simulation_api/covid19_simulator/main.jl"
+folder_julia = "model_covid19_julia/covid19_simulator/main.jl"
 server_julia = subprocess.Popen(["julia", folder_julia])
 url_api_julia_simulation = 'http://127.0.0.1:8081/simulation'
 

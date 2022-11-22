@@ -590,6 +590,19 @@ pre{
     background-color : #000000;
     text-align: center;
 }
+
+#patient_zero_id{
+    color: #ffffff;
+    background-color : #000000;
+    text-align: center;
+}
+
+#patient_zone_id{
+    color: #ffffff;
+    background-color : #000000;
+    text-align: center;
+}
+
 #final_time_step{
     color: #ffffff;
     background-color : #000000;

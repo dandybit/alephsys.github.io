@@ -137,12 +137,12 @@
                             <input id='final_time_step' class="form-control number_style"  value="1" min="0" type="number" oninput="this.value = Math.round(this.value);">
                             <label>Lockdown Mobility Reduction</label>
                             <input id='lockdown_severity' class="form-control number_style"  type="number" value="0.00" min="0" max="100" step="0.01">
-                            <small class="form-text text-muted">You must introduce a %. 100% means there isn't mobility at all.</small>
+                            <small class="form-text text-muted">You must introduce a percentage. 1.0 means there isn't mobility at all.</small>
                             <label>Lockdown Permeability</label>
                             <input id= "lockdown_permeability" class="form-control number_style" type="number" value="0.00" min="0" step="0.01">
                             <label>Lockdown Social Distance</label>
                             <input id= "lockdown_distance" class="form-control number_style" type="number" value="0.00" min="0" step="0.01">
-                            <small class="form-text text-muted">Social distance is represented in Meters.</small>
+                            <small class="form-text text-muted">Social distance is represented in percentage.</small>
 
                             <select id="lockdown_select" class="form-select center_lockdown" aria-label="Default select example" hidden>
                               <option selected style="float: right;">Lockdown type</option>
@@ -166,12 +166,53 @@
             </a>
             <ul id="charts" class="collapse" aria-labelledby="charts" data-parent="#side-nav-accordion">
               <li>
-                  <select class="form-select form-control number_style" aria-label="Default select example">
-                      <option selected>Open this select menu</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                  <select id="patient_zero_id" class="form-select form-control number_style" aria-label="Default select example">
+                      <option value="5" selected>Alta Ribagorça</option>
+                      <option value="1">Alt Camp</option>
+                      <option value="2">Alt Empordà</option>
+                      <option value="3">Alt Penedès</option>
+                      <option value="4">Alt Urgell</option>
+                      <option value="5">Alta Ribagorça</option>
+                      <option value="6">Anoia</option>
+                      <option value="7">Val d'Aran</option>
+                      <option value="8">Bages</option>
+                      <option value="9">Baix Camp</option>
+                      <option value="10">Baix Ebre</option>
+                      <option value="11">Baix Empordà</option>
+                      <option value="12">Baix Llobregat</option>
+                      <option value="13">Baix Penedès</option>
+                      <option value="14">Barcelonès</option>
+                      <option value="15">Berguedà</option>
+                      <option value="16">Cerdanya</option>
+                      <option value="17">Conca de Barberà</option>
+                      <option value="18">Garraf</option>
+                      <option value="19">Garrigues</option>
+                      <option value="20">Garrotxa</option>
+                      <option value="21">Gironès</option>
+                      <option value="22">Maresme</option>
+                      <option value="23">Moianès</option>
+                      <option value="24">Montsià</option>
+                      <option value="25">Noguera</option>
+                      <option value="26">Osona</option>
+                      <option value="27">Pallars Jussà</option>
+                      <option value="28">Pallars Sobirà</option>
+                      <option value="29">Pla d'Urgell</option>
+                      <option value="30">Pla de l'Estany</option>
+                      <option value="31">Priorat</option>
+                      <option value="32">Ribera d'Ebre</option>
+                      <option value="33">Ripollès</option>
+                      <option value="34">Segarra</option>
+                      <option value="35">Segrià</option>
+                      <option value="36">Selva</option>
+                      <option value="37">Solsonès</option>
+                      <option value="38">Tarragonès</option>
+                      <option value="39">Terra Alta</option>
+                      <option value="40">Urgell</option>
+                      <option value="41">Vallès Occidental</option>
+                      <option value="42">Vallès Oriental</option>
                   </select>
+                  <span><i></i> <br></span>
+                  <span hidden><i id="patient_zone_id" class="form-control number_style" hidden>Lockdowns</i></span>
               </li>
             </ul>
         </li>
