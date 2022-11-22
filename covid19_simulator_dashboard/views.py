@@ -46,33 +46,33 @@ def map_query(request, *a, **kw):
 
 
 def request_json_map(request, *a, **kw):
-    with open('static/json/cat_comarques.geojson') as f:
+    with open('static/json/comarcas_cat.geojson') as f:
         json_map = json.load(f)
     data = {}
-    locations = [k for k in range(50)]
+    locations = [k for k in range(42)]
     nombre_comarques = []
 
     dup = ''
     dup_c = 1
     for local in locations:
         #json_map['features'][local]['id'] = local
-        json_map['features'][local]['id'] = json_map['features'][local]['properties']['nom_comar']
+        json_map['features'][local]['id'] = json_map['features'][local]['properties']['NOMCOMAR']
 
-        if dup == json_map['features'][local]['properties']['nom_comar']:
-            json_map['features'][local]['id'] = (json_map['features'][local]['properties']['nom_comar']) + str(' ')
-            json_map['features'][local]['properties']['nom_comar'] = json_map['features'][local]['id']
+        if dup == json_map['features'][local]['properties']['NOMCOMAR']:
+            json_map['features'][local]['id'] = (json_map['features'][local]['properties']['NOMCOMAR']) + str(' ')
+            json_map['features'][local]['properties']['NOMCOMAR'] = json_map['features'][local]['id']
             dup_c += 1
         else:
             dup_c = 1
-            dup = json_map['features'][local]['properties']['nom_comar']
+            dup = json_map['features'][local]['properties']['NOMCOMAR']
 
 
     for x in range(len(json_map['features'])):
-        nombre_comarques.append(json_map['features'][x]['properties']['nom_comar'])
+        nombre_comarques.append(json_map['features'][x]['properties']['NOMCOMAR'])
 
 
     if json_map:
-        data = {'map': json_map, 'nom_comarques': nombre_comarques, 'test_data': [x for x in range(50)]}
+        data = {'map': json_map, 'nom_comarques': nombre_comarques, 'test_data': [x for x in range(42)]}
     return JsonResponse(data)
 
 # Create your views here.

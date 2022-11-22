@@ -155,7 +155,7 @@ function generate_simulation(json_params)
     A₀[1, 5] = 2.0
     A₀[1, 3] = 1.0
 
-    # Initial number of infectious symptomatic individuals
+    # Initial number of infectious symptomatic individuals <------------------------------------------------- PATIENT ZERO
     I₀ = zeros(G, M)
     I₀[1, 5] = 1.0
 

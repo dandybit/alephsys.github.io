@@ -1,11 +1,11 @@
-Alt Camp
-Alt Empordà
-Alt Penedès
-Alt Urgell
-Alta Ribagorça
-Anoia
-Val d'Aran #
-Bages #
+Alt Camp # 1
+Alt Empordà # 2
+Alt Penedès # 3
+Alt Urgell # 4
+Alta Ribagorça # 5
+Anoia # 6
+Val d'Aran # 7 -
+Bages # 8
 Baix Camp # 9
 Baix Ebre # 10
 Baix Empordà # 11
