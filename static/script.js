@@ -340,6 +340,7 @@ document.getElementById('time_steps_range').addEventListener('input', function()
 
     // stats for stratas
     //redrawMap(document.getElementById('time_steps_range').value)
+    drawTimestepLineComarca();
     drawTimestepLine();
     redrawMap();
 });
@@ -378,6 +379,7 @@ success: function(data){
     drawMap(data);
     //Redraw graphs for the new simulation
     drawMainGraph(data);
+    drawMainGraphComarcas(data);
 
 },
 error: function(){

@@ -603,6 +603,12 @@ pre{
     text-align: center;
 }
 
+#comarca_select_id{
+  color: #ffffff;
+  background-color : #000000;
+  text-align: center;
+}
+
 #final_time_step{
     color: #ffffff;
     background-color : #000000;

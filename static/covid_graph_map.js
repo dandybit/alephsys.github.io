@@ -1,6 +1,5 @@
 // Div reference graph
 let div_graph_map_total = document.getElementById('map_graph');
-let graph_map_data_total;
 
 // Registers of buttons
 let graph_map_exposed_status = false;
@@ -106,8 +105,6 @@ function drawMapGraph(json_data, strata_select)
 {
     //init_map_graph_var();
     //graph_map_data_total = json_data["results"]["total_states"];
-
-    console.log(json_data)
 
     let strata_1_y = Array(simulator_steps).fill(0);
     let strata_2_y = Array(simulator_steps).fill(0);

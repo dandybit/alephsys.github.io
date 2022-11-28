@@ -595,107 +595,87 @@
 
         <div id="main_graph"></div>
 
+  </div>
+    </div>
+      </div>
+    </div>
+    <div class="col" style="padding-left: 10px;">
+          <div class="ms-panel">
+            <div class="ms-panel-header">
+                <div class="row">
+                  <div class="col-sm">
+                    <select id="comarca_select_id" class="form-select form-control number_style" aria-label="Default select example">
+                      <option value="5" selected>Alta Ribagorça</option>
+                      <option value="1">Alt Camp</option>
+                      <option value="2">Alt Empordà</option>
+                      <option value="3">Alt Penedès</option>
+                      <option value="4">Alt Urgell</option>
+                      <option value="5">Alta Ribagorça</option>
+                      <option value="6">Anoia</option>
+                      <option value="7">Val d'Aran</option>
+                      <option value="8">Bages</option>
+                      <option value="9">Baix Camp</option>
+                      <option value="10">Baix Ebre</option>
+                      <option value="11">Baix Empordà</option>
+                      <option value="12">Baix Llobregat</option>
+                      <option value="13">Baix Penedès</option>
+                      <option value="14">Barcelonès</option>
+                      <option value="15">Berguedà</option>
+                      <option value="16">Cerdanya</option>
+                      <option value="17">Conca de Barberà</option>
+                      <option value="18">Garraf</option>
+                      <option value="19">Garrigues</option>
+                      <option value="20">Garrotxa</option>
+                      <option value="21">Gironès</option>
+                      <option value="22">Maresme</option>
+                      <option value="23">Moianès</option>
+                      <option value="24">Montsià</option>
+                      <option value="25">Noguera</option>
+                      <option value="26">Osona</option>
+                      <option value="27">Pallars Jussà</option>
+                      <option value="28">Pallars Sobirà</option>
+                      <option value="29">Pla d'Urgell</option>
+                      <option value="30">Pla de l'Estany</option>
+                      <option value="31">Priorat</option>
+                      <option value="32">Ribera d'Ebre</option>
+                      <option value="33">Ripollès</option>
+                      <option value="34">Segarra</option>
+                      <option value="35">Segrià</option>
+                      <option value="36">Selva</option>
+                      <option value="37">Solsonès</option>
+                      <option value="38">Tarragonès</option>
+                      <option value="39">Terra Alta</option>
+                      <option value="40">Urgell</option>
+                      <option value="41">Vallès Occidental</option>
+                      <option value="42">Vallès Oriental</option>
+                  </select>
+                 </div>
+                 <div class="col-sm">
+                    <button id="button_exposed_comarcas_graph" class="btn-secondary">Exposed</button>
+                    <button id="button_asymtomatic_comarcas_graph" class="btn-secondary">Asymptomatic</button>
+                 </div>
+                 <div class="col-sm">
+                    <button id="button_infected_comarcas_graph" class="btn-secondary">Infected</button>
+                    <button id="button_hospitalized_comarcas_graph" class="btn-secondary">Pre-hospitalized</button>
+                 </div>
+                <div class="col-sm">
+                    <button id="button_pre_deceased_comarcas_graph" class="btn-secondary">Pre-deceased</button>
+                    <button id="button_recovered_comarcas_graph" class="btn-secondary">Recovered</button>
+                </div>
+                <div class="col-sm">
+                    <button id="button_hospitalized_icu_comarcas_graph" class="btn-secondary">Hospitalized in ICU</button>
+                    <button id="button_deceased_comarcas_graph" class="btn-secondary">Deceased</button>
+                </div>
+        </div>
+
+        <div id="main_graph_comarcas"></div>
+
           </div>
         </div>
       </div>
-    </div>
   </main>
 
-  <!-- Reminder Modal -->
-  <div class="modal fade" id="reminder-modal" tabindex="-1" role="dialog" aria-labelledby="reminder-modal">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
 
-        <div class="modal-header bg-secondary">
-          <h5 class="modal-title has-icon text-white"> New Reminder</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        </div>
-
-        <form>
-
-        <div class="modal-body">
-
-          <div class="ms-form-group">
-            <label>Remind me about</label>
-            <textarea class="form-control" name="reminder"></textarea>
-          </div>
-
-          <div class="ms-form-group">
-            <span class="ms-option-name fs-14">Repeat Daily</span>
-            <label class="ms-switch float-right">
-              <input type="checkbox">
-              <span class="ms-switch-slider round"></span>
-            </label>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">
-              <div class="ms-form-group">
-                <input type="text" class="form-control datepicker" name="reminder-date" value="" />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="ms-form-group">
-                <select class="form-control" name="reminder-time">
-                  <option value="">12:00 pm</option>
-                  <option value="">1:00 pm</option>
-                  <option value="">2:00 pm</option>
-                  <option value="">3:00 pm</option>
-                  <option value="">4:00 pm</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-secondary shadow-none" data-dismiss="modal">Add Reminder</button>
-        </div>
-
-        </form>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- Notes Modal -->
-  <div class="modal fade" id="notes-modal" tabindex="-1" role="dialog" aria-labelledby="notes-modal">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-
-        <div class="modal-header bg-secondary">
-          <h5 class="modal-title has-icon text-white" id="NoteModal">New Note</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        </div>
-
-        <form>
-
-        <div class="modal-body">
-
-          <div class="ms-form-group">
-            <label>Note Title</label>
-            <input type="text" class="form-control" name="note-title" value="">
-          </div>
-
-          <div class="ms-form-group">
-            <label>Note Description</label>
-            <textarea class="form-control" name="note-description"></textarea>
-          </div>
-
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-secondary shadow-none" data-dismiss="modal">Add Note</button>
-        </div>
-
-        </form>
-
-      </div>
-    </div>
-  </div>
 
   <!-- SCRIPTS -->
   <!-- Global Required Scripts Start -->
@@ -707,6 +687,7 @@
   <script src="{% static 'assets/js/jquery-ui.min.js' %}"> </script>
   <script src="{% static 'covid_graphs.js' %}"></script>
   <script src="{% static 'covid_graph_map.js' %}"></script>
+  <script src="{% static 'covid_graph_comarcas.js' %}"></script>
   <script src="{% static 'map_cat.js' %}"></script>
   <script src="{% static 'script.js' %}"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>

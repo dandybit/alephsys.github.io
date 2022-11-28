@@ -301,8 +301,6 @@ function drawMap(data_covid) {
 
             data_map_draw = data_map;
             data_map_covid = data_covid;
-            console.log(data_map);
-            console.log(data_covid);
             redrawMap();
 		},
 	});
