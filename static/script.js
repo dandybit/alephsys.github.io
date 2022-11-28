@@ -404,7 +404,7 @@ document.getElementById('simulate_button_oscar').addEventListener('click', funct
             document.getElementById('simulate_button_oscar').disabled = false;
             document.getElementById('simulate_button_oscar').style.background = '#ff0000';
         }, 1000);
-        return -11;
+        return -1;
     }
 
     if(button_t.value < 0.0 || button_t.value > 1.0){
