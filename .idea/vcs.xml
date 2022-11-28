@@ -2,5 +2,9 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/covid19_rest_api/prevalence_app/machine-scientist_new" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/covid19_rest_api/prevalence_app/machinescientist" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/covid19_rest_api/prevalence_app/machinesicentist" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/static/prevalence_app/machine-scientist_new" vcs="Git" />
   </component>
 </project>

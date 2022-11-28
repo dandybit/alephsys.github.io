@@ -591,6 +591,18 @@ pre{
     text-align: center;
 }
 
+#P_value{
+    color: #ffffff;
+    background-color : #000000;
+    text-align: center;
+}
+
+#T_value{
+    color: #ffffff;
+    background-color : #000000;
+    text-align: center;
+}
+
 #patient_zero_id{
     color: #ffffff;
     background-color : #000000;

@@ -199,8 +199,6 @@ function reDrawGraphComarcas(comarca_id){
     let result_comarcas = {}
     let counter = 0;
 
-    console.log(graph_comarcas_data);
-
     for(let x in graph_comarcas_data){
         if(graph_comarcas_data[x]['patch'] == comarca_id.toString() && graph_comarcas_data[x]['compartment'] === state){
             result_comarcas[graph_comarcas_data[x]['strata']] = graph_comarcas_data[x]['evolution']
@@ -210,8 +208,6 @@ function reDrawGraphComarcas(comarca_id){
             }
         }
     }
-
-    console.log(result_comarcas);
 
     let alt_x = Array.from({length: result_comarcas[1].length}, (x, i) => i);
 

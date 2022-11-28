@@ -386,3 +386,57 @@ error: function(){
     alert("The simulation has throw error");
 },
 });
+
+
+// Call API for the second simulation.
+document.getElementById('simulate_button_oscar').addEventListener('click', function(){
+    document.getElementById('simulate_button_oscar').disabled = true;
+    document.getElementById('simulate_button_oscar').style.background = '#0017a6';
+
+
+
+    let button_p = document.getElementById("P_value");
+    let button_t = document.getElementById("T_value");
+
+    if(button_p.value < 0.0 || button_p.value > 1.0){
+        alert("Values must be between [0-1]");
+        setTimeout(function(){
+            document.getElementById('simulate_button_oscar').disabled = false;
+            document.getElementById('simulate_button_oscar').style.background = '#ff0000';
+        }, 1000);
+        return -1;
+    }
+
+    if(button_t.value < 0.0 || button_t.value > 1.0){
+        alert("Values must be between [0-1]");
+        setTimeout(function(){
+            document.getElementById('simulate_button_oscar').disabled = false;
+            document.getElementById('simulate_button_oscar').style.background = '#ff0000';
+        }, 1000);
+        return -1;
+    }
+
+    $.ajax({
+        type: "GET",
+        url: "api/prevalence",
+        data: {
+            "P": button_p.value,
+            "T": button_t.value
+        },
+        success: function(data){
+            document.getElementById("bias_id").innerText = "Bias Closest: " + data['bias_closest'];
+            document.getElementById("exponent_id").innerText = "Exponent Closest: " + data['exponent_closest'];
+            document.getElementById("prevalence_id").innerText = "Prevalence Closest: " + data['prevalences_closest'];
+
+            setTimeout(function(){
+                document.getElementById('simulate_button_oscar').disabled = false;
+                document.getElementById('simulate_button_oscar').style.background = '#ff0000';
+            }, 1000);
+
+        },
+        error: function(){
+            alert("The simulation 2 has throw error");
+        },
+    });
+
+})

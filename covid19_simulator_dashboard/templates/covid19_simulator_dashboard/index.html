@@ -390,15 +390,12 @@
 
     <!-- Navigation Bar -->
     <nav class="navbar ms-navbar">
-
       <div class="ms-aside-toggler ms-toggler pl-0" data-target="#ms-side-nav" data-toggle="slideLeft">
         <span class="ms-toggler-bar bg-primary"></span>
         <span class="ms-toggler-bar bg-primary"></span>
         <span class="ms-toggler-bar bg-primary"></span>
       </div>
-
     </nav>
-
 
     <!-- Body Content Wrapper -->
     <div id="hidden_block" class="ms-content-wrapper" style="padding-left: 10px;">
@@ -569,8 +566,6 @@
         </div>
 
 
-
-
         <div class="col" style="padding-left: 10px;">
           <div class="ms-panel">
             <div class="ms-panel-header">
@@ -591,88 +586,108 @@
                     <button id="button_hospitalized_icu_strata_graph" class="btn-secondary">Hospitalized in ICU</button>
                     <button id="button_deceased_strata_graph" class="btn-secondary">Deceased</button>
                 </div>
+            </div>
+                <div id="main_graph"></div>
+            </div>
+                </div>
+            </div>
         </div>
 
-        <div id="main_graph"></div>
+        <div class="col" style="padding-left: 10px;">
+              <div class="ms-panel">
+                <div class="ms-panel-header">
+                    <div class="row">
+                      <div class="col-sm">
+                        <select id="comarca_select_id" class="form-select form-control number_style" aria-label="Default select example">
+                          <option value="5" selected>Alta Ribagorça</option>
+                          <option value="1">Alt Camp</option>
+                          <option value="2">Alt Empordà</option>
+                          <option value="3">Alt Penedès</option>
+                          <option value="4">Alt Urgell</option>
+                          <option value="5">Alta Ribagorça</option>
+                          <option value="6">Anoia</option>
+                          <option value="7">Val d'Aran</option>
+                          <option value="8">Bages</option>
+                          <option value="9">Baix Camp</option>
+                          <option value="10">Baix Ebre</option>
+                          <option value="11">Baix Empordà</option>
+                          <option value="12">Baix Llobregat</option>
+                          <option value="13">Baix Penedès</option>
+                          <option value="14">Barcelonès</option>
+                          <option value="15">Berguedà</option>
+                          <option value="16">Cerdanya</option>
+                          <option value="17">Conca de Barberà</option>
+                          <option value="18">Garraf</option>
+                          <option value="19">Garrigues</option>
+                          <option value="20">Garrotxa</option>
+                          <option value="21">Gironès</option>
+                          <option value="22">Maresme</option>
+                          <option value="23">Moianès</option>
+                          <option value="24">Montsià</option>
+                          <option value="25">Noguera</option>
+                          <option value="26">Osona</option>
+                          <option value="27">Pallars Jussà</option>
+                          <option value="28">Pallars Sobirà</option>
+                          <option value="29">Pla d'Urgell</option>
+                          <option value="30">Pla de l'Estany</option>
+                          <option value="31">Priorat</option>
+                          <option value="32">Ribera d'Ebre</option>
+                          <option value="33">Ripollès</option>
+                          <option value="34">Segarra</option>
+                          <option value="35">Segrià</option>
+                          <option value="36">Selva</option>
+                          <option value="37">Solsonès</option>
+                          <option value="38">Tarragonès</option>
+                          <option value="39">Terra Alta</option>
+                          <option value="40">Urgell</option>
+                          <option value="41">Vallès Occidental</option>
+                          <option value="42">Vallès Oriental</option>
+                      </select>
+                     </div>
+                     <div class="col-sm">
+                        <button id="button_exposed_comarcas_graph" class="btn-secondary">Exposed</button>
+                        <button id="button_asymtomatic_comarcas_graph" class="btn-secondary">Asymptomatic</button>
+                     </div>
+                     <div class="col-sm">
+                        <button id="button_infected_comarcas_graph" class="btn-secondary">Infected</button>
+                        <button id="button_hospitalized_comarcas_graph" class="btn-secondary">Pre-hospitalized</button>
+                     </div>
+                    <div class="col-sm">
+                        <button id="button_pre_deceased_comarcas_graph" class="btn-secondary">Pre-deceased</button>
+                        <button id="button_recovered_comarcas_graph" class="btn-secondary">Recovered</button>
+                    </div>
+                    <div class="col-sm">
+                        <button id="button_hospitalized_icu_comarcas_graph" class="btn-secondary">Hospitalized in ICU</button>
+                        <button id="button_deceased_comarcas_graph" class="btn-secondary">Deceased</button>
+                    </div>
+            </div>
+                <div id="main_graph_comarcas"></div>
+              </div>
+            </div>
+          </div>
 
-  </div>
-    </div>
-      </div>
-    </div>
-    <div class="col" style="padding-left: 10px;">
+
+        <div class="col" style="padding-left: 10px;">
           <div class="ms-panel">
             <div class="ms-panel-header">
                 <div class="row">
-                  <div class="col-sm">
-                    <select id="comarca_select_id" class="form-select form-control number_style" aria-label="Default select example">
-                      <option value="5" selected>Alta Ribagorça</option>
-                      <option value="1">Alt Camp</option>
-                      <option value="2">Alt Empordà</option>
-                      <option value="3">Alt Penedès</option>
-                      <option value="4">Alt Urgell</option>
-                      <option value="5">Alta Ribagorça</option>
-                      <option value="6">Anoia</option>
-                      <option value="7">Val d'Aran</option>
-                      <option value="8">Bages</option>
-                      <option value="9">Baix Camp</option>
-                      <option value="10">Baix Ebre</option>
-                      <option value="11">Baix Empordà</option>
-                      <option value="12">Baix Llobregat</option>
-                      <option value="13">Baix Penedès</option>
-                      <option value="14">Barcelonès</option>
-                      <option value="15">Berguedà</option>
-                      <option value="16">Cerdanya</option>
-                      <option value="17">Conca de Barberà</option>
-                      <option value="18">Garraf</option>
-                      <option value="19">Garrigues</option>
-                      <option value="20">Garrotxa</option>
-                      <option value="21">Gironès</option>
-                      <option value="22">Maresme</option>
-                      <option value="23">Moianès</option>
-                      <option value="24">Montsià</option>
-                      <option value="25">Noguera</option>
-                      <option value="26">Osona</option>
-                      <option value="27">Pallars Jussà</option>
-                      <option value="28">Pallars Sobirà</option>
-                      <option value="29">Pla d'Urgell</option>
-                      <option value="30">Pla de l'Estany</option>
-                      <option value="31">Priorat</option>
-                      <option value="32">Ribera d'Ebre</option>
-                      <option value="33">Ripollès</option>
-                      <option value="34">Segarra</option>
-                      <option value="35">Segrià</option>
-                      <option value="36">Selva</option>
-                      <option value="37">Solsonès</option>
-                      <option value="38">Tarragonès</option>
-                      <option value="39">Terra Alta</option>
-                      <option value="40">Urgell</option>
-                      <option value="41">Vallès Occidental</option>
-                      <option value="42">Vallès Oriental</option>
-                  </select>
+                 <div class="col-sm">
+                    <input id="P_value" class="form-control number_style" value="0.0" min="0.0" max="1.0" type="number">
                  </div>
                  <div class="col-sm">
-                    <button id="button_exposed_comarcas_graph" class="btn-secondary">Exposed</button>
-                    <button id="button_asymtomatic_comarcas_graph" class="btn-secondary">Asymptomatic</button>
-                 </div>
-                 <div class="col-sm">
-                    <button id="button_infected_comarcas_graph" class="btn-secondary">Infected</button>
-                    <button id="button_hospitalized_comarcas_graph" class="btn-secondary">Pre-hospitalized</button>
+                    <input id="T_value" class="form-control number_style" value="0.0" min="0.0" max="1.0" type="number">
                  </div>
                 <div class="col-sm">
-                    <button id="button_pre_deceased_comarcas_graph" class="btn-secondary">Pre-deceased</button>
-                    <button id="button_recovered_comarcas_graph" class="btn-secondary">Recovered</button>
+                    <button id="simulate_button_oscar" class="btn-secondary" style="background-color: #ff0000">Simulate</button>
                 </div>
                 <div class="col-sm">
-                    <button id="button_hospitalized_icu_comarcas_graph" class="btn-secondary">Hospitalized in ICU</button>
-                    <button id="button_deceased_comarcas_graph" class="btn-secondary">Deceased</button>
+                    <button id="bias_id" class="btn-secondary" disabled>Bias Closest: ?</button>
+                    <button id="exponent_id" class="btn-secondary" disabled>Exponent Closest: ?</button>
+                    <button id="prevalence_id" class="btn-secondary" disabled>Prevalence Closest: ?</button>
                 </div>
+                </div>
+            </div>
         </div>
-
-        <div id="main_graph_comarcas"></div>
-
-          </div>
-        </div>
-      </div>
   </main>
 
 
