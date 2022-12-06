@@ -59,7 +59,7 @@ by the population strata categories.
 * <=65 years
 * \>=66 years
 
-[<img src="https://github.com/dandybit/covid_19_alephsyslab_seeslab/blob/master/readme_images/map_graph.png?raw=true" width="1220"/>]
+<img src="https://github.com/dandybit/covid_19_alephsyslab_seeslab/blob/master/readme_images/map_graph.png?raw=true" width="1220"/>
 
 Use the different states of the simulation to display the information you want to display on the graph.
 
@@ -73,16 +73,16 @@ Use the different states of the simulation to display the information you want t
 * Deceased (D).
 * Recovered (R).
 
-[<img src="https://github.com/dandybit/covid_19_alephsyslab_seeslab/blob/master/readme_images/simulator_states.png?raw=true" width="1220"/>]
+<img src="https://github.com/dandybit/covid_19_alephsyslab_seeslab/blob/master/readme_images/simulator_states.png?raw=true" width="1220"/>
 
 The second graph shows the sum of the stratas and the regions. This graph allows you to select multiple states to compare 
 the evolutions of the different states.
 
-[<img src="https://github.com/dandybit/covid_19_alephsyslab_seeslab/blob/master/readme_images/comarques_overall_graph.png?raw=true" width="1220"/>]
+<img src="https://github.com/dandybit/covid_19_alephsyslab_seeslab/blob/master/readme_images/comarques_overall_graph.png?raw=true" width="1220"/>
 
 The final graph shows the evolution of the simulation by region. Select the region you want to obtain the information.
 
-[<img src="https://github.com/dandybit/covid_19_alephsyslab_seeslab/blob/master/readme_images/comarques_strata_graph.png?raw=true" width="1220"/>]
+<img src="https://github.com/dandybit/covid_19_alephsyslab_seeslab/blob/master/readme_images/comarques_strata_graph.png?raw=true" width="1220"/>
 
 Alternative Model
 =================
@@ -90,4 +90,4 @@ Alternative Model
 There is an alternative model to estimate the evolution of Covid-19 in Catalonia. Unlike the main one, this only shows 
 the data of Bias Closest, Exponent Closest, Prevalence Closest.
 
-[<img src="https://github.com/dandybit/covid_19_alephsyslab_seeslab/blob/master/readme_images/oscar_model.png?raw=true" width="1220"/>]
+<img src="https://github.com/dandybit/covid_19_alephsyslab_seeslab/blob/master/readme_images/oscar_model.png?raw=true" width="1220"/>
