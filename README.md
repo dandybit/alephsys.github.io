@@ -40,4 +40,5 @@ Use the menu on the left to add confinements. It defines a range of timesteps fo
 
 All characteristics have a range [0-1]
 
+[<img src="https://github.com/dandybit/covid_19_alephsyslab_seeslab/blob/master/readme_images/confinaments_menu.png?raw=true" width="180"/>](https://www.urv.cat)
 
