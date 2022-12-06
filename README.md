@@ -41,11 +41,11 @@ then its options.
 
 **All characteristics have a range [0-1]**
 
-[<img src="https://github.com/dandybit/covid_19_alephsyslab_seeslab/blob/master/readme_images/confinaments_menu.png?raw=true" width="180"/>]
+<img src="https://github.com/dandybit/covid_19_alephsyslab_seeslab/blob/master/readme_images/confinaments_menu.png?raw=true" width="180"/>
 
 Use patient zero to select the region where the first infected will be in the simulation.
 
-[<img src="https://github.com/dandybit/covid_19_alephsyslab_seeslab/blob/master/readme_images/patient_zero.png?raw=true" width="180"/>]
+<img src="https://github.com/dandybit/covid_19_alephsyslab_seeslab/blob/master/readme_images/patient_zero.png?raw=true" width="180"/>
 
 Once the simulation is set up, simply press the red simulation button to start.
 
