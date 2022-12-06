@@ -6,6 +6,7 @@
 *.exe
 *.o
 *.so
+.idea
 
 # Packages #
 ############
@@ -25,6 +26,8 @@
 *.log
 *.sql
 *.sqlite
+*.sqllite3
+
 
 # OS generated files #
 ######################
@@ -37,3 +40,5 @@ ehthumbs.db
 Thumbs.db
 django_alephsys_venv
 cache
+manage.py
+settings.py
