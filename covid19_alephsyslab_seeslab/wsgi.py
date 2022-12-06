@@ -1,5 +1,5 @@
 """
-WSGI config for covid_19_alephsyslab_seeslab project.
+WSGI config for covid19_alephsyslab_seeslab project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -14,7 +14,7 @@ from django.core.wsgi import get_wsgi_application
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'covid_19_alephsyslab_seeslab.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'covid19_alephsyslab_seeslab.settings')
 
 application = get_wsgi_application()
 

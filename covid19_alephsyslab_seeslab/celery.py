@@ -3,9 +3,9 @@ import os
 from celery import Celery
 
 # Set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'covid_19_alephsyslab_seeslab.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'covid19_alephsyslab_seeslab.settings')
 
-app = Celery('covid_19_alephsyslab_seeslab')
+app = Celery('covid19_alephsyslab_seeslab')
 
 # Using a string here means the worker doesn't have to serialize
 # the configuration object to child processes.

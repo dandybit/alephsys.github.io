@@ -12,7 +12,7 @@ from .prevalence_app.machinescientist.parallel import *
 from .prevalence_app.machinescientist.Prior.fit_prior import read_prior_par
 from .prevalence_app.BMS_prevalence import *
 
-folder_julia = "model_covid19_julia/covid19_simulator/main.jl"
+folder_julia = "covid19_julia_model/covid19_simulator/main.jl"
 server_julia = subprocess.Popen(["julia", folder_julia])
 url_api_julia_simulation = 'http://127.0.0.1:8081/simulation'
 

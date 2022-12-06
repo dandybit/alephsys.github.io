@@ -1,5 +1,5 @@
 """
-ASGI config for covid_19_alephsyslab_seeslab project.
+ASGI config for covid19_alephsyslab_seeslab project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -21,7 +21,7 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 from django.urls import path
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'covid_19_alephsyslab_seeslab.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'covid19_alephsyslab_seeslab.settings')
 
 application = get_asgi_application()
 
