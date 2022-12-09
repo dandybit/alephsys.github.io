@@ -36,6 +36,9 @@ Use _patient zero_ to select the region where the first infected will be in the 
 
 Once the parameters of the simulation are set up, simply press the red _Simulation_ button to start.
 
+<img src="./readme_images/simulation_button.png" width="180"/>
+
+
 ## Plots
 
 Use the _Time steps_ slider to choose a date (a time step of the simulation).
@@ -74,6 +77,8 @@ In the top, four counters show the global values of the most important indicator
 The second plot shows the sum of the stratas and the regions. This plot allows you to select multiple states to compare their evolution.
 
 <img src="./readme_images/plot_overall.png" width="1220"/>
+
+If you hover over the previous plots (including the map), you will get extra information.
 
 The final plot shows the evolution of the simulation by region. Select the region you want to obtain the information.
 
