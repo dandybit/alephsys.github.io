@@ -23,8 +23,8 @@ The model documentation can be found here [Covid-19 Model Documentation](https:/
 Research Group
 ==========
 
-[<img src="https://github.com/dandybit/alephsys.github.io/tree/main/readme_images/logo_alephsys.png?raw=true" width="320"/>](https://alephsyslab.com/)
-[<img src="https://github.com/dandybit/alephsys.github.io/tree/main/readme_images/urv-bandera-color.png?raw=true" width="532"/>](https://www.urv.cat)
+[<img src="./readme_images/logo_alephsys.png" width="320"/>](https://alephsyslab.com/)
+[<img src="https://github.com/dandybit/alephsys.github.io/blob/main/readme_images/urv-bandera-color.png?raw=true" width="532"/>](https://www.urv.cat)
 
 How to use
 =================
