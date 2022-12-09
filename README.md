@@ -1,13 +1,9 @@
 Covid-19 Simulator 
 ========
 
-The Alephsys Lab is part of the Department of Computer Engineering and Mathematics at the "Universitat Rovira i Virgili" 
-of Tarragona. The core of our research activity is aimed at investigating the laws governing the structure and dynamics 
-of complex networked systems.
+Dashboard for COVID-19 simulations corresponding to project _2020PANDE-00098: Modelització probabilística per a predir l’evolució de la COVID-19: parametrització i correcció automàtica_.
 
-[Alephsyslab Web page](https://alephsyslab.com/).
-
-The Covid-19 simulator is a model created by the Alephsyslab research group of the Rovira i Virgili University. 
+The Covid-19 simulator is a model created by Developed at Universitat Rovira i Virgili, Tarragona. 
 Its purpose is to simulate the spread of the Covid-19 virus in Catalonia at the comarca(region) level. 
 The user can enter how many simulation timesteps (days), the confinement policies and the zero patient.
 
