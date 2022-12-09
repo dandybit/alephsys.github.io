@@ -32,35 +32,30 @@ model_loaded = ensamble_model(traces_df)
 
 
 class SimulationList(APIView):
-    """
-    List all snippets, or create a new snippet.
-    """
 
     def get(self, request, hash=None, format=None):
-        json_request = request.GET.dict()
-        check_hash = hashlib.md5(str(json_request).encode('utf-8')).hexdigest()
+        json_request = request.GET.dict()  # Transform GET REQUEST into Python Dict.
+        check_hash = hashlib.md5(str(json_request).encode('utf-8')).hexdigest() # Generate Dict HASH MD5
 
-        check_simulation = db.find_one({'hash_id': str(check_hash)})
-        # check_simulation = None
+        check_simulation = db.find_one({'hash_id': str(check_hash)}) # Check simulation hash.
+
+        # If simulation already exist in MongoDB.
         if check_simulation:
-            del (check_simulation["_id"])
-            return Response(check_simulation)
+            del (check_simulation["_id"]) # Remove _id from Dict
+            return Response(check_simulation) # Return Mongo Request.
         else:
             json_simulation = requests.post(url_api_julia_simulation, json=json_request).json()
             json_simulation = json.loads(json_simulation)
-            json_simulation = preprocess_julia_json(json_simulation)
-            json_simulation["hash_id"] = str(check_hash)
+            json_simulation = preprocess_julia_json(json_simulation) # Call Julia Model
+            json_simulation["hash_id"] = str(check_hash) # Add hash Dict
             json_simulation["simulation_id"] = str(json_simulation["simulation_id"])
             json_file = json.dumps(json_simulation)
             json_file = json.loads(json_file)
-            db.insert_one(json_file)
+            db.insert_one(json_file) # Insert simulation in Mongo
 
-        return Response(json_simulation)
+        return Response(json_simulation) # Return simulation results
 
 class PrevalenceApp(APIView):
-    """
-    List all snippets, or create a new snippet.
-    """
 
     def get(self, request, hash=None, format=None):
         json_request = request.GET.dict()

@@ -352,7 +352,7 @@ type: "GET",
 url: "api/simulation",
 data: {
     //"population": document.getElementById('population_id').value,
-    "population": 1,
+    "population": 1, // population has been disabled.
     "timesteps": 200,
     "lockdown_info": JSON.stringify(lockdown_info),
     "patient_zero": '5', // Altá Ribagorça default patient zero zone.

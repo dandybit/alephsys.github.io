@@ -367,10 +367,8 @@ end
 
 
 # define REST endpoints to dispatch to "service" functions
-
 const SIMULATION_ROUTER = HTTP.Router()
 HTTP.@register(SIMULATION_ROUTER, "POST", "/simulation", simulation_post)
 
 HTTP.serve(SIMULATION_ROUTER, Sockets.localhost, 8081)
 
-#generate_simulation(1)
