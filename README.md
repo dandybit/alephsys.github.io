@@ -1,10 +1,8 @@
 Covid-19 Simulator 
 ========
 
-Dashboard for COVID-19 simulations corresponding to project _2020PANDE-00098: Modelització probabilística per a predir l’evolució de la COVID-19: parametrització i correcció automàtica_.
+Dashboard for COVID-19 simulations corresponding to project _2020PANDE-00098: Modelització probabilística per a predir l’evolució de la COVID-19: parametrització i correcció automàtica_, developed at [Universitat Rovira i Virgili](https://www.urv.cat). Its purpose is to simulate the spread of the COVID-19 in Catalonia at a region ("_comarca_") level. 
 
-The Covid-19 simulator is a model created by Developed at Universitat Rovira i Virgili, Tarragona. 
-Its purpose is to simulate the spread of the Covid-19 virus in Catalonia at the comarca(region) level. 
 The user can enter how many simulation timesteps (days), the confinement policies and the zero patient.
 
 The model is available for use in [Alephsyslab Covid-19 Simulator](https://simulator.alephsyslab.com/).
