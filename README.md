@@ -1,87 +1,78 @@
-Covid-19 Simulator 
-========
+# Covid-19 Simulator 
 
-Dashboard for COVID-19 simulations corresponding to project _2020PANDE-00098: Modelització probabilística per a predir l’evolució de la COVID-19: parametrització i correcció automàtica_, developed at [Universitat Rovira i Virgili](https://www.urv.cat). Its purpose is to simulate the spread of the COVID-19 in Catalonia at a region ("_comarca_") level. 
+Dashboard for COVID-19 simulations corresponding to project _2020PANDE-00098: Modelització probabilística per a predir l’evolució de la COVID-19: parametrització i correcció automàtica_, developed at [Universitat Rovira i Virgili](https://www.urv.cat). Its purpose is to simulate the spread of the COVID-19 in Catalonia at the region ("_comarca_") level. 
 
-The user can enter how many simulation timesteps (days), the confinement policies and the zero patient.
+The user can enter into the simulation its _duration_ (number of timesteps, that represent days), the location of the _zero patients_ (seeds of COVID-19 spreading), and the _confinement policies_.
 
-The model is available for use in [Alephsyslab Covid-19 Simulator](https://simulator.alephsyslab.com/).
-**It is recommended use Firefox or Chrome.**
+The interactive dashboard is available at [Alephsyslab Covid-19 Simulator](https://simulator.alephsyslab.com/).
+It is recommended to use Firefox or Chrome.
 
-The implementation of the model used can be found here [Covid-19 Model](https://github.com/jtmatamalas/MMCAcovid19.jl).
+The simulations are based on the model described in reference
 
-The model documentation can be found here [Covid-19 Model Documentation](https://jtmatamalas.github.io/MMCAcovid19.jl/v0.1/).
+- A Arenas, W Cota, J Gómez-Gardeñes, S Gómez, C Granell, JT Matamalas, D Soriano-Paños, B Steinegger: Modeling the spatiotemporal epidemic spreading of COVID-19 and the impact of mobility and social distancing interventions. _Physical Review X_ **10** (2020) 041055. [DOI:10.1103/PhysRevX.10.041055](https://doi.org/10.1103/PhysRevX.10.041055).
+
+The source code of this model, developed in the [Julia](https://julialang.org/) programming language, can be found here: [MMCAcovid19.jl](https://github.com/jtmatamalas/MMCAcovid19.jl). Its documentation can be found here: [MMCAcovid19.jl Documentation](https://jtmatamalas.github.io/MMCAcovid19.jl/v0.1/).
 
 
- 
-Research Group
-==========
+## How to use
 
-[<img src="./readme_images/logo_alephsys.png" width="320"/>](https://alephsyslab.com/)
-[<img src="https://github.com/dandybit/alephsys.github.io/blob/main/readme_images/urv-bandera-color.png?raw=true" width="532"/>](https://www.urv.cat)
+Initially, when the dashboard is first accessed, the model has a default simulation configuration, with a single patient zero located at Alta Ribagorça, and without confinement mesures.
 
-How to use
-=================
+Use the menu on the left to add _lockdowns_. Each lockdown is characterized by:
 
-Initially, when the web is accessed, the model has a simulation configuration by default. 
-The default configuration does not have any restrictions and patient zero is located in the Alta Ribagorça region.
-
-Use the menu on the left to add confinements. It defines a range of timesteps for the confinement and 
-then its options.
-
+* Initial timestep of the lockdown.
+* Final timestep of the lockdown.
 * Mobility reduction.
 * Permeability of confined households.
 * Social distancing.
 
-**All characteristics have a range [0-1]**
+The last three parameters represent probabilities, thus they take values between 0.0 and 1.0.
 
 <img src="./readme_images/confinaments_menu.png" width="180"/>
 
-Use patient zero to select the region where the first infected will be in the simulation.
+Use _patient zero_ to select the region where the first infected will be in the simulation.
 
 <img src="./readme_images/patient_zero.png" width="180"/>
 
-Once the simulation is set up, simply press the red simulation button to start.
+Once the parameters of the simulation are set up, simply press the red _Simulation_ button to start.
 
-Graphs
-=================
+## Plots
 
-The first graph represents the sum of all the cases of the regions. This total sum is divided 
-by the population strata categories.
+Use the _Time steps_ slider to choose a date (a time step of the simulation).
 
-* Lower or equal than 25 years old
-* Between 26 and 65 years old
-* Greater or equal than 66 years old
+The map of Catalonia shows the state of the simulation at the selected time step, and for the selected age strata categories:
+
+* Lower or equal than 25 years old ("<= 25 years").
+* Between 26 and 65 years old ("<= 65 years").
+* Greater or equal than 66 years old (">= 66 years").
 
 <img src="./readme_images/map_graph.png" width="1220"/>
 
-Use the different states of the simulation to display the information you want to display on the graph.
+In the plot to the right of the map, it is shown the time evolution of the selected compartment, and for the selected age strata.
+According to the model, the possible compartments to choose from are:
 
-* Susceptible (S): healthy individual.
 * Exposed (E): incubating the disease, not infectious.
 * Infected asymptomatic (A): infectious, without symptomes of the disease.
 * Infected symptomatic (I): infectious, with symptomes of the disease.
-* Pre-hospitalized to ICU (PH).
+* Pre-hospitalized at ICU (PH).
 * Pre-deceased (PD).
-* Hospitalized in ICU.
+* Hospitalized at ICU (H).
 * Deceased (D).
 * Recovered (R).
 
 <img src="./readme_images/simulator_states.png" width="1220"/>
 
-The second graph shows the sum of the stratas and the regions. This graph allows you to select multiple states to compare 
-the evolutions of the different states.
+The second plot shows the sum of the stratas and the regions. This plot allows you to select multiple states to compare their evolution.
 
 <img src=./readme_images/comarques_overall_graph.png" width="1220"/>
 
-The final graph shows the evolution of the simulation by region. Select the region you want to obtain the information.
+The final plot shows the evolution of the simulation by region. Select the region you want to obtain the information.
 
 <img src="./readme_images/comarques_strata_graph.png" width="1220"/>
 
-Alternative Model
-=================
+                        
+## Additional information
 
-There is an alternative model to estimate the evolution of Covid-19 in Catalonia. Unlike the main one, this only shows 
-the data of Bias Closest, Exponent Closest, Prevalence Closest.
+The dashboard can also calculate the data of Bias Closest, Exponent Closest, Prevalence Closest.
 
 <img src="./readme_images/oscar_model.png" width="1220"/>
