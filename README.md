@@ -40,13 +40,13 @@ Once the parameters of the simulation are set up, simply press the red _Simulati
 
 Use the _Time steps_ slider to choose a date (a time step of the simulation).
 
+<img src="./readme_images/slider.png" width="1220"/>
+
 The map of Catalonia shows the state of the simulation at the selected time step, and for the selected age strata categories:
 
 * Lower or equal than 25 years old ("<= 25 years").
 * Between 26 and 65 years old ("<= 65 years").
 * Greater or equal than 66 years old (">= 66 years").
-
-<img src="./readme_images/map_graph.png" width="1220"/>
 
 In the plot to the right of the map, it is shown the time evolution of the selected compartment, and for the selected age strata.
 According to the model, the possible compartments to choose from are:
@@ -60,15 +60,24 @@ According to the model, the possible compartments to choose from are:
 * Deceased (D).
 * Recovered (R).
 
-<img src="./readme_images/simulator_states.png" width="1220"/>
+<img src="./readme_images/plot_map.png" width="1220"/>
+
+In the top, four counters show the global values of the most important indicators:
+
+* Infected.
+* ICUs.
+* Cases (overall).
+* Deaths (overall).
+
+<img src="./readme_images/counters_overall.png" width="1220"/>
 
 The second plot shows the sum of the stratas and the regions. This plot allows you to select multiple states to compare their evolution.
 
-<img src=./readme_images/comarques_overall_graph.png" width="1220"/>
+<img src="./readme_images/plot_overall.png" width="1220"/>
 
 The final plot shows the evolution of the simulation by region. Select the region you want to obtain the information.
 
-<img src="./readme_images/comarques_strata_graph.png" width="1220"/>
+<img src="./readme_images/plot_comarca.png" width="1220"/>
 
                         
 ## Additional information
